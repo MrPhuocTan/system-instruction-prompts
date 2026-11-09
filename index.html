@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>System Instruction Library — Centralized Multi-Agent Governance Specification</title>
-  <meta name="description" content="Centralized multi-domain governance, orchestration, specialist role prompts, and reusable procedural skills for autonomous agent execution (v1.0.0).">
+  <title>System Instruction Library — Centralized Multi-Agent Governance Framework</title>
+  <meta name="description" content="Centralized multi-domain governance, PM + SA orchestration, specialist role prompts, and reusable SKILL.md packages for autonomous agent workflows (v1.0.0).">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='30' height='30' x='1' y='1' fill='%23ffffff' stroke='%23121417' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' text-anchor='middle' fill='%23121417'%3ESI%3C/text%3E%3C/svg%3E">
   <style>
     :root {
@@ -22,7 +22,7 @@
       --accent-soft: #e8effc;
       --status-pass: #166534;
       --status-pass-bg: #e7f5ec;
-      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
       --font-mono: "SFMono-Regular", "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --max-w: 1180px;
@@ -90,7 +90,7 @@
       align-items: center;
       justify-content: space-between;
       min-height: 60px;
-      gap: 16px;
+      gap: 12px;
     }
 
     .brand {
@@ -101,6 +101,7 @@
       font-weight: 600;
       font-size: 14px;
       letter-spacing: -0.01em;
+      min-width: 0;
     }
 
     .brand:hover {
@@ -113,12 +114,19 @@
       justify-content: center;
       width: 26px;
       height: 26px;
+      flex-shrink: 0;
       border: 1.5px solid var(--ink-primary);
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0;
       background: var(--bg-surface);
+    }
+
+    .brand-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .version-tag {
@@ -128,19 +136,21 @@
       border: 1px solid var(--line-hair);
       background: var(--bg-surface);
       color: var(--ink-secondary);
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 18px;
+      flex-wrap: nowrap;
     }
 
     .nav-links a {
       color: var(--ink-secondary);
       font-size: 13.5px;
       font-weight: 500;
+      white-space: nowrap;
       transition: color 180ms ease;
     }
 
@@ -152,11 +162,13 @@
     .topbar-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .lang-switch {
       display: inline-flex;
+      align-items: center;
       border: 1px solid var(--line-hair);
       background: var(--bg-surface);
       padding: 2px;
@@ -169,9 +181,14 @@
       font-family: var(--font-mono);
       font-size: 11.5px;
       font-weight: 600;
-      padding: 4px 8px;
+      padding: 4px 7px;
       cursor: pointer;
+      white-space: nowrap;
       transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .lang-btn:hover {
+      color: var(--ink-primary);
     }
 
     .lang-btn[aria-pressed="true"] {
@@ -240,6 +257,7 @@
     .status-dot {
       width: 8px;
       height: 8px;
+      flex-shrink: 0;
       background: var(--status-pass);
       display: inline-block;
     }
@@ -263,8 +281,8 @@
 
     .hero h1 {
       margin: 0 0 20px;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      line-height: 1.1;
+      font-size: clamp(2rem, 3.8vw, 3.15rem);
+      line-height: 1.12;
       letter-spacing: -0.03em;
       font-weight: 700;
       color: var(--ink-primary);
@@ -272,7 +290,7 @@
 
     .hero-lead {
       margin: 0 0 28px;
-      font-size: 1.08rem;
+      font-size: 1.06rem;
       color: var(--ink-secondary);
       max-width: 66ch;
     }
@@ -384,13 +402,13 @@
       margin: 0;
       font-size: clamp(1.5rem, 2.5vw, 2.05rem);
       letter-spacing: -0.025em;
-      line-height: 1.2;
+      line-height: 1.22;
     }
 
     .section-desc {
       margin: 8px 0 0;
       color: var(--ink-secondary);
-      max-width: 65ch;
+      max-width: 66ch;
       font-size: 15.5px;
     }
 
@@ -694,6 +712,7 @@
       color: var(--ink-primary);
       display: flex;
       justify-content: space-between;
+      gap: 8px;
     }
 
     .layer-row {
@@ -1016,11 +1035,13 @@
     }
 
     /* Responsive Breakpoints */
-    @media (max-width: 980px) {
+    @media (max-width: 1080px) {
       .nav-links {
         display: none;
       }
+    }
 
+    @media (max-width: 980px) {
       .hero-grid,
       .stage-detail-card,
       .router-layout,
@@ -1057,18 +1078,33 @@
         padding: 0 16px;
       }
 
-      .nav-links,
+      .topbar-inner {
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 8px;
+      }
+
       .version-tag {
         display: none;
       }
 
       .brand {
-        font-size: 13px;
+        font-size: 13.5px;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .lang-btn {
+        padding: 4px 6px;
+        font-size: 11px;
       }
 
       .topbar-actions .btn-outline {
-        padding: 6px 10px;
-        font-size: 12.5px;
+        padding: 5px 10px;
+        font-size: 12px;
       }
 
       .hero {
@@ -1131,20 +1167,23 @@
     <div class="container topbar-inner">
       <a class="brand" href="#top">
         <span class="brand-mark" aria-hidden="true">SI</span>
-        <span>System Instruction Library</span>
+        <span class="brand-title">System Instruction Library</span>
         <span class="version-tag">v1.0.0</span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#workflow" data-i18n="nav_workflow">Luồng vận hành</a>
-        <a href="#router" data-i18n="nav_router">Bộ định tuyến L0–L4</a>
-        <a href="#architecture" data-i18n="nav_arch">Kiến trúc 9 tầng</a>
-        <a href="#catalog" data-i18n="nav_catalog">Danh mục 15 miền</a>
-        <a href="#quickstart" data-i18n="nav_quickstart">Tích hợp nhanh</a>
+        <a href="#workflow" data-i18n="nav_workflow">Workflow</a>
+        <a href="#router" data-i18n="nav_router">L0–L4 Router</a>
+        <a href="#architecture" data-i18n="nav_arch">Architecture</a>
+        <a href="#catalog" data-i18n="nav_catalog">Catalog</a>
+        <a href="#quickstart" data-i18n="nav_quickstart">Quickstart</a>
       </nav>
       <div class="topbar-actions">
-        <div class="lang-switch" role="group" aria-label="Language switch">
-          <button type="button" class="lang-btn" data-lang="vi" aria-pressed="true">VI</button>
-          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="vi" title="Tiếng Việt" aria-label="Tiếng Việt" aria-pressed="false">VI</button>
+          <button type="button" class="lang-btn" data-lang="zh" title="中文" aria-label="中文" aria-pressed="false">中文</button>
+          <button type="button" class="lang-btn" data-lang="fr" title="Français" aria-label="Français" aria-pressed="false">FR</button>
+          <button type="button" class="lang-btn" data-lang="es" title="Español" aria-label="Español" aria-pressed="false">ES</button>
         </div>
         <a class="btn-outline" href="https://github.com/MrPhuocTan/system-instruction-prompts" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
       </div>
@@ -1157,24 +1196,24 @@
       <div class="container">
         <div class="eyebrow">
           <span class="status-dot" aria-hidden="true"></span>
-          <span data-i18n="hero_eyebrow">SINGLE SOURCE OF TRUTH CHO HỆ THỐNG ĐA TÁC TỬ (MULTI-AGENT)</span>
+          <span data-i18n="hero_eyebrow">SINGLE SOURCE OF TRUTH FOR MULTI-AGENT SYSTEMS</span>
         </div>
         <div class="hero-grid">
           <div>
-            <h1 data-i18n="hero_title">Thư viện Chỉ dẫn Hệ thống &amp; Khung Quản trị Tác tử Tập trung</h1>
+            <h1 data-i18n="hero_title">Centralized Agent Framework &amp; System Instruction Library</h1>
             <p class="hero-lead" data-i18n="hero_lead">
-              Chuẩn hóa toàn bộ quy tắc hiến pháp, điều phối PM + SA bền vững, vai trò chuyên gia trên 15 lĩnh vực và 22 kỹ năng thực thi tái sử dụng tại một kho duy nhất. Dự án bên ngoài kế thừa tức thì mà không cần sao chép prompt thủ công.
+              Standardize global governance, persistent PM + SA orchestration, specialist Role Prompts across 15 Domains, and 22 reusable SKILL.md packages in one canonical repository—inherited on demand with zero prompt duplication.
             </p>
             <div class="hero-cta">
-              <a class="btn-primary" href="#quickstart" data-i18n="cta_quickstart">Kết nối trong 3 bước</a>
-              <a class="btn-outline" href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/LIBRARY_INDEX.md" target="_blank" rel="noopener noreferrer" data-i18n="cta_index">Tra cứu LIBRARY_INDEX.md</a>
-              <a class="btn-outline" href="#catalog" data-i18n="cta_explore">Khám phá 112 vai trò</a>
+              <a class="btn-primary" href="#quickstart" data-i18n="cta_quickstart">3-Step Quickstart</a>
+              <a class="btn-outline" href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/LIBRARY_INDEX.md" target="_blank" rel="noopener noreferrer" data-i18n="cta_index">Open LIBRARY_INDEX.md</a>
+              <a class="btn-outline" href="#catalog" data-i18n="cta_explore">Explore 112 Roles</a>
             </div>
           </div>
-          <aside class="axiom-box" aria-label="Natural-language interaction rule">
-            <div class="axiom-label" data-i18n="axiom_label">NGUYÊN TẮC TỰ HÀNH NGÔN NGỮ TỰ NHIÊN</div>
+          <aside class="axiom-box" aria-label="Autonomous natural-language interaction principle">
+            <div class="axiom-label" data-i18n="axiom_label">NATURAL-LANGUAGE AUTONOMOUS AXIOM</div>
             <p class="axiom-quote" data-i18n="axiom_quote">
-              “Người dùng chỉ nêu mục tiêu bằng ngôn ngữ tự nhiên. PM điều phối thực thi. SA kiểm soát kiến trúc. Subagent đảm nhận công việc chuyên môn. Khung hệ thống tự duy trì trạng thái và kiểm chứng độc lập.”
+              “The user gives objectives. PM manages execution. SA governs architecture. Subagents perform delegated work. The framework preserves continuity and verifies results.”
             </p>
             <div class="axiom-meta">
               <span>01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md</span>
@@ -1191,23 +1230,23 @@
         <div class="metrics-strip">
           <div class="metric-cell">
             <div class="metric-num" data-count="356">356</div>
-            <div class="metric-label" data-i18n="m_files">Tệp chuẩn hóa được kiểm định tự động</div>
+            <div class="metric-label" data-i18n="m_files">Validated canonical files</div>
           </div>
           <div class="metric-cell">
             <div class="metric-num" data-count="9">9</div>
-            <div class="metric-label" data-i18n="m_layers">Tầng kiến trúc (00 đến 08)</div>
+            <div class="metric-label" data-i18n="m_layers">Architecture layers (00–08)</div>
           </div>
           <div class="metric-cell">
             <div class="metric-num" data-count="15">15</div>
-            <div class="metric-label" data-i18n="m_domains">Miền chuyên môn đa ngành</div>
+            <div class="metric-label" data-i18n="m_domains">Specialist Domains</div>
           </div>
           <div class="metric-cell">
             <div class="metric-num" data-count="112">112</div>
-            <div class="metric-label" data-i18n="m_roles">Vai trò định danh (4 Core + 108 Domain)</div>
+            <div class="metric-label" data-i18n="m_roles">Role Prompts (4 Core + 108 Domain)</div>
           </div>
           <div class="metric-cell">
             <div class="metric-num" data-count="22">22</div>
-            <div class="metric-label" data-i18n="m_skills">Gói SKILL.md kế thừa trực tiếp</div>
+            <div class="metric-label" data-i18n="m_skills">Inheritable SKILL.md packages</div>
           </div>
         </div>
       </div>
@@ -1219,14 +1258,14 @@
         <div class="rule-draw"></div>
         <div class="section-header">
           <div>
-            <span class="section-index">01 / AUTONOMOUS EXECUTION LOOP</span>
-            <h2 class="section-title" data-i18n="s1_title">Vận hành tự động từ câu lệnh tự nhiên đến nghiệm thu độc lập</h2>
+            <span class="section-index">01 / AUTONOMOUS EXECUTION WORKFLOW</span>
+            <h2 class="section-title" data-i18n="s1_title">From plain-language prompt to independent Dual-Gate sign-off</h2>
             <p class="section-desc" data-i18n="s1_desc">
-              Không yêu cầu người dùng nhớ lệnh INIT, CONTINUE hay quản lý hàng đợi. Mọi khâu phân loại, khóa hợp đồng và kiểm định thực nghiệm diễn ra minh bạch bên dưới.
+              No manual INIT or CONTINUE commands, no manual subagent micromanagement. Complexity triage, Contract locking, and empirical QA run automatically under the hood.
             </p>
           </div>
           <div class="pipeline-controls">
-            <button type="button" id="cycleToggleBtn" class="btn-outline" data-i18n="btn_pause">Tạm dừng tự chuyển</button>
+            <button type="button" id="cycleToggleBtn" class="btn-outline" data-i18n="btn_pause">Pause auto-step</button>
           </div>
         </div>
 
@@ -1249,9 +1288,9 @@
         <div class="section-header">
           <div>
             <span class="section-index">02 / TASK COMPLEXITY ROUTER</span>
-            <h2 class="section-title" data-i18n="s2_title">Phân bổ tỷ lệ thuận theo độ phức tạp thực tế (Level 0 – Level 4)</h2>
+            <h2 class="section-title" data-i18n="s2_title">Proportional orchestration scaled to real complexity (Level 0 – Level 4)</h2>
             <p class="section-desc" data-i18n="s2_desc">
-              Tác vụ đơn giản phản hồi tức thì với chi phí điều phối bằng 0; dự án phức tạp hoặc rủi ro cao mới kích hoạt PM + SA, khóa ghi tệp độc quyền và cổng phê duyệt con người.
+              Simple lookups run with zero overhead; complex multi-module or high-risk tasks activate persistent PM + SA Contracts, Exclusive Write-Locks, and Human Approval Gates.
             </p>
           </div>
         </div>
@@ -1266,19 +1305,19 @@
             <p id="rDesc" style="margin: 0 0 20px; color: var(--ink-secondary);"></p>
             <div class="router-specs">
               <div class="spec-box">
-                <div class="spec-box-label" data-i18n="r_lbl_agents">Cơ cấu tác tử</div>
+                <div class="spec-box-label" data-i18n="r_lbl_agents">Agent Setup</div>
                 <div class="spec-box-val" id="rAgents"></div>
               </div>
               <div class="spec-box">
-                <div class="spec-box-label" data-i18n="r_lbl_state">Trạng thái đĩa (State)</div>
+                <div class="spec-box-label" data-i18n="r_lbl_state">Workspace State</div>
                 <div class="spec-box-val" id="rState"></div>
               </div>
               <div class="spec-box">
-                <div class="spec-box-label" data-i18n="r_lbl_gate">Cổng kiểm định</div>
+                <div class="spec-box-label" data-i18n="r_lbl_gate">Review &amp; QA Gate</div>
                 <div class="spec-box-val" id="rGate"></div>
               </div>
               <div class="spec-box">
-                <div class="spec-box-label" data-i18n="r_lbl_weight">Tải trọng điều phối tương đối</div>
+                <div class="spec-box-label" data-i18n="r_lbl_weight">Orchestration Overhead</div>
                 <div class="spec-box-val" id="rWeightText"></div>
                 <div class="overhead-meter" aria-hidden="true">
                   <div class="overhead-fill" id="rWeightBar"></div>
@@ -1301,9 +1340,9 @@
         <div class="section-header">
           <div>
             <span class="section-index">03 / DIRECTORY &amp; AUTHORITY ARCHITECTURE</span>
-            <h2 class="section-title" data-i18n="s3_title">Cấu trúc 9 phân tầng &amp; Thứ bậc ưu tiên chỉ dẫn 6 cấp</h2>
+            <h2 class="section-title" data-i18n="s3_title">9-layer repository structure &amp; 6-level authority hierarchy</h2>
             <p class="section-desc" data-i18n="s3_desc">
-              Mỗi tệp quy tắc giữ dung lượng nhỏ gọn (&lt; 24 KB) để nạp chọn lọc theo nhu cầu. Quy tắc cấp cao luôn ghi đè cấp thấp; kỹ năng thực thi không bao giờ được phép vượt quyền bảo mật.
+              Every rule stays compact (&lt; 24 KB) for selective progressive disclosure. Higher levels unconditionally override lower levels; SKILL.md files never bypass security boundaries.
             </p>
           </div>
         </div>
@@ -1311,7 +1350,7 @@
         <div class="arch-dual">
           <div class="layer-list">
             <div class="panel-subhead">
-              <span data-i18n="arch_left_head">Cấu trúc thư mục chuẩn hóa</span>
+              <span data-i18n="arch_left_head">Canonical Repository Layers</span>
               <span>356 FILES</span>
             </div>
             <div id="layerRows"></div>
@@ -1319,7 +1358,7 @@
 
           <div class="precedence-list">
             <div class="panel-subhead">
-              <span data-i18n="arch_right_head">Thứ bậc thẩm quyền (Level 1 → 6)</span>
+              <span data-i18n="arch_right_head">Authority Precedence (Level 1 → 6)</span>
               <span>OVERRIDE RULES</span>
             </div>
             <div id="precedenceRows"></div>
@@ -1335,23 +1374,23 @@
         <div class="section-header">
           <div>
             <span class="section-index">04 / DOMAIN, ROLE &amp; SKILL EXPLORER</span>
-            <h2 class="section-title" data-i18n="s4_title">Tra cứu 15 miền chuyên môn, 4 vai trò cốt lõi và 22 gói kỹ năng</h2>
+            <h2 class="section-title" data-i18n="s4_title">Browse 15 Specialist Domains, 4 Core Roles, and 22 Reusable Skills</h2>
             <p class="section-desc" data-i18n="s4_desc">
-              Ngăn chặn thiên kiến chỉ dùng góc nhìn CNTT cho các bài toán tài chính, pháp lý, y sinh, công nghiệp hay khoa học thực nghiệm.
+              Eliminates IT-only bias when tackling finance, legal, healthcare, industrial, supply-chain, or scientific research problems.
             </p>
           </div>
         </div>
 
         <div class="catalog-toolbar">
           <div class="filter-group" role="group" aria-label="Catalog category filter">
-            <button type="button" class="filter-pill" data-cat="all" aria-pressed="true" data-i18n="f_all">Tất cả (41 mục)</button>
-            <button type="button" class="filter-pill" data-cat="domain" aria-pressed="false" data-i18n="f_domain">15 Miền chuyên ngành (108 Roles)</button>
-            <button type="button" class="filter-pill" data-cat="core-role" aria-pressed="false" data-i18n="f_core">4 Vai trò điều phối cốt lõi</button>
-            <button type="button" class="filter-pill" data-cat="core-skill" aria-pressed="false" data-i18n="f_cskill">12 Kỹ năng liên ngành</button>
-            <button type="button" class="filter-pill" data-cat="spec-skill" aria-pressed="false" data-i18n="f_sskill">10 Kỹ năng chuyên sâu</button>
+            <button type="button" class="filter-pill" data-cat="all" aria-pressed="true" data-i18n="f_all">All (41)</button>
+            <button type="button" class="filter-pill" data-cat="domain" aria-pressed="false" data-i18n="f_domain">15 Domains (108 Roles)</button>
+            <button type="button" class="filter-pill" data-cat="core-role" aria-pressed="false" data-i18n="f_core">4 Core Roles</button>
+            <button type="button" class="filter-pill" data-cat="core-skill" aria-pressed="false" data-i18n="f_cskill">12 Cross-Domain Skills</button>
+            <button type="button" class="filter-pill" data-cat="spec-skill" aria-pressed="false" data-i18n="f_sskill">10 Specialized Skills</button>
           </div>
           <div class="search-box">
-            <input type="search" id="catalogSearch" class="search-input" placeholder="Tìm theo tên miền, vai trò, mã SKL..." aria-label="Search domains, roles, and skills">
+            <input type="search" id="catalogSearch" class="search-input" placeholder="Search by Domain, Role, or SKL ID..." aria-label="Search domains, roles, and skills">
           </div>
         </div>
 
@@ -1366,10 +1405,10 @@
         <div class="rule-draw"></div>
         <div class="section-header">
           <div>
-            <span class="section-index">05 / ZERO-DUPLICATION INTEGRATION</span>
-            <h2 class="section-title" data-i18n="s5_title">Kết nối bất kỳ dự án nào trong 2 phút</h2>
+            <span class="section-index">05 / ZERO-DUPLICATION QUICKSTART</span>
+            <h2 class="section-title" data-i18n="s5_title">Connect any project in 2 minutes</h2>
             <p class="section-desc" data-i18n="s5_desc">
-              Giữ kho mã dự án của bạn sạch gọn: chỉ cần 1 tệp con trỏ quy tắc nhỏ và 1 khai báo kế thừa skills.json.
+              Keep target repositories lightweight: add one compact AGENTS.md bootstrap pointer and one native skills.json inheritance block.
             </p>
           </div>
         </div>
@@ -1379,7 +1418,7 @@
             <div class="snippet-tabs" role="tablist" aria-label="Integration configuration snippets" id="snippetTabs">
               <button type="button" class="snippet-tab" role="tab" data-snip="bootstrap" aria-selected="true">1. AGENTS.md (Bootstrap)</button>
               <button type="button" class="snippet-tab" role="tab" data-snip="skills" aria-selected="false">2. .agents/skills.json</button>
-              <button type="button" class="snippet-tab" role="tab" data-snip="validate" aria-selected="false">3. Deterministic Validation CLI</button>
+              <button type="button" class="snippet-tab" role="tab" data-snip="validate" aria-selected="false">3. Validation CLI</button>
             </div>
             <button type="button" id="copyBtn" class="copy-btn" aria-live="polite">Copy</button>
           </div>
@@ -1410,7 +1449,7 @@
 
       var REPO_BLOB = "https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/";
       var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var currentLang = "vi";
+      var currentLang = "en";
       var activeStageIdx = 0;
       var activeRouterIdx = 2;
       var activeCategory = "all";
@@ -1418,177 +1457,404 @@
       var cycleTimer = null;
       var isCycling = !reducedMotion;
 
+      /* Pragmatic developer localization: keep standard technical keywords intact for clarity */
       var I18N = {
-        vi: {
-          nav_workflow: "Luồng vận hành",
-          nav_router: "Bộ định tuyến L0–L4",
-          nav_arch: "Kiến trúc 9 tầng",
-          nav_catalog: "Danh mục 15 miền",
-          nav_quickstart: "Tích hợp nhanh",
-          hero_eyebrow: "SINGLE SOURCE OF TRUTH CHO HỆ THỐNG ĐA TÁC TỬ (MULTI-AGENT)",
-          hero_title: "Thư viện Chỉ dẫn Hệ thống & Khung Quản trị Tác tử Tập trung",
-          hero_lead: "Chuẩn hóa toàn bộ quy tắc hiến pháp, điều phối PM + SA bền vững, vai trò chuyên gia trên 15 lĩnh vực và 22 kỹ năng thực thi tái sử dụng tại một kho duy nhất. Dự án bên ngoài kế thừa tức thì mà không cần sao chép prompt thủ công.",
-          cta_quickstart: "Kết nối trong 3 bước",
-          cta_index: "Tra cứu LIBRARY_INDEX.md",
-          cta_explore: "Khám phá 112 vai trò",
-          axiom_label: "NGUYÊN TẮC TỰ HÀNH NGÔN NGỮ TỰ NHIÊN",
-          axiom_quote: "“Người dùng chỉ nêu mục tiêu bằng ngôn ngữ tự nhiên. PM điều phối thực thi. SA kiểm soát kiến trúc. Subagent đảm nhận công việc chuyên môn. Khung hệ thống tự duy trì trạng thái và kiểm chứng độc lập.”",
-          m_files: "Tệp chuẩn hóa được kiểm định tự động",
-          m_layers: "Tầng kiến trúc (00 đến 08)",
-          m_domains: "Miền chuyên môn đa ngành",
-          m_roles: "Vai trò định danh (4 Core + 108 Domain)",
-          m_skills: "Gói SKILL.md kế thừa trực tiếp",
-          s1_title: "Vận hành tự động từ câu lệnh tự nhiên đến nghiệm thu độc lập",
-          s1_desc: "Không yêu cầu người dùng nhớ lệnh INIT, CONTINUE hay quản lý hàng đợi. Mọi khâu phân loại, khóa hợp đồng và kiểm định thực nghiệm diễn ra minh bạch bên dưới.",
-          btn_pause: "Tạm dừng tự chuyển",
-          btn_resume: "Tiếp tục tự chuyển",
-          s2_title: "Phân bổ tỷ lệ thuận theo độ phức tạp thực tế (Level 0 – Level 4)",
-          s2_desc: "Tác vụ đơn giản phản hồi tức thì với chi phí điều phối bằng 0; dự án phức tạp hoặc rủi ro cao mới kích hoạt PM + SA, khóa ghi tệp độc quyền và cổng phê duyệt con người.",
-          r_lbl_agents: "Cơ cấu tác tử",
-          r_lbl_state: "Trạng thái đĩa (State)",
-          r_lbl_gate: "Cổng kiểm định",
-          r_lbl_weight: "Tải trọng điều phối tương đối",
-          s3_title: "Cấu trúc 9 phân tầng & Thứ bậc ưu tiên chỉ dẫn 6 cấp",
-          s3_desc: "Mỗi tệp quy tắc giữ dung lượng nhỏ gọn (< 24 KB) để nạp chọn lọc theo nhu cầu. Quy tắc cấp cao luôn ghi đè cấp thấp; kỹ năng thực thi không bao giờ được phép vượt quyền bảo mật.",
-          arch_left_head: "Cấu trúc thư mục chuẩn hóa",
-          arch_right_head: "Thứ bậc thẩm quyền (Level 1 → 6)",
-          s4_title: "Tra cứu 15 miền chuyên môn, 4 vai trò cốt lõi và 22 gói kỹ năng",
-          s4_desc: "Ngăn chặn thiên kiến chỉ dùng góc nhìn CNTT cho các bài toán tài chính, pháp lý, y sinh, công nghiệp hay khoa học thực nghiệm.",
-          f_all: "Tất cả (41 mục)",
-          f_domain: "15 Miền chuyên ngành (108 Roles)",
-          f_core: "4 Vai trò điều phối cốt lõi",
-          f_cskill: "12 Kỹ năng liên ngành",
-          f_sskill: "10 Kỹ năng chuyên sâu",
-          search_ph: "Tìm theo tên miền, vai trò, mã SKL...",
-          s5_title: "Kết nối bất kỳ dự án nào trong 2 phút",
-          s5_desc: "Giữ kho mã dự án của bạn sạch gọn: chỉ cần 1 tệp con trỏ quy tắc nhỏ và 1 khai báo kế thừa skills.json.",
-          open_spec: "Mở đặc tả →",
-          empty_msg: "Không có mục nào khớp với từ khóa tìm kiếm hiện tại.",
-          showing_prefix: "Đang hiển thị "
-        },
         en: {
-          nav_workflow: "Autonomous Loop",
+          nav_workflow: "Workflow",
           nav_router: "L0–L4 Router",
-          nav_arch: "9-Layer Architecture",
-          nav_catalog: "15-Domain Catalog",
+          nav_arch: "Architecture",
+          nav_catalog: "Catalog",
           nav_quickstart: "Quickstart",
-          hero_eyebrow: "SINGLE SOURCE OF TRUTH FOR AUTONOMOUS MULTI-AGENT SYSTEMS",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH FOR MULTI-AGENT SYSTEMS",
           hero_title: "Centralized Agent Framework & System Instruction Library",
-          hero_lead: "Standardize constitutional governance, persistent PM + SA orchestration, specialist roles across 15 domains, and 22 reusable procedural skills in one canonical repository—inherited on demand with zero prompt duplication.",
+          hero_lead: "Standardize global governance, persistent PM + SA orchestration, specialist Role Prompts across 15 Domains, and 22 reusable SKILL.md packages in one canonical repository—inherited on demand with zero prompt duplication.",
           cta_quickstart: "3-Step Quickstart",
-          cta_index: "Browse LIBRARY_INDEX.md",
+          cta_index: "Open LIBRARY_INDEX.md",
           cta_explore: "Explore 112 Roles",
           axiom_label: "NATURAL-LANGUAGE AUTONOMOUS AXIOM",
           axiom_quote: "“The user gives objectives. PM manages execution. SA governs architecture. Subagents perform delegated work. The framework preserves continuity and verifies results.”",
-          m_files: "Deterministically validated canonical files",
-          m_layers: "Architectural layers (00 through 08)",
-          m_domains: "Specialist professional domains",
-          m_roles: "Defined roles (4 Core + 108 Domain)",
-          m_skills: "Directly inheritable SKILL.md packages",
-          s1_title: "Autonomous execution from plain language to independent sign-off",
-          s1_desc: "Zero INIT or CONTINUE command modes, zero manual subagent management. Triage, contract locking, and empirical verification run automatically beneath plain-language objectives.",
+          m_files: "Validated canonical files",
+          m_layers: "Architecture layers (00–08)",
+          m_domains: "Specialist Domains",
+          m_roles: "Role Prompts (4 Core + 108 Domain)",
+          m_skills: "Inheritable SKILL.md packages",
+          s1_title: "From plain-language prompt to independent Dual-Gate sign-off",
+          s1_desc: "No manual INIT or CONTINUE commands, no manual subagent micromanagement. Complexity triage, Contract locking, and empirical QA run automatically under the hood.",
           btn_pause: "Pause auto-step",
           btn_resume: "Resume auto-step",
-          s2_title: "Proportional governance scaled to real complexity (Level 0 – Level 4)",
-          s2_desc: "Instant questions incur zero orchestration overhead; multi-module and high-risk initiatives engage persistent PM + SA contracts, disjoint write-locks, and human approval gates.",
-          r_lbl_agents: "Agent Footprint",
-          r_lbl_state: "Disk State Artifacts",
-          r_lbl_gate: "Verification Gate",
-          r_lbl_weight: "Relative Governance Weight",
-          s3_title: "Nine-layer repository taxonomy & six-level authority stack",
-          s3_desc: "Every module stays compact (< 24 KB) for selective progressive loading. Higher layers unconditionally override lower layers; procedural skills never bypass constitutional safety.",
+          s2_title: "Proportional orchestration scaled to real complexity (Level 0 – Level 4)",
+          s2_desc: "Simple lookups run with zero overhead; complex multi-module or high-risk tasks activate persistent PM + SA Contracts, Exclusive Write-Locks, and Human Approval Gates.",
+          r_lbl_agents: "Agent Setup",
+          r_lbl_state: "Workspace State",
+          r_lbl_gate: "Review & QA Gate",
+          r_lbl_weight: "Orchestration Overhead",
+          s3_title: "9-layer repository structure & 6-level authority hierarchy",
+          s3_desc: "Every rule stays compact (< 24 KB) for selective progressive disclosure. Higher levels unconditionally override lower levels; SKILL.md files never bypass security boundaries.",
           arch_left_head: "Canonical Repository Layers",
-          arch_right_head: "Instruction Precedence (Level 1 → 6)",
-          s4_title: "Explore 15 specialist domains, 4 core roles, and 22 reusable skills",
-          s4_desc: "Prevents software-only bias on finance, legal, clinical, industrial, supply-chain, or scientific research problems.",
-          f_all: "All (41 entries)",
+          arch_right_head: "Authority Precedence (Level 1 → 6)",
+          s4_title: "Browse 15 Specialist Domains, 4 Core Roles, and 22 Reusable Skills",
+          s4_desc: "Eliminates IT-only bias when tackling finance, legal, healthcare, industrial, supply-chain, or scientific research problems.",
+          f_all: "All (41)",
           f_domain: "15 Domains (108 Roles)",
-          f_core: "4 Core Governance Roles",
+          f_core: "4 Core Roles",
           f_cskill: "12 Cross-Domain Skills",
           f_sskill: "10 Specialized Skills",
-          search_ph: "Filter by domain, role, or SKL ID...",
-          s5_title: "Connect any downstream repository in 2 minutes",
-          s5_desc: "Keep target repositories clean: add one compact bootstrap pointer and one native skills.json inheritance block.",
+          search_ph: "Search by Domain, Role, or SKL ID...",
+          s5_title: "Connect any project in 2 minutes",
+          s5_desc: "Keep target repositories lightweight: add one compact AGENTS.md bootstrap pointer and one native skills.json inheritance block.",
           open_spec: "View spec →",
-          empty_msg: "No catalog entries match your current filter.",
-          showing_prefix: "Showing "
+          empty_msg: "No catalog items match your search query.",
+          showing_prefix: "Showing ",
+          copy_label: "Copy",
+          copied_label: "Copied"
+        },
+        vi: {
+          nav_workflow: "Workflow",
+          nav_router: "Complexity Router",
+          nav_arch: "Architecture",
+          nav_catalog: "Domains & Skills",
+          nav_quickstart: "Quickstart",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH CHO HỆ THỐNG MULTI-AGENT",
+          hero_title: "Centralized Agent Framework & System Instruction Library",
+          hero_lead: "Tập trung toàn bộ Global Governance, cơ chế điều phối PM + SA bền vững, bộ Role Prompts cho 15 Domains và 22 gói SKILL.md tái sử dụng vào một repo chuẩn duy nhất. Các project khác chỉ cần kế thừa on-demand, không phải copy-paste prompt thủ công.",
+          cta_quickstart: "Quickstart 3 bước",
+          cta_index: "Mở LIBRARY_INDEX.md",
+          cta_explore: "Khám phá 112 Roles",
+          axiom_label: "NGUYÊN TẮC AUTONOMOUS NATURAL-LANGUAGE",
+          axiom_quote: "“User chỉ cần nêu mục tiêu bằng ngôn ngữ tự nhiên. PM điều phối thực thi. SA kiểm soát kiến trúc. Subagents xử lý chuyên môn. Framework tự duy trì context và verify kết quả độc lập.”",
+          m_files: "Canonical files được validate tự động",
+          m_layers: "Tầng kiến trúc (Layer 00–08)",
+          m_domains: "Specialist Domains đa ngành",
+          m_roles: "Role Prompts (4 Core + 108 Domain)",
+          m_skills: "Gói SKILL.md kế thừa trực tiếp",
+          s1_title: "Vận hành tự động từ Natural-Language Prompt đến Dual-Gate Sign-off",
+          s1_desc: "Không cần gõ lệnh INIT hay CONTINUE, không phải tự chia batch hay quản lý Subagent thủ công. Triage độ phức tạp, khóa Contract và chạy QA thực nghiệm đều diễn ra tự động.",
+          btn_pause: "Tạm dừng auto-step",
+          btn_resume: "Tiếp tục auto-step",
+          s2_title: "Điều phối linh hoạt theo đúng độ phức tạp thực tế (Level 0 – Level 4)",
+          s2_desc: "Câu hỏi đơn giản được trả lời ngay với 0 overhead; chỉ các dự án nhiều module hoặc rủi ro cao mới kích hoạt PM + SA Contract, Exclusive Write-Lock và Human Approval Gate.",
+          r_lbl_agents: "Cấu hình Agent",
+          r_lbl_state: "Workspace State",
+          r_lbl_gate: "Review & QA Gate",
+          r_lbl_weight: "Mức Orchestration Overhead",
+          s3_title: "Cấu trúc 9 Layers & Thứ bậc ưu tiên quyền hạn 6 Levels",
+          s3_desc: "Mỗi rule file đều nhỏ gọn (< 24 KB) để load đúng phần cần dùng (Progressive Disclosure). Layer cao luôn override layer thấp; SKILL.md không bao giờ được vượt qua chốt chặn Security.",
+          arch_left_head: "9 Layers trong Repository",
+          arch_right_head: "Precedence Hierarchy (Level 1 → 6)",
+          s4_title: "Tra cứu 15 Domains, 4 Core Roles và 22 Reusable Skills",
+          s4_desc: "Tránh lỗi áp đặt tư duy thuần IT lên các bài toán Finance, Legal, Healthcare, Industrial, Supply Chain hay Scientific Research.",
+          f_all: "Tất cả (41)",
+          f_domain: "15 Domains (108 Roles)",
+          f_core: "4 Core Roles",
+          f_cskill: "12 Cross-Domain Skills",
+          f_sskill: "10 Specialized Skills",
+          search_ph: "Tìm theo Domain, Role hoặc mã SKL...",
+          s5_title: "Tích hợp vào bất kỳ project nào trong 2 phút",
+          s5_desc: "Giữ repo dự án gọn sạch: chỉ cần thêm 1 file AGENTS.md gọn nhẹ làm pointer và 1 khai báo kế thừa trong .agents/skills.json.",
+          open_spec: "Xem spec →",
+          empty_msg: "Không tìm thấy mục nào khớp với từ khóa.",
+          showing_prefix: "Đang hiển thị ",
+          copy_label: "Copy",
+          copied_label: "Đã copy"
+        },
+        zh: {
+          nav_workflow: "Workflow 流程",
+          nav_router: "L0–L4 路由",
+          nav_arch: "9 层架构",
+          nav_catalog: "Domain 与 Skill 目录",
+          nav_quickstart: "Quickstart",
+          hero_eyebrow: "面向 MULTI-AGENT 系统的单一事实来源 (SINGLE SOURCE OF TRUTH)",
+          hero_title: "Centralized Agent Framework & System Instruction Library",
+          hero_lead: "将全局治理规则、持久化 PM + SA 协同编排、覆盖 15 个专业 Domain 的 Role Prompts 以及 22 个可复用 SKILL.md 包统一收敛至单一仓库。外部项目按需继承，告别重复拷贝巨型 Prompt。",
+          cta_quickstart: "3 步快速接入",
+          cta_index: "查看 LIBRARY_INDEX.md",
+          cta_explore: "浏览 112 个 Roles",
+          axiom_label: "自然语言自治原则 (AUTONOMOUS NL)",
+          axiom_quote: "“用户只需用自然语言表达目标。PM 负责执行调度，SA 把控系统架构，Subagents 完成专项任务，框架自动维护 Checkpoint 连续性并独立验证结果。”",
+          m_files: "经脚本确定性校验的标准文件",
+          m_layers: "架构分层 (Layer 00–08)",
+          m_domains: "跨行业专业 Domains",
+          m_roles: "Role Prompts (4 Core + 108 Domain)",
+          m_skills: "可直接继承的 SKILL.md 包",
+          s1_title: "从自然语言输入到 SA_GATE + PM_GATE 双门禁签收",
+          s1_desc: "无需记忆 INIT / CONTINUE 等命令模式，也无需手动管理 Subagent 队列。复杂度分级、Contract 锁定与独立 QA 验证均在底层自动完成。",
+          btn_pause: "暂停自动轮播",
+          btn_resume: "继续自动轮播",
+          s2_title: "按真实任务复杂度动态匹配治理权重 (Level 0 – Level 4)",
+          s2_desc: "简单问答零编排开销即时响应；多模块或高风险任务按比例启用持久化 PM + SA Contract、Exclusive Write-Lock 与 Human Approval Gate。",
+          r_lbl_agents: "Agent 编排规模",
+          r_lbl_state: "Workspace State 文件",
+          r_lbl_gate: "Review 与 QA 门禁",
+          r_lbl_weight: "Orchestration 开销占比",
+          s3_title: "9 层目录结构与 6 级指令优先级体系",
+          s3_desc: "单个规则文件严格小于 24 KB，支持按需渐进加载 (Progressive Disclosure)。高层级规则无条件覆盖低层级，SKILL.md 绝不可绕过安全与授权边界。",
+          arch_left_head: "仓库标准分层 (Canonical Layers)",
+          arch_right_head: "指令优先级 (Level 1 → 6)",
+          s4_title: "检索 15 个专业 Domains、4 个 Core Roles 与 22 个 Skills",
+          s4_desc: "避免用单一软件视角生搬硬套金融、法务合规、医疗生命科学、工业制造或科研实验问题。",
+          f_all: "全部 (41)",
+          f_domain: "15 Domains (108 Roles)",
+          f_core: "4 Core Roles",
+          f_cskill: "12 Cross-Domain Skills",
+          f_sskill: "10 Specialized Skills",
+          search_ph: "按 Domain、Role 或 SKL ID 搜索...",
+          s5_title: "2 分钟接入任意外部项目",
+          s5_desc: "保持业务仓库精简：只需添加一个轻量 AGENTS.md 指针文件与一段 .agents/skills.json 继承配置。",
+          open_spec: "查看规范 →",
+          empty_msg: "未找到匹配当前关键词的条目。",
+          showing_prefix: "当前显示 ",
+          copy_label: "Copy",
+          copied_label: "已复制"
+        },
+        fr: {
+          nav_workflow: "Workflow",
+          nav_router: "Routeur L0–L4",
+          nav_arch: "Architecture",
+          nav_catalog: "Catalogue",
+          nav_quickstart: "Quickstart",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH POUR SYSTÈMES MULTI-AGENTS",
+          hero_title: "Centralized Agent Framework & System Instruction Library",
+          hero_lead: "Centralisez la gouvernance globale, l’orchestration persistante PM + SA, les Role Prompts couvrant 15 Domains métiers et 22 packages SKILL.md réutilisables dans un seul dépôt de référence — hérités à la demande sans dupliquer vos prompts.",
+          cta_quickstart: "Quickstart en 3 étapes",
+          cta_index: "Ouvrir LIBRARY_INDEX.md",
+          cta_explore: "Explorer les 112 Roles",
+          axiom_label: "PRINCIPE D’AUTONOMIE EN LANGAGE NATUREL",
+          axiom_quote: "« L’utilisateur exprime ses objectifs en langage naturel. Le PM pilote l’exécution. Le SA gouverne l’architecture. Les Subagents réalisent le travail délégué. Le framework assure la continuité et vérifie les résultats. »",
+          m_files: "Fichiers canoniques validés",
+          m_layers: "Couches d’architecture (00–08)",
+          m_domains: "Domains métiers spécialisés",
+          m_roles: "Role Prompts (4 Core + 108 Domain)",
+          m_skills: "Packages SKILL.md héritables",
+          s1_title: "Du prompt en langage naturel à la validation indépendante Dual-Gate",
+          s1_desc: "Aucune commande INIT ou CONTINUE à mémoriser, aucune gestion manuelle des Subagents. Le routage de complexité, le verrouillage des Contracts et la QA empirique s’exécutent automatiquement.",
+          btn_pause: "Mettre en pause",
+          btn_resume: "Reprendre",
+          s2_title: "Orchestration proportionnelle à la complexité réelle (Level 0 – Level 4)",
+          s2_desc: "Les questions simples répondent instantanément avec zéro overhead ; les projets multi-modules ou critiques activent les Contracts PM + SA, les Exclusive Write-Locks et les Human Approval Gates.",
+          r_lbl_agents: "Allocation d’Agents",
+          r_lbl_state: "Fichiers de State",
+          r_lbl_gate: "Gate de Review & QA",
+          r_lbl_weight: "Overhead d’Orchestration",
+          s3_title: "Architecture en 9 couches & Hiérarchie d’autorité à 6 niveaux",
+          s3_desc: "Chaque module reste compact (< 24 KB) pour un chargement progressif à la demande. Les niveaux supérieurs priment toujours sur les niveaux inférieurs ; un SKILL.md ne contourne jamais la sécurité.",
+          arch_left_head: "Couches Canoniques du Dépôt",
+          arch_right_head: "Priorité des Instructions (Level 1 → 6)",
+          s4_title: "Parcourir les 15 Domains, 4 Core Roles et 22 Reusable Skills",
+          s4_desc: "Évite le biais purement IT face aux problématiques Finance, Legal, Healthcare, Industrie, Supply Chain ou Recherche scientifique.",
+          f_all: "Tout (41)",
+          f_domain: "15 Domains (108 Roles)",
+          f_core: "4 Core Roles",
+          f_cskill: "12 Cross-Domain Skills",
+          f_sskill: "10 Specialized Skills",
+          search_ph: "Rechercher par Domain, Role ou ID SKL...",
+          s5_title: "Connecter n’importe quel projet en 2 minutes",
+          s5_desc: "Gardez vos dépôts cibles propres : ajoutez un simple pointeur AGENTS.md et une déclaration d’héritage dans .agents/skills.json.",
+          open_spec: "Voir spec →",
+          empty_msg: "Aucun élément ne correspond à votre recherche.",
+          showing_prefix: "Affichage ",
+          copy_label: "Copy",
+          copied_label: "Copié"
+        },
+        es: {
+          nav_workflow: "Workflow",
+          nav_router: "Router L0–L4",
+          nav_arch: "Arquitectura",
+          nav_catalog: "Catálogo",
+          nav_quickstart: "Quickstart",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH PARA SISTEMAS MULTI-AGENT",
+          hero_title: "Centralized Agent Framework & System Instruction Library",
+          hero_lead: "Estandarice la gobernanza global, la orquestación persistente PM + SA, los Role Prompts en 15 Domains profesionales y 22 paquetes SKILL.md reutilizables en un único repositorio canónico, heredados bajo demanda sin duplicar prompts.",
+          cta_quickstart: "Quickstart en 3 pasos",
+          cta_index: "Abrir LIBRARY_INDEX.md",
+          cta_explore: "Explorar 112 Roles",
+          axiom_label: "AXIOMA AUTÓNOMO EN LENGUAJE NATURAL",
+          axiom_quote: "«El usuario define objetivos en lenguaje natural. PM gestiona la ejecución. SA gobierna la arquitectura. Los Subagents ejecutan el trabajo delegado. El framework preserva la continuidad y verifica los resultados.»",
+          m_files: "Archivos canónicos validados",
+          m_layers: "Capas de arquitectura (00–08)",
+          m_domains: "Domains especializados",
+          m_roles: "Role Prompts (4 Core + 108 Domain)",
+          m_skills: "Paquetes SKILL.md heredables",
+          s1_title: "De objetivos en lenguaje natural a verificación Dual-Gate independiente",
+          s1_desc: "Sin comandos manuales INIT o CONTINUE ni microgestión de Subagents. La clasificación de complejidad, el bloqueo de Contracts y el QA empírico operan automáticamente.",
+          btn_pause: "Pausar auto-avance",
+          btn_resume: "Reanudar auto-avance",
+          s2_title: "Orquestación proporcional a la complejidad real (Level 0 – Level 4)",
+          s2_desc: "Las consultas simples se responden al instante con cero overhead; los proyectos complejos o críticos activan Contracts PM + SA, Exclusive Write-Locks y Human Approval Gates.",
+          r_lbl_agents: "Configuración de Agents",
+          r_lbl_state: "Archivos de State",
+          r_lbl_gate: "Gate de Review y QA",
+          r_lbl_weight: "Overhead de Orquestación",
+          s3_title: "Estructura de 9 capas y jerarquía de autoridad de 6 niveles",
+          s3_desc: "Cada módulo se mantiene compacto (< 24 KB) para carga progresiva bajo demanda. Los niveles superiores prevalecen siempre; ningún SKILL.md puede omitir las reglas de seguridad.",
+          arch_left_head: "Capas Canónicas del Repositorio",
+          arch_right_head: "Jerarquía de Precedencia (Level 1 → 6)",
+          s4_title: "Explorar 15 Domains, 4 Core Roles y 22 Reusable Skills",
+          s4_desc: "Evita el sesgo exclusivamente IT al resolver problemas de Finanzas, Legal, Salud, Industria, Supply Chain o Investigación científica.",
+          f_all: "Todos (41)",
+          f_domain: "15 Domains (108 Roles)",
+          f_core: "4 Core Roles",
+          f_cskill: "12 Cross-Domain Skills",
+          f_sskill: "10 Specialized Skills",
+          search_ph: "Buscar por Domain, Role o ID SKL...",
+          s5_title: "Conecte cualquier proyecto en 2 minutos",
+          s5_desc: "Mantenga limpio su repositorio destino: añada un puntero ligero en AGENTS.md y la herencia nativa en .agents/skills.json.",
+          open_spec: "Ver spec →",
+          empty_msg: "Ningún elemento coincide con su búsqueda.",
+          showing_prefix: "Mostrando ",
+          copy_label: "Copy",
+          copied_label: "Copiado"
         }
       };
 
       var PIPELINE_STAGES = [
         {
           num: "STAGE 01",
-          name_vi: "Mục tiêu ngôn ngữ tự nhiên",
-          name_en: "Natural-Language Objective",
-          title_vi: "01. Tiếp nhận yêu cầu tự nhiên & Khôi phục ngữ cảnh",
-          title_en: "01. Plain-Language Intake & Context Hydration",
-          body_vi: "Người dùng diễn đạt mục tiêu bằng ngôn ngữ thông thường. Hệ thống tự động kiểm tra trạng thái dự án hiện hữu trên đĩa, phát hiện checkpoint đang dở dang (nếu có) và xác định phạm vi thực tế mà không bắt người dùng chọn pha thủ công.",
-          body_en: "Users state goals in ordinary prose. The orchestrator inspects existing workspace state files, automatically resumes interrupted checkpoints when applicable, and scopes the true objective without asking users to pick internal execution modes.",
+          name: {
+            en: "Natural-Language Prompt",
+            vi: "Natural-Language Prompt",
+            zh: "自然语言目标输入",
+            fr: "Prompt en langage naturel",
+            es: "Prompt en lenguaje natural"
+          },
+          title: {
+            en: "01. Plain-Language Intake & Context Hydration",
+            vi: "01. Nhận yêu cầu tự nhiên & Tự động khôi phục Context",
+            zh: "01. 自然语言接收与 Workspace Context 自动恢复",
+            fr: "01. Prise en charge en langage naturel & Hydratation du contexte",
+            es: "01. Recepción en lenguaje natural e hidratación de contexto"
+          },
+          body: {
+            en: "State your objective in ordinary language. The orchestrator inspects workspace state files, automatically resumes interrupted Checkpoints, and scopes deliverables without asking you to pick internal modes.",
+            vi: "Bạn chỉ cần mô tả mục tiêu bình thường. Orchestrator tự kiểm tra State trên đĩa, resume từ Checkpoint gần nhất nếu phiên trước đang dở và xác định scope mà không bắt chọn mode thủ công.",
+            zh: "直接用日常语言描述需求。编排器自动检查本地 State 文件，从最近的 Checkpoint 无缝恢复进度并界定交付范围，无需手动指定运行模式。",
+            fr: "Exprimez votre besoin normalement. L’orchestrateur inspecte les fichiers de State, reprend automatiquement au dernier Checkpoint valide et cadre le périmètre sans mode manuel.",
+            es: "Exprese su objetivo con naturalidad. El orquestador inspecciona los archivos de State, retoma automáticamente el último Checkpoint válido y define el alcance sin modos manuales."
+          },
           path: "01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md",
           meta: [
-            ["Gánh nặng người dùng / User Burden", "0 command modes (No INIT / CONTINUE)"],
-            ["Pha nội bộ tự động / Internal Phases", "13 autonomous orchestration phases"],
-            ["Khôi phục phiên / Continuity", "PROJECT_STATE.md + AGENT_COMMUNICATE.md"]
+            ["User Burden", "0 manual modes (No INIT / CONTINUE)"],
+            ["Internal Routing", "13 autonomous orchestration phases"],
+            ["Session Continuity", "PROJECT_STATE.md + AGENT_COMMUNICATE.md"]
           ]
         },
         {
           num: "STAGE 02",
-          name_vi: "Phân loại L0–L4 & Miền",
-          name_en: "L0–L4 & Domain Triage",
-          title_vi: "02. Định tuyến độ phức tạp & Nhận diện 15 miền chuyên môn",
-          title_en: "02. Complexity Classification & 15-Domain Routing",
-          body_vi: "Bộ định tuyến phân loại tác vụ từ Level 0 (trả lời ngay) đến Level 4 (rủi ro trọng yếu), đồng thời chọn đúng miền chính và miền phụ (như Bảo mật, Pháp lý, Thiết kế) trước khi chọn vai trò chuyên gia.",
-          body_en: "Every task is triaged across Levels 0–4 and mapped against all 15 canonical domains—identifying both primary problem ownership and cross-cutting constraints before loading role prompts.",
+          name: {
+            en: "L0–L4 & Domain Triage",
+            vi: "Triage L0–L4 & Domain",
+            zh: "L0–L4 与 Domain 路由",
+            fr: "Triage L0–L4 & Domain",
+            es: "Triage L0–L4 y Domain"
+          },
+          title: {
+            en: "02. Complexity Classification & 15-Domain Routing",
+            vi: "02. Phân loại Level 0–4 & Chọn đúng Specialist Domain",
+            zh: "02. 任务复杂度分级 (L0–L4) 与 15 Domains 精准路由",
+            fr: "02. Classification Level 0–4 & Routage vers les 15 Domains",
+            es: "02. Clasificación Level 0–4 y enrutamiento en 15 Domains"
+          },
+          body: {
+            en: "Tasks are classified from Level 0 (instant answer) to Level 4 (critical risk) and mapped across 15 Domains—identifying primary ownership plus secondary constraints like Cybersecurity or Legal before loading Role Prompts.",
+            vi: "Mỗi yêu cầu được phân loại từ Level 0 (trả lời ngay) đến Level 4 (rủi ro cao), đồng thời map đúng Primary Domain và các Secondary Domains (như Cybersecurity, Legal, Design) trước khi load Role Prompts.",
+            zh: "系统在 Level 0（即时响应）至 Level 4（高风险关键任务）间完成分级，并在加载 Role Prompts 前识别主责 Domain 与安全、法务、设计等交叉约束。",
+            fr: "Chaque tâche est classée de Level 0 (réponse directe) à Level 4 (risque critique) et associée aux Domains principaux et transverses (Cybersecurity, Legal, Design) avant de charger les Role Prompts.",
+            es: "Cada tarea se clasifica de Level 0 (respuesta directa) a Level 4 (riesgo crítico) y se asigna al Domain principal y dominios transversales (Cybersecurity, Legal, Design) antes de cargar Role Prompts."
+          },
           path: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md",
           meta: [
-            ["Ngân sách quy tắc / Rule Cap", "< 24 KB per rule file (Progressive Load)"],
-            ["Phạm vi miền / Domain Scope", "15 Domains / 108 Specialist Roles"],
-            ["Quy tắc xung đột ngang / Multi-Domain", "Intersection of actions + Union of gates"]
+            ["Context Budget", "< 24 KB per rule file (Progressive Load)"],
+            ["Domain Coverage", "15 Domains / 108 Specialist Roles"],
+            ["Multi-Domain Rule", "Intersection of actions + Union of gates"]
           ]
         },
         {
           num: "STAGE 03",
-          name_vi: "Khóa hợp đồng PM + SA",
-          name_en: "PM + SA Contract Lock",
-          title_vi: "03. Thiết lập hợp đồng giao diện & Quyền ghi tệp độc quyền",
-          title_en: "03. Pre-Execution Interface Contracts & Disjoint Write-Locks",
-          body_vi: "Trên tác vụ Level 2–4, PM khóa tiêu chí nghiệm thu nghiệp vụ và SA khóa kiến trúc, schema API/CLI cùng danh sách đường dẫn Exclusive Write-Lock tách biệt hoàn toàn trước khi chạy song song.",
-          body_en: "On Level 2–4 tasks, PM locks scope and UX acceptance criteria while SA locks schemas, interfaces, and disjoint Exclusive Write-Lock file paths so parallel workers never overwrite each other.",
+          name: {
+            en: "PM + SA Contract Lock",
+            vi: "PM + SA Contract Lock",
+            zh: "PM + SA 契约与写锁",
+            fr: "Verrouillage Contract PM + SA",
+            es: "Bloqueo de Contract PM + SA"
+          },
+          title: {
+            en: "03. Upfront Interface Contracts & Exclusive Write-Locks",
+            vi: "03. Khóa Interface Contract & Phân vùng Exclusive Write-Lock",
+            zh: "03. 前置接口 Contract 锁定与文件互斥写锁 (Exclusive Write-Lock)",
+            fr: "03. Verrouillage des Contracts d’interface & Exclusive Write-Locks",
+            es: "03. Contracts de interfaz previos y Exclusive Write-Locks"
+          },
+          body: {
+            en: "On Level 2–4 work, PM locks scope and Acceptance Criteria while SA locks API/Schema Contracts and disjoint file Exclusive Write-Locks so parallel Subagents never overwrite each other.",
+            vi: "Ở tác vụ Level 2–4, PM chốt scope và Acceptance Criteria, còn SA khóa API/Schema Contract cùng danh sách file Exclusive Write-Lock tách biệt để các Subagent chạy song song không bao giờ ghi đè lên nhau.",
+            zh: "在 Level 2–4 任务中，PM 锁定范围与验收标准，SA 提前锁定 API/Schema Contract 并分配互不重叠的文件 Exclusive Write-Lock，彻底杜绝并行 Subagent 写冲突。",
+            fr: "Sur les tâches Level 2–4, le PM fige le périmètre et les Acceptance Criteria tandis que le SA verrouille les Contracts API/Schema et des Exclusive Write-Locks disjoints entre Subagents parallèles.",
+            es: "En tareas Level 2–4, PM fija el alcance y Acceptance Criteria mientras SA bloquea Contracts API/Schema y rutas Exclusive Write-Lock disjuntas para evitar colisiones entre Subagents paralelos."
+          },
           path: "01_ORCHESTRATION/FILE_OWNERSHIP_AND_LOCKING.md",
           meta: [
-            [" Tái sử dụng tác tử / Reuse", "Persistent PM + SA via send_message"],
-            ["Chống ghi đè / Concurrency", "Max 1 active writer per file path"],
-            ["Đặc tả Subagent / Blueprint", "16 mandatory fields (SUBAGENT_CREATION)"]
+            ["Governance Reuse", "Persistent PM + SA via send_message"],
+            ["Write Isolation", "Max 1 active writer per file path"],
+            ["Subagent Spec", "16 mandatory fields (SUBAGENT_CREATION)"]
           ]
         },
         {
           num: "STAGE 04",
-          name_vi: "Thực thi chuyên sâu",
-          name_en: "Scoped Specialist Work",
-          title_vi: "04. Thực thi theo tư duy nhận thức & Đặc quyền tối thiểu",
-          title_en: "04. Least-Privilege Cognitive Execution",
-          body_vi: "Mỗi tác tử chỉ nạp đúng vai trò và SKILL.md cần thiết, tuân thủ chu trình Understand → Reason → Plan → Execute → Observe, bảo vệ bí mật tuyệt đối và bàn giao báo cáo cấu trúc đầy đủ bằng chứng.",
-          body_en: "Workers receive only workstream-relevant roles and skills, follow structured hypothesis-and-observation reasoning, redact credentials on sight, and return structured handoff evidence.",
+          name: {
+            en: "Scoped Specialist Work",
+            vi: "Specialist Execution",
+            zh: "最小权限专家执行",
+            fr: "Exécution Spécialisée",
+            es: "Ejecución Especializada"
+          },
+          title: {
+            en: "04. Least-Privilege Cognitive Execution",
+            vi: "04. Thực thi theo Cognitive Loop & Least Privilege",
+            zh: "04. 最小权限与结构化认知执行 (Cognitive Execution)",
+            fr: "04. Exécution cognitive structurée & Least Privilege",
+            es: "04. Ejecución cognitiva estructurada y Least Privilege"
+          },
+          body: {
+            en: "Each worker loads only relevant Roles and SKILL.md packages, follows Understand → Reason → Plan → Execute → Observe, redacts secrets on sight, and submits an 8-field Handoff Report.",
+            vi: "Mỗi worker chỉ load đúng Role và gói SKILL.md cần dùng, tuân thủ chu trình Understand → Reason → Plan → Execute → Observe, tự động che biến nhạy cảm (secret redaction) và trả về Handoff Report chuẩn.",
+            zh: "每个 Worker 仅按需加载当前工作流所需的 Role 与 SKILL.md，遵循 Understand → Reason → Plan → Execute → Observe 闭环，自动脱敏密钥并提交结构化 Handoff Report。",
+            fr: "Chaque worker charge uniquement les Roles et SKILL.md requis, suit la boucle Understand → Reason → Plan → Execute → Observe, masque les secrets et remet un Handoff Report structuré.",
+            es: "Cada worker carga solo los Roles y SKILL.md necesarios, sigue el ciclo Understand → Reason → Plan → Execute → Observe, protege secretos y entrega un Handoff Report estructurado."
+          },
           path: "00_GLOBAL_CONSTITUTION/COGNITIVE_EXECUTION.md",
           meta: [
-            ["Gói kỹ năng / Skill Catalog", "12 Core + 10 Specialized SKILL.md"],
-            ["Bảo mật mặc định / Security", "Zero-Trust RoE & secret redaction"],
-            ["Chuẩn bàn giao / Handoff", "06_TEMPLATES/HANDOFF_REPORT.md"]
+            ["Skill Catalog", "12 Core + 10 Specialized SKILL.md"],
+            ["Security Posture", "Zero-Trust RoE & secret redaction"],
+            ["Handoff Contract", "06_TEMPLATES/HANDOFF_REPORT.md"]
           ]
         },
         {
           num: "STAGE 05",
-          name_vi: "Nghiệm thu kép SA + PM",
-          name_en: "Dual Gate Verification",
-          title_vi: "05. Kiểm chứng độc lập (Tool Success != Task Success)",
-          title_en: "05. Independent Empirical Verification (SA_GATE + PM_GATE)",
-          body_vi: "Tách biệt người làm và người kiểm duyệt. Kết hợp kiểm thử tự động, kiểm thử trải nghiệm người dùng 3 cấp độ (Human-Centric QA) và đối chiếu hai cổng SA_GATE + PM_GATE trước khi bàn giao.",
-          body_en: "Separates authorship from verification. Enforces automated test suites, 3-level Human-Centric Application QA, and explicit SA_GATE + PM_GATE sign-off with honest limitation disclosure.",
+          name: {
+            en: "Dual-Gate Sign-off",
+            vi: "Dual-Gate Sign-off",
+            zh: "SA + PM 双门禁验收",
+            fr: "Validation Dual-Gate",
+            es: "Validación Dual-Gate"
+          },
+          title: {
+            en: "05. Independent Verification (Tool Success != Task Success)",
+            vi: "05. Kiểm chứng độc lập (Tool Success != Task Success)",
+            zh: "05. 独立实证核验 (Tool Success != Task Success)",
+            fr: "05. Vérification indépendante (Tool Success != Task Success)",
+            es: "05. Verificación independiente (Tool Success != Task Success)"
+          },
+          body: {
+            en: "Authorship is separated from verification. Substantive work passes automated test suites, 3-level Human-Centric Application QA, and explicit SA_GATE + PM_GATE review with honest runtime limitation disclosure.",
+            vi: "Tách bạch người code và người review. Sản phẩm phải vượt qua test tự động, kiểm thử thực tế 3 mức (Human-Centric App QA) và đạt đủ 2 cổng SA_GATE + PM_GATE trước khi bàn giao.",
+            zh: "实现者与审核者职责分离。交付前必须通过自动化测试、三级用户体验质量核验 (Human-Centric App QA) 以及 SA_GATE + PM_GATE 双重签收，并如实披露运行环境限制。",
+            fr: "Séparation stricte entre implémentation et revue. Les livrables passent les tests automatisés, la QA applicative à 3 niveaux (Human-Centric QA) et la double validation SA_GATE + PM_GATE.",
+            es: "Separación estricta entre autoría y verificación. Todo entregable supera pruebas automatizadas, Human-Centric App QA de 3 niveles y doble aprobación SA_GATE + PM_GATE."
+          },
           path: "00_GLOBAL_CONSTITUTION/INDEPENDENT_VERIFICATION.md",
           meta: [
-            ["Tiên đề cốt lõi / Core Axiom", "Build/HTTP 200 != Task Success"],
-            ["Kiểm định ứng dụng / App QA", "Level 1 Code / Level 2 Live / Level 3 UX"],
-            ["Trạng thái chuẩn / Gate States", "PASS | PARTIAL | BLOCKED | FAILED | NOT VERIFIED"]
+            ["Core Axiom", "Build/HTTP 200 != Task Success"],
+            ["Application QA", "Level 1 Code / Level 2 Live / Level 3 UX"],
+            ["Canonical Statuses", "PASS | PARTIAL | BLOCKED | FAILED | NOT VERIFIED"]
           ]
         }
       ];
@@ -1596,43 +1862,113 @@
       var ROUTER_LEVELS = [
         {
           code: "L0",
-          name_vi: "Tương tác tức thì",
-          name_en: "Instant Interaction",
-          title_vi: "Level 0 — Phản hồi trực tiếp, không độ trễ điều phối",
-          title_en: "Level 0 — Direct Instant Execution (Zero Overhead)",
+          name: {
+            en: "Instant Lookup",
+            vi: "Instant Lookup",
+            zh: "即时问答 (Instant)",
+            fr: "Réponse Instantanée",
+            es: "Consulta Instantánea"
+          },
+          title: {
+            en: "Level 0 — Direct Instant Execution (Zero Overhead)",
+            vi: "Level 0 — Trả lời trực tiếp tức thì (0 Overhead)",
+            zh: "Level 0 — 主 Agent 直接响应（零编排开销）",
+            fr: "Level 0 — Exécution directe instantanée (Zéro Overhead)",
+            es: "Level 0 — Ejecución directa instantánea (Cero Overhead)"
+          },
           badge: "0 SUBAGENTS / 0 STATE FILES",
-          desc_vi: "Dành cho câu hỏi tra cứu sự kiện, giải thích ngắn, quy đổi đơn vị hoặc chạy một lệnh đọc có sẵn. Tác tử chính trả lời ngay lập tức mà không khởi tạo PM/SA hay tạo tệp agent_communicate.md.",
-          desc_en: "For factual lookups, quick explanations, or single read-only checks. Handled immediately by the main agent with zero subagent spawning and zero governance file creation.",
-          agents_vi: "Chỉ tác tử chính (0 subagent)",
-          agents_en: "Main agent only (0 subagents)",
-          state_vi: "Tuyệt đối không tạo tệp trạng thái",
-          state_en: "None created or mutated",
-          gate_vi: "Kiểm tra độ chính xác trực tiếp",
-          gate_en: "Direct factual accuracy check",
-          weight_vi: "5% — Tức thì (< 10s)",
-          weight_en: "5% — Instantaneous (< 10s)",
+          desc: {
+            en: "For factual Q&A, syntax lookups, short explanations, or running an existing read-only command. Handled directly by the Main Agent with zero Subagents and zero state file mutations.",
+            vi: "Dành cho câu hỏi tra cứu nhanh, giải thích ngắn hoặc chạy lệnh đọc có sẵn. Main Agent phản hồi trực tiếp ngay lập tức, không spawn Subagent và tuyệt đối không tạo file agent_communicate.md.",
+            zh: "适用于事实查询、概念解释或只读命令执行。由 Main Agent 直接回复，不创建任何 Subagent，也不生成或修改任何状态文件。",
+            fr: "Pour les questions factuelles, explications courtes ou vérifications en lecture seule. Traité directement par le Main Agent sans Subagent ni fichier d’état.",
+            es: "Para consultas puntuales, explicaciones breves o comandos de solo lectura. Resuelto al instante por el Main Agent sin Subagents ni archivos de estado."
+          },
+          agents: {
+            en: "Main Agent only (0 Subagents)",
+            vi: "Chỉ Main Agent (0 Subagents)",
+            zh: "仅 Main Agent (0 Subagents)",
+            fr: "Main Agent seul (0 Subagent)",
+            es: "Solo Main Agent (0 Subagents)"
+          },
+          state: {
+            en: "None created or modified",
+            vi: "Không tạo file State",
+            zh: "不创建或修改任何 State 文件",
+            fr: "Aucun fichier de State créé",
+            es: "Sin archivos de State"
+          },
+          gate: {
+            en: "Direct factual accuracy check",
+            vi: "Main Agent tự kiểm tra độ chính xác",
+            zh: "主 Agent 直接核对事实准确性",
+            fr: "Vérification directe d’exactitude",
+            es: "Verificación directa de exactitud"
+          },
+          weight: {
+            en: "5% — Instant (< 10s)",
+            vi: "5% — Tức thì (< 10s)",
+            zh: "5% — 毫秒/秒级响应 (< 10s)",
+            fr: "5% — Instantané (< 10s)",
+            es: "5% — Instantáneo (< 10s)"
+          },
           weight_pct: 6,
           modules: "Loaded: Workspace Bootstrap Rule only",
-          example_label: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md",
+          example_label: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md →",
           example_path: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md"
         },
         {
           code: "L1",
-          name_vi: "Tác vụ nhỏ gọn",
-          name_en: "Small Contained Task",
-          title_vi: "Level 1 — Chỉnh sửa đơn tệp hoặc một miền đơn lẻ",
-          title_en: "Level 1 — Contained Single-Component Task",
-          badge: "0–1 WORKER / LIGHTWEIGHT CHECK",
-          desc_vi: "Dành cho bản vá lỗi cục bộ, tinh chỉnh cấu hình, viết script nhỏ hoặc tài liệu ngắn trong 1 miền duy nhất. Áp dụng kiểm chứng nhận thức và chạy bộ test/build xác định.",
-          desc_en: "For localized bug fixes, single-file edits, straightforward scripts, or concise documentation within one domain. Applies cognitive verification and deterministic build/test checks.",
-          agents_vi: "Tác tử chính kiêm vai trò hoặc 1 worker",
-          agents_en: "Main agent or 1 scoped worker",
-          state_vi: "Không bắt buộc tạo state mới",
-          state_en: "Optional read; no new state required",
-          gate_vi: "Build / Unit test + SA xem xét nếu có rủi ro",
-          gate_en: "Deterministic check (+ SA review if risky)",
-          weight_vi: "25% — Nhẹ, tập trung",
-          weight_en: "25% — Lightweight & focused",
+          name: {
+            en: "Small Task",
+            vi: "Small Task (Đơn lẻ)",
+            zh: "小型任务 (Small)",
+            fr: "Tâche Légère",
+            es: "Tarea Pequeña"
+          },
+          title: {
+            en: "Level 1 — Contained Single-File or Single-Domain Edit",
+            vi: "Level 1 — Chỉnh sửa gọn trong 1 file hoặc 1 Domain",
+            zh: "Level 1 — 单文件修改或单一 Domain 局部任务",
+            fr: "Level 1 — Modification ciblée mono-fichier ou mono-Domain",
+            es: "Level 1 — Cambio acotado en un archivo o un solo Domain"
+          },
+          badge: "0–1 WORKER / DETERMINISTIC CHECK",
+          desc: {
+            en: "For localized bug fixes, config tweaks, small scripts, or concise docs within a single Domain. Uses cognitive verification and deterministic build/test checks without heavy multi-agent ceremony.",
+            vi: "Dành cho fix bug nhỏ, chỉnh config, viết script ngắn hoặc sửa tài liệu trong 1 Domain. Áp dụng Cognitive Verification và chạy build/test thực tế, không tốn chi phí điều phối rườm rà.",
+            zh: "适用于局部 Bug 修复、配置调整、小型脚本或单领域文档。执行认知推理与确定性构建/测试校验，避免冗余的多智能体流程。",
+            fr: "Pour un correctif localisé, un ajustement de config, un petit script ou une doc courte dans un seul Domain, avec vérification déterministe build/test.",
+            es: "Para correcciones puntuales, ajustes de configuración, scripts pequeños o documentación breve en un Domain, con validación determinista de build/test."
+          },
+          agents: {
+            en: "Main Agent or 1 scoped Worker",
+            vi: "Main Agent hoặc 1 Worker",
+            zh: "Main Agent 或 1 个专项 Worker",
+            fr: "Main Agent ou 1 Worker ciblé",
+            es: "Main Agent o 1 Worker acotado"
+          },
+          state: {
+            en: "Optional read; no new State required",
+            vi: "Đọc nếu có sẵn; không ép tạo mới",
+            zh: "按需读取；无需新建 State 文件",
+            fr: "Lecture optionnelle ; aucun nouveau State requis",
+            es: "Lectura opcional; no requiere nuevo State"
+          },
+          gate: {
+            en: "Build/Test check (+ SA review if risky)",
+            vi: "Build/Test (+ SA review nếu có rủi ro)",
+            zh: "构建/测试校验（有架构风险时引入 SA）",
+            fr: "Build/Test (+ revue SA si risque technique)",
+            es: "Build/Test (+ revisión SA si hay riesgo)"
+          },
+          weight: {
+            en: "25% — Lightweight & fast",
+            vi: "25% — Gọn nhẹ, tập trung",
+            zh: "25% — 轻量高效",
+            fr: "25% — Léger et rapide",
+            es: "25% — Ligero y enfocado"
+          },
           weight_pct: 25,
           modules: "Loaded: GLOBAL_SYSTEM_PROMPT + COGNITIVE_EXECUTION + 1 Role",
           example_label: "Example: 08_EXAMPLES/SIMPLE_TASK.md →",
@@ -1640,21 +1976,56 @@
         },
         {
           code: "L2",
-          name_vi: "Tác vụ trung bình",
-          name_en: "Moderate Feature / Analysis",
-          title_vi: "Level 2 — Triển khai tính năng đa bước có hợp đồng rõ ràng",
-          title_en: "Level 2 — Multi-Step Feature or Structured Analysis",
+          name: {
+            en: "Moderate Feature",
+            vi: "Moderate Feature",
+            zh: "中等任务 (Moderate)",
+            fr: "Feature Modérée",
+            es: "Tarea Moderada"
+          },
+          title: {
+            en: "Level 2 — Multi-File Feature or Structured Analysis",
+            vi: "Level 2 — Triển khai Feature nhiều file hoặc Phân tích đa bước",
+            zh: "Level 2 — 多文件功能开发或结构化多步分析",
+            fr: "Level 2 — Feature multi-fichiers ou Analyse structurée",
+            es: "Level 2 — Funcionalidad multi-archivo o Análisis estructurado"
+          },
           badge: "PM + SA + 1–3 WORKERS",
-          desc_vi: "Dành cho tính năng liên quan nhiều tệp (API + UI), gỡ lỗi đa thành phần hoặc nghiên cứu phân tích nhiều bước. PM khóa tiêu chí nghiệm thu, SA duyệt hợp đồng kỹ thuật và ghi nhận bằng chứng vào AGENT_COMMUNICATE.md.",
-          desc_en: "For multi-file features, API + UI changes, or multi-step analytical work. PM sets acceptance criteria, SA locks technical contracts, and outcomes are verified against AGENT_COMMUNICATE.md.",
-          agents_vi: "PM + SA điều phối 1–3 worker chuyên môn",
-          agents_en: "PM + SA coordinating 1–3 workers",
-          state_vi: "Bắt buộc: AGENT_COMMUNICATE.md",
-          state_en: "Required: AGENT_COMMUNICATE.md",
-          gate_vi: "Nghiệm thu kép tỷ lệ thuận (SA_GATE + PM_GATE)",
-          gate_en: "Proportional Dual Gate (SA_GATE + PM_GATE)",
-          weight_vi: "55% — Cân bằng tốc độ & kiểm soát",
-          weight_en: "55% — Balanced rigor & velocity",
+          desc: {
+            en: "For API + UI features, multi-component debugging, or structured research. PM defines Acceptance Criteria, SA reviews technical Contracts, and evidence is logged in AGENT_COMMUNICATE.md.",
+            vi: "Dành cho feature chạm nhiều file (API + UI), debug liên module hoặc phân tích chuyên sâu. PM chốt Acceptance Criteria, SA khóa Contract kỹ thuật và lưu bằng chứng vào AGENT_COMMUNICATE.md.",
+            zh: "适用于前后端联动开发、跨组件调试或结构化专题研究。PM 明确验收标准，SA 审核技术 Contract，并在 AGENT_COMMUNICATE.md 中沉淀验证证据。",
+            fr: "Pour les features API + UI, le débogage multi-composants ou les études structurées. Le PM fixe les critères, le SA valide les Contracts et trace les preuves dans AGENT_COMMUNICATE.md.",
+            es: "Para funcionalidades API + UI, depuración multi-componente o análisis estructurado. PM define criterios, SA valida Contracts y registra evidencia en AGENT_COMMUNICATE.md."
+          },
+          agents: {
+            en: "PM + SA coordinating 1–3 Workers",
+            vi: "PM + SA điều phối 1–3 Workers",
+            zh: "PM + SA 协同调度 1–3 个 Workers",
+            fr: "PM + SA coordonnant 1 à 3 Workers",
+            es: "PM + SA coordinando 1–3 Workers"
+          },
+          state: {
+            en: "Required: AGENT_COMMUNICATE.md",
+            vi: "Bắt buộc: AGENT_COMMUNICATE.md",
+            zh: "必需：AGENT_COMMUNICATE.md",
+            fr: "Requis : AGENT_COMMUNICATE.md",
+            es: "Requerido: AGENT_COMMUNICATE.md"
+          },
+          gate: {
+            en: "Proportional Dual Gate (SA_GATE + PM_GATE)",
+            vi: "Proportional Dual Gate (SA_GATE + PM_GATE)",
+            zh: "按比例双门禁 (SA_GATE + PM_GATE)",
+            fr: "Dual Gate proportionnel (SA_GATE + PM_GATE)",
+            es: "Dual Gate proporcional (SA_GATE + PM_GATE)"
+          },
+          weight: {
+            en: "55% — Balanced rigor & speed",
+            vi: "55% — Cân bằng tốc độ & kiểm soát",
+            zh: "55% — 兼顾交付速度与工程严谨度",
+            fr: "55% — Équilibre vitesse & rigueur",
+            es: "55% — Equilibrio entre agilidad y control"
+          },
           weight_pct: 55,
           modules: "Loaded: 01_ORCHESTRATION + PM/SA Roles + Selected SKILL.md",
           example_label: "Example: 08_EXAMPLES/MODERATE_TASK.md →",
@@ -1662,21 +2033,56 @@
         },
         {
           code: "L3",
-          name_vi: "Dự án phức tạp / Đa miền",
-          name_en: "Complex Multi-Domain Project",
-          title_vi: "Level 3 — Kiến trúc đa phân hệ & Phối hợp liên miền song song",
-          title_en: "Level 3 — Multi-Workstream & Cross-Domain Architecture",
+          name: {
+            en: "Complex Project",
+            vi: "Complex / Multi-Domain",
+            zh: "复杂跨领域项目 (Complex)",
+            fr: "Projet Complexe",
+            es: "Proyecto Complejo"
+          },
+          title: {
+            en: "Level 3 — Multi-Workstream & Cross-Domain Architecture",
+            vi: "Level 3 — Dự án Full-Stack lớn hoặc Phối hợp liên Domain",
+            zh: "Level 3 — 多工作流并行与跨 Domain 复杂架构",
+            fr: "Level 3 — Architecture multi-workstreams & inter-Domains",
+            es: "Level 3 — Arquitectura multi-workstream y multi-Domain"
+          },
           badge: "PARALLEL STREAMS + INDEPENDENT QA",
-          desc_vi: "Dành cho hệ thống full-stack lớn, mô hình tài chính chuyên sâu, dự án AI/ML hoặc tích hợp nhiều lĩnh vực. Tách luồng công việc độc lập với khóa ghi tệp tách rời và kiểm thử QA độc lập với người viết mã.",
-          desc_en: "For full-stack systems, ML pipelines, financial models, or multi-domain integrations. Splits independent workstreams under disjoint write-locks with independent Quality Reviewer verification.",
-          agents_vi: "PM + SA bền vững + Parallel Workers + QA độc lập",
-          agents_en: "Persistent PM + SA + Parallel Workers + QA",
-          state_vi: "PROJECT_MANIFEST + PROJECT_STATE + Write-Locks",
-          state_en: "Full Manifest, State & Write-Lock Ledger",
-          gate_vi: "QA 3 cấp độ + SA_GATE + PM_GATE độc lập",
-          gate_en: "3-Level QA + Full SA_GATE + PM_GATE",
-          weight_vi: "80% — Điều phối song song chặt chẽ",
-          weight_en: "80% — Full parallel governance",
+          desc: {
+            en: "For full-stack systems, ML pipelines, financial models, or multi-domain builds. Workstreams execute in parallel under disjoint Exclusive Write-Locks with an independent Quality Reviewer.",
+            vi: "Dành cho hệ thống full-stack, pipeline AI/ML, mô hình tài chính lớn hoặc tích hợp đa ngành. Chia workstream chạy song song với Exclusive Write-Lock riêng biệt và có Quality Reviewer kiểm thử độc lập.",
+            zh: "适用于全栈系统、AI/ML 管线、复杂财务建模或多领域集成。独立工作流在互斥写锁保护下并行推进，并配备独立 Quality Reviewer 验收。",
+            fr: "Pour les systèmes full-stack, pipelines ML, modèles financiers ou projets multi-métiers. Workstreams parallèles sous Exclusive Write-Locks disjoints avec Quality Reviewer indépendant.",
+            es: "Para sistemas full-stack, pipelines ML, modelos financieros o integraciones multi-dominio. Workstreams paralelos con Exclusive Write-Locks disjuntos y Quality Reviewer independiente."
+          },
+          agents: {
+            en: "Persistent PM + SA + Parallel Workers + QA",
+            vi: "Persistent PM + SA + Parallel Workers + QA",
+            zh: "持久化 PM + SA + 并行 Workers + 独立 QA",
+            fr: "PM + SA persistants + Workers parallèles + QA",
+            es: "PM + SA persistentes + Workers paralelos + QA"
+          },
+          state: {
+            en: "Full Manifest, State & Write-Lock Ledger",
+            vi: "PROJECT_MANIFEST + PROJECT_STATE + Write-Locks",
+            zh: "完整 Manifest、State 与 Write-Lock 台账",
+            fr: "Manifest complet, State & registre Write-Locks",
+            es: "Manifest completo, State y registro Write-Locks"
+          },
+          gate: {
+            en: "3-Level App QA + Independent SA_GATE & PM_GATE",
+            vi: "3-Level App QA + SA_GATE & PM_GATE độc lập",
+            zh: "三级应用 QA + 独立 SA_GATE 与 PM_GATE",
+            fr: "QA applicative 3 niveaux + SA_GATE & PM_GATE",
+            es: "App QA de 3 niveles + SA_GATE y PM_GATE"
+          },
+          weight: {
+            en: "80% — Full parallel governance",
+            vi: "80% — Điều phối song song chặt chẽ",
+            zh: "80% — 完整并行协同治理",
+            fr: "80% — Gouvernance parallèle complète",
+            es: "80% — Gobernanza paralela completa"
+          },
           weight_pct: 80,
           modules: "Loaded: Full Orchestration + Domain Quality Gates + QA Skill",
           example_label: "Example: 08_EXAMPLES/MULTI_DOMAIN_PROJECT.md →",
@@ -1684,21 +2090,56 @@
         },
         {
           code: "L4",
-          name_vi: "Trọng yếu / Rủi ro cao",
-          name_en: "Critical / High-Assurance",
-          title_vi: "Level 4 — Bảo mật, Hạ tầng Production & Lĩnh vực chịu quản lý",
-          title_en: "Level 4 — Security, Production & Regulated Operations",
+          name: {
+            en: "Critical / High-Risk",
+            vi: "Critical / High-Risk",
+            zh: "高危关键任务 (Critical)",
+            fr: "Critique / Haut Risque",
+            es: "Crítico / Alto Riesgo"
+          },
+          title: {
+            en: "Level 4 — Security, Production Infra & Regulated Operations",
+            vi: "Level 4 — Security, Production Infra & Tác vụ rủi ro trọng yếu",
+            zh: "Level 4 — 安全评估、生产基础设施与强监管关键操作",
+            fr: "Level 4 — Sécurité, Infra Production & Opérations réglementées",
+            es: "Level 4 — Seguridad, Infraestructura Productiva y Operaciones Reguladas"
+          },
           badge: "MANDATORY HUMAN APPROVAL GATE",
-          desc_vi: "Dành cho kiểm thử xâm nhập được ủy quyền, di trú dữ liệu production, quyết định tài chính/pháp lý/y sinh hoặc điều khiển công nghiệp. Bắt buộc đánh giá rủi ro, kiểm toán chéo và xin phê duyệt tường minh từ con người trước thao tác hệ trọng.",
-          desc_en: "For authorized security assessments, production migrations, regulated clinical/legal/financial deliverables, or safety-critical industrial systems. Enforces explicit human approval before consequential actions.",
-          agents_vi: "PM + SA + Domain Lead + Security & QA Auditors",
-          agents_en: "PM + SA + Domain Lead + Independent Auditors",
-          state_vi: "Đầy đủ hồ sơ trạng thái + RISK_REGISTER.md",
-          state_en: "Full State Ledger + RISK_REGISTER.md",
-          gate_vi: "Phê duyệt con người + Kiểm toán bảo mật + Dual Gate",
-          gate_en: "Explicit Human Approval + Security Audit + Dual Gate",
-          weight_vi: "100% — An toàn tối đa, 0 đường tắt",
-          weight_en: "100% — Maximum assurance, zero shortcuts",
+          desc: {
+            en: "For authorized pentests, production data migrations, consequential financial/legal/clinical work, or industrial control systems. Requires risk registers, independent audits, and explicit human approval before consequential actions.",
+            vi: "Dành cho pentest được ủy quyền, migrate dữ liệu production, nghiệp vụ Finance/Legal/Healthcare nhạy cảm hoặc hệ thống điều khiển công nghiệp. Bắt buộc lập Risk Register, audit độc lập và xin Human Approval trước thao tác hệ trọng.",
+            zh: "适用于授权渗透测试、生产数据迁移、高影响金融/法务/医疗分析或工业控制系统。强制要求风险登记册、独立安全审计，并在关键操作前获得明确人工批准。",
+            fr: "Pour les pentests autorisés, migrations de production, travaux financiers/juridiques/cliniques sensibles ou systèmes industriels. Impose un registre de risques, un audit indépendant et une approbation humaine explicite.",
+            es: "Para pentesting autorizado, migraciones en producción, análisis financiero/legal/clínico sensible o control industrial. Exige registro de riesgos, auditoría independiente y aprobación humana explícita."
+          },
+          agents: {
+            en: "PM + SA + Domain Lead + Security & QA Auditors",
+            vi: "PM + SA + Domain Lead + Security & QA Auditors",
+            zh: "PM + SA + Domain Lead + 独立安全与 QA 审计员",
+            fr: "PM + SA + Domain Lead + Auditeurs Security & QA",
+            es: "PM + SA + Domain Lead + Auditores Security y QA"
+          },
+          state: {
+            en: "Full State Ledger + RISK_REGISTER.md",
+            vi: "Full State Ledger + RISK_REGISTER.md",
+            zh: "完整状态台账 + RISK_REGISTER.md",
+            fr: "Registre complet + RISK_REGISTER.md",
+            es: "Registro completo + RISK_REGISTER.md"
+          },
+          gate: {
+            en: "Explicit Human Approval + Security Audit + Dual Gate",
+            vi: "Human Approval + Security Audit + Dual Gate",
+            zh: "明确人工审批 + 安全审计 + 双门禁签收",
+            fr: "Approbation humaine + Audit Sécurité + Dual Gate",
+            es: "Aprobación humana + Auditoría Security + Dual Gate"
+          },
+          weight: {
+            en: "100% — Maximum safety assurance",
+            vi: "100% — Kiểm soát an toàn tối đa",
+            zh: "100% — 最高安全保障级别（零捷径）",
+            fr: "100% — Assurance sécurité maximale",
+            es: "100% — Máxima garantía de seguridad"
+          },
           weight_pct: 100,
           modules: "Loaded: SECURITY_AND_PRIVACY + HUMAN_APPROVAL_POLICY + RISK_REGISTER",
           example_label: "Example: 08_EXAMPLES/CYBERSECURITY_ASSESSMENT.md →",
@@ -1707,72 +2148,647 @@
       ];
 
       var REPO_LAYERS = [
-        { path: "Root Catalog & Manifest", link: "LIBRARY_INDEX.md", desc_vi: "README, LIBRARY_INDEX, VERSION, CHANGELOG & skills.json", desc_en: "README, LIBRARY_INDEX, VERSION, CHANGELOG & skills.json", count: "5 files" },
-        { path: "00_GLOBAL_CONSTITUTION/", link: "00_GLOBAL_CONSTITUTION/GLOBAL_SYSTEM_PROMPT.md", desc_vi: "Thứ bậc ưu tiên, định tuyến L0–L4, sự thật thực nghiệm, bảo mật", desc_en: "Precedence hierarchy, L0–L4 router, truth, security & approval", count: "8 files" },
-        { path: "01_ORCHESTRATION/", link: "01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md", desc_vi: "Tự hành ngôn ngữ tự nhiên, PM+SA bền vững, khóa tệp, bàn giao", desc_en: "Autonomous NL loop, persistent PM+SA, write-locks & handoffs", count: "13 files" },
-        { path: "02_CORE_ROLES/", link: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md", desc_vi: "Project Manager, System Architect, Domain Lead, Quality Reviewer", desc_en: "Project Manager, System Architect, Domain Lead, Quality Reviewer", count: "8 files" },
-        { path: "03_DOMAINS/", link: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md", desc_vi: "15 miền chuyên ngành, 108 vai trò chuyên gia & cổng chất lượng", desc_en: "15 professional domains, 108 specialist roles & quality gates", count: "274 files" },
-        { path: "04_CROSS_DOMAIN_SKILLS/", link: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md", desc_vi: "12 kỹ năng cốt lõi: tư duy phản biện, nghiên cứu, viết kỹ thuật, QA", desc_en: "12 core skills: reasoning, source validation, technical writing, QA", count: "12 files" },
-        { path: "05_SPECIALIZED_SKILLS/", link: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md", desc_vi: "10 kỹ năng chuyên sâu: UI QA, API/DB test, bảo mật, tài chính, ML", desc_en: "10 technical skills: Human-Centric QA, API/DB, security, finance, ML", count: "10 files" },
-        { path: "06_TEMPLATES/", link: "06_TEMPLATES/AGENT_COMMUNICATE.md", desc_vi: "12 biểu mẫu chuẩn: Manifest, State, Agent Communicate, Gate Review", desc_en: "12 templates: Manifest, State, Agent Communicate, Reviews & Risk", count: "12 files" },
-        { path: "07_SUBAGENT_PROMPTS/", link: "07_SUBAGENT_PROMPTS/SUBAGENT_CREATION_PROMPT.md", desc_vi: "7 khung khởi tạo subagent 16 trường & tác tử chuyên biệt", desc_en: "7 blueprints for 16-field subagent creation & specialized workers", count: "7 files" },
-        { path: "08_EXAMPLES/", link: "08_EXAMPLES/COMPLEX_SOFTWARE_PROJECT.md", desc_vi: "7 kịch bản thực tế trải dài từ Level 1 đến Level 4 đa miền", desc_en: "7 end-to-end reference walkthroughs spanning Levels 1 to 4", count: "7 files" }
+        {
+          path: "Root Catalog & Manifest",
+          link: "LIBRARY_INDEX.md",
+          count: "5 files",
+          desc: {
+            en: "README, LIBRARY_INDEX, VERSION, CHANGELOG & native skills.json",
+            vi: "README, LIBRARY_INDEX, VERSION, CHANGELOG & manifest skills.json",
+            zh: "README、LIBRARY_INDEX、VERSION、CHANGELOG 与原生 skills.json",
+            fr: "README, LIBRARY_INDEX, VERSION, CHANGELOG & manifeste skills.json",
+            es: "README, LIBRARY_INDEX, VERSION, CHANGELOG y manifiesto skills.json"
+          }
+        },
+        {
+          path: "00_GLOBAL_CONSTITUTION/",
+          link: "00_GLOBAL_CONSTITUTION/GLOBAL_SYSTEM_PROMPT.md",
+          count: "8 files",
+          desc: {
+            en: "Precedence rules, L0–L4 Complexity Router, truth, Security & Approval",
+            vi: "Thứ bậc ưu tiên, L0–L4 Router, chuẩn kiểm chứng, Security & Approval",
+            zh: "指令优先级、L0–L4 复杂度路由、实证准则、安全隐私与人工审批",
+            fr: "Hiérarchie d’autorité, Routeur L0–L4, vérification, Security & Approval",
+            es: "Jerarquía de autoridad, Router L0–L4, verificación, Security y Approval"
+          }
+        },
+        {
+          path: "01_ORCHESTRATION/",
+          link: "01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md",
+          count: "13 files",
+          desc: {
+            en: "Autonomous NL workflow, persistent PM + SA, Write-Locks & Handoffs",
+            vi: "Autonomous NL workflow, persistent PM + SA, Write-Locks & Handoffs",
+            zh: "自然语言自治编排、持久化 PM + SA、文件互斥写锁与 Handoff 规范",
+            fr: "Workflow autonome NL, PM + SA persistants, Write-Locks & Handoffs",
+            es: "Workflow autónomo NL, PM + SA persistentes, Write-Locks y Handoffs"
+          }
+        },
+        {
+          path: "02_CORE_ROLES/",
+          link: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md",
+          count: "8 files",
+          desc: {
+            en: "Project Manager (PM), System Architect (SA), Domain Lead, Quality Reviewer",
+            vi: "Project Manager (PM), System Architect (SA), Domain Lead, Quality Reviewer",
+            zh: "核心治理角色：Project Manager、System Architect、Domain Lead、Quality Reviewer",
+            fr: "Project Manager (PM), System Architect (SA), Domain Lead, Quality Reviewer",
+            es: "Project Manager (PM), System Architect (SA), Domain Lead, Quality Reviewer"
+          }
+        },
+        {
+          path: "03_DOMAINS/",
+          link: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md",
+          count: "274 files",
+          desc: {
+            en: "15 Specialist Domains, 108 Role Prompts, Checklists & Quality Gates",
+            vi: "15 Domains chuyên ngành, 108 Role Prompts, Checklists & Quality Gates",
+            zh: "15 个专业 Domains、108 个专家 Role Prompts、检查清单与质量门禁",
+            fr: "15 Domains métiers, 108 Role Prompts, Checklists & Quality Gates",
+            es: "15 Domains profesionales, 108 Role Prompts, Checklists y Quality Gates"
+          }
+        },
+        {
+          path: "04_CROSS_DOMAIN_SKILLS/",
+          link: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md",
+          count: "12 files",
+          desc: {
+            en: "Core SKILL.md modules: reasoning, source validation, technical writing, QA",
+            vi: "12 gói SKILL.md nền tảng: reasoning, kiểm chứng nguồn, technical writing, QA",
+            zh: "12 个通用核心 SKILL.md：批判性推理、信源核验、技术写作、风险与 QA",
+            fr: "12 SKILL.md transverses : raisonnement, validation de sources, rédaction, QA",
+            es: "12 SKILL.md transversales: razonamiento, validación de fuentes, redacción, QA"
+          }
+        },
+        {
+          path: "05_SPECIALIZED_SKILLS/",
+          link: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md",
+          count: "10 files",
+          desc: {
+            en: "Technical SKILL.md modules: Browser QA, API/DB testing, Security, ML, Finance",
+            vi: "10 gói SKILL.md chuyên sâu: Browser QA, API/DB test, Security, ML, Finance",
+            zh: "10 个专项 SKILL.md：浏览器真实交互 QA、API/DB 测试、安全评估、金融与 ML",
+            fr: "10 SKILL.md spécialisés : Browser QA, tests API/DB, Security, ML, Finance",
+            es: "10 SKILL.md especializados: Browser QA, pruebas API/DB, Security, ML, Finanzas"
+          }
+        },
+        {
+          path: "06_TEMPLATES/",
+          link: "06_TEMPLATES/AGENT_COMMUNICATE.md",
+          count: "12 files",
+          desc: {
+            en: "Standard templates: Manifest, State, Agent Communicate, Contracts & Gates",
+            vi: "12 mẫu chuẩn: Manifest, State, Agent Communicate, Contracts & Gate Reviews",
+            zh: "12 个标准模板：Manifest、State、通信总线、工作流契约与门禁报告",
+            fr: "12 modèles standards : Manifest, State, Agent Communicate, Contracts & Gates",
+            es: "12 plantillas estándar: Manifest, State, Agent Communicate, Contracts y Gates"
+          }
+        },
+        {
+          path: "07_SUBAGENT_PROMPTS/",
+          link: "07_SUBAGENT_PROMPTS/SUBAGENT_CREATION_PROMPT.md",
+          count: "7 files",
+          desc: {
+            en: "16-field Subagent creation specification & specialized worker blueprints",
+            vi: "Khung khởi tạo Subagent 16 trường bắt buộc & blueprint cho từng loại Worker",
+            zh: "包含 16 项必填字段的 Subagent 创建规范与专用 Worker 蓝图",
+            fr: "Spécification de création de Subagent (16 champs) & blueprints Workers",
+            es: "Especificación de creación de Subagents (16 campos) y blueprints de Workers"
+          }
+        },
+        {
+          path: "08_EXAMPLES/",
+          link: "08_EXAMPLES/COMPLEX_SOFTWARE_PROJECT.md",
+          count: "7 files",
+          desc: {
+            en: "End-to-end reference walkthroughs spanning Complexity Levels 1 to 4",
+            vi: "7 kịch bản mẫu thực tế trải dài từ Level 1 đến dự án đa ngành Level 4",
+            zh: "覆盖 Level 1 至 Level 4 跨领域场景的 7 个端到端参考演练案例",
+            fr: "7 scénarios complets de référence couvrant les Levels 1 à 4",
+            es: "7 casos prácticos de extremo a extremo desde Level 1 hasta Level 4"
+          }
+        }
       ];
 
       var PRECEDENCE = [
-        { lvl: "LEVEL 1", title_vi: "An toàn Runtime & Ủy quyền Con người", title_en: "Runtime Safety & Human Authorization", rule_vi: "Bất biến; ranh giới pháp lý, sandbox và phê duyệt người dùng.", rule_en: "Immutable platform sandbox, legal bounds, and explicit human consent." },
-        { lvl: "LEVEL 2", title_vi: "Hiến pháp Toàn cục (00_GLOBAL_CONSTITUTION)", title_en: "Global Constitution (00_GLOBAL_CONSTITUTION)", rule_vi: "Sự thật dựa trên bằng chứng, bảo vệ bí mật, định tuyến L0–L4; ghi đè L3–L6.", rule_en: "Evidence rules, privacy, tool realism, and L0–L4 routing; overrides L3–L6." },
-        { lvl: "LEVEL 3", title_vi: "Điều phối & Vai trò Cốt lõi (01–02)", title_en: "Orchestration & Core Roles (01–02)", rule_vi: "Vòng đời PM + SA, khóa ghi tệp độc quyền, nghiệm thu kép; ghi đè L4–L6.", rule_en: "PM + SA lifecycle, disjoint file write-locks, dual gates; overrides L4–L6." },
-        { lvl: "LEVEL 4", title_vi: "Chuẩn mực Miền chuyên môn (03_DOMAINS)", title_en: "Domain System Prompts & Gates (03_DOMAINS)", rule_vi: "Tiêu chuẩn kỹ thuật và quy định ngành; siết chặt L1–L3, ghi đè L5–L6.", rule_en: "Domain engineering and regulatory baselines; tightens L1–L3, overrides L5–L6." },
-        { lvl: "LEVEL 5", title_vi: "Vai trò Chuyên gia (ROLES/*)", title_en: "Specialist Role Prompts (ROLES/*)", rule_vi: "Năng lực chuyên sâu, ranh giới chọn vai trò và bảng kiểm chất lượng.", rule_en: "Specialist competencies, selection boundaries, and role checklists." },
-        { lvl: "LEVEL 6", title_vi: "Kỹ năng Thực thi (04 & 05 SKILL.md)", title_en: "Reusable Procedural Skills (04 & 05)", rule_vi: "Quy trình từng bước; tuyệt đối không được vượt quyền hay nới lỏng L1–L5.", rule_en: "Procedural workflows only; never overrides L1–L5 safety or governance." }
+        {
+          lvl: "LEVEL 1",
+          title: {
+            en: "Runtime Safety & Human Authorization",
+            vi: "Runtime Safety & Human Authorization",
+            zh: "运行时安全边界与人工授权 (Runtime Safety)",
+            fr: "Sécurité Runtime & Autorisation Humaine",
+            es: "Seguridad Runtime y Autorización Humana"
+          },
+          rule: {
+            en: "Immutable platform sandbox, legal limits, and explicit user consent.",
+            vi: "Bất biến; tuân thủ sandbox hệ thống, pháp luật và sự đồng ý của user.",
+            zh: "不可逾越的最高准则：平台沙箱边界、法律法规与明确的用户授权。",
+            fr: "Immuable : sandbox plateforme, cadre légal et consentement explicite.",
+            es: "Inmutable: sandbox de plataforma, límites legales y autorización explícita."
+          }
+        },
+        {
+          lvl: "LEVEL 2",
+          title: {
+            en: "Global Constitution (00_GLOBAL_CONSTITUTION)",
+            vi: "Global Constitution (00_GLOBAL_CONSTITUTION)",
+            zh: "全局宪章层 (00_GLOBAL_CONSTITUTION)",
+            fr: "Constitution Globale (00_GLOBAL_CONSTITUTION)",
+            es: "Constitución Global (00_GLOBAL_CONSTITUTION)"
+          },
+          rule: {
+            en: "Evidence rules, secret protection, tool realism & L0–L4 routing; overrides L3–L6.",
+            vi: "Quy tắc bằng chứng, bảo mật secret, trung thực về công cụ & L0–L4; override L3–L6.",
+            zh: "证据准则、密钥保护、工具能力诚实披露与 L0–L4 路由；覆盖 L3–L6。",
+            fr: "Preuves empiriques, protection des secrets, routage L0–L4 ; prime sur L3–L6.",
+            es: "Evidencia empírica, protección de secretos y ruteo L0–L4; prevalece sobre L3–L6."
+          }
+        },
+        {
+          lvl: "LEVEL 3",
+          title: {
+            en: "Orchestration & Core Roles (01–02)",
+            vi: "Orchestration & Core Roles (01–02)",
+            zh: "协同编排与核心治理角色 (01–02)",
+            fr: "Orchestration & Core Roles (01–02)",
+            es: "Orquestación y Core Roles (01–02)"
+          },
+          rule: {
+            en: "Persistent PM + SA lifecycle, Exclusive Write-Locks & Dual Gates; overrides L4–L6.",
+            vi: "Vòng đời PM + SA, Exclusive Write-Locks & nghiệm thu Dual Gate; override L4–L6.",
+            zh: "持久化 PM + SA 生命周期、互斥写锁与双门禁签收；覆盖 L4–L6。",
+            fr: "Cycle PM + SA, Exclusive Write-Locks et validation Dual Gate ; prime sur L4–L6.",
+            es: "Ciclo PM + SA, Exclusive Write-Locks y validación Dual Gate; prevalece sobre L4–L6."
+          }
+        },
+        {
+          lvl: "LEVEL 4",
+          title: {
+            en: "Domain System Prompts & Quality Gates (03_DOMAINS)",
+            vi: "Domain System Prompts & Quality Gates (03_DOMAINS)",
+            zh: "领域系统规范与质量门禁 (03_DOMAINS)",
+            fr: "Prompts de Domains & Quality Gates (03_DOMAINS)",
+            es: "Prompts de Domains y Quality Gates (03_DOMAINS)"
+          },
+          rule: {
+            en: "Domain engineering and regulatory baselines; tightens L1–L3, overrides L5–L6.",
+            vi: "Tiêu chuẩn kỹ thuật và quy định đặc thù của từng ngành; override L5–L6.",
+            zh: "各专业领域的工程与合规基线；可在 L1–L3 基础上收紧要求并覆盖 L5–L6。",
+            fr: "Standards d’ingénierie et conformité métier ; renforce L1–L3 et prime sur L5–L6.",
+            es: "Estándares técnicos y regulatorios de cada industria; prevalece sobre L5–L6."
+          }
+        },
+        {
+          lvl: "LEVEL 5",
+          title: {
+            en: "Specialist Role Prompts (ROLES/*)",
+            vi: "Specialist Role Prompts (ROLES/*)",
+            zh: "专家角色定义层 (ROLES/*)",
+            fr: "Specialist Role Prompts (ROLES/*)",
+            es: "Specialist Role Prompts (ROLES/*)"
+          },
+          rule: {
+            en: "Role competencies, selection boundaries, failure modes, and checklists.",
+            vi: "Năng lực chuyên môn, tiêu chí chọn Role, lỗi thường gặp và Quality Checklist.",
+            zh: "定义具体专家角色的专业能力、选用边界、常见反模式与质量核对表。",
+            fr: "Compétences métier, critères de sélection, anti-patterns et checklists.",
+            es: "Competencias del rol, criterios de selección, anti-patrones y checklists."
+          }
+        },
+        {
+          lvl: "LEVEL 6",
+          title: {
+            en: "Reusable Procedural Skills (04 & 05 SKILL.md)",
+            vi: "Reusable Procedural Skills (04 & 05 SKILL.md)",
+            zh: "可复用执行技能包 (04 & 05 SKILL.md)",
+            fr: "Skills Procéduraux Réutilisables (04 & 05 SKILL.md)",
+            es: "Skills Procedimentales Reutilizables (04 & 05 SKILL.md)"
+          },
+          rule: {
+            en: "Step-by-step execution runbooks; never overrides L1–L5 safety or governance.",
+            vi: "Runbook thực thi từng bước; không bao giờ được quyền override L1–L5.",
+            zh: "标准化操作步骤指南；严禁覆盖或削弱 L1–L5 的安全、授权与治理规则。",
+            fr: "Runbooks d’exécution pas-à-pas ; ne peut jamais outrepasser les règles L1–L5.",
+            es: "Runbooks paso a paso; jamás puede anular reglas de seguridad o gobernanza L1–L5."
+          }
+        }
       ];
 
       var CATALOG = [
-        { cat: "domain", id: "DOM-01", count: "11 ROLES", title: "IT & Software Engineering", sum_vi: "Kiến trúc phần mềm, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.", sum_en: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.", path: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-02", count: "13 ROLES", title: "Cybersecurity", sum_vi: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (kèm WORKFLOW.md).", sum_en: "Security Architect, AppSec, Pentest, Red/Blue Team, CTI, Forensics, IR, Cloud/Network Sec, IAM, GRC, Privacy (+ WORKFLOW.md).", path: "03_DOMAINS/CYBERSECURITY/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-03", count: "10 ROLES", title: "AI & Machine Learning", sum_vi: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM, MLOps, AI Evaluation, Data Scientist, GPU/HPC.", sum_en: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM, MLOps, AI Evaluation, Data Scientist, GPU/HPC.", path: "03_DOMAINS/AI_MACHINE_LEARNING/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-04", count: "10 ROLES", title: "Economics & Finance", sum_vi: "Kinh tế học, Phân tích tài chính, Đầu tư, Định lượng (Quant), Lập mô hình 3 báo cáo, Quản trị rủi ro, Định giá, Kế toán.", sum_en: "Economist, Financial/Investment/Quant Analyst, 3-Statement Modeling, Risk, Corporate Finance, Valuation, Accounting.", path: "03_DOMAINS/ECONOMICS_FINANCE/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-05", count: "7 ROLES", title: "Business & Product", sum_vi: "Product Manager, Business Analyst, Chiến lược kinh doanh, Quản trị vận hành, Tăng trưởng (Growth), Nghiên cứu thị trường.", sum_en: "Product Manager, Business Analyst, Business Strategist, Project/Operations Manager, Growth, Market Researcher.", path: "03_DOMAINS/BUSINESS_PRODUCT/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-06", count: "6 ROLES", title: "Research & Science", sum_vi: "Nhà khoa học nghiên cứu, Phương pháp luận, Thống kê, Thiết kế thực nghiệm, Tổng quan tài liệu, Kiểm toán tái lập.", sum_en: "Research Scientist, Methodologist, Statistician, Experimental Designer, Literature Reviewer, Reproducibility Auditor.", path: "03_DOMAINS/RESEARCH_SCIENCE/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-07", count: "6 ROLES", title: "Legal & Compliance", sum_vi: "Nghiên cứu pháp lý, Phân tích hợp đồng, Tuân thủ (Compliance), Quyền riêng tư dữ liệu, Pháp quy ngành, Sở hữu trí tuệ.", sum_en: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst, IP Specialist.", path: "03_DOMAINS/LEGAL_COMPLIANCE/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-08", count: "7 ROLES", title: "Design & Creative", sum_vi: "Product Designer, UX Researcher, UI Designer, Visual/Brand/Motion Designer, Chiến lược nội dung chuẩn công thái học.", sum_en: "Product Designer, UX Researcher, UI, Visual, Brand, and Motion Designers, Content Strategist (zero AI-Sign).", path: "03_DOMAINS/DESIGN_CREATIVE/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-09", count: "6 ROLES", title: "Healthcare & Life Sciences", sum_vi: "Nghiên cứu lâm sàng, Tổng quan y văn, Y tế công cộng, Y sinh, Phân tích dữ liệu y tế, Đánh giá an toàn bệnh nhân.", sum_en: "Clinical Researcher, Medical Literature, Public Health, Biomedical Researcher, Health Data, Patient Safety Reviewer.", path: "03_DOMAINS/HEALTHCARE_LIFE_SCIENCES/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-10", count: "7 ROLES", title: "Data & Analytics", sum_vi: "Data Architect, Data/Analytics Engineer, BI Analyst, Kỹ sư chất lượng dữ liệu, Quản trị dữ liệu, Trực quan hóa dữ liệu.", sum_en: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality, Data Governance, Data Visualization.", path: "03_DOMAINS/DATA_ANALYTICS/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-11", count: "5 ROLES", title: "Manufacturing & Industrial", sum_vi: "Kỹ sư hệ thống công nghiệp, Kỹ thuật quy trình sản xuất, Kiểm soát chất lượng Six Sigma SPC, OT/ICS, Độ tin cậy bảo trì.", sum_en: "Industrial Systems, Manufacturing Process, Six Sigma SPC Quality Control, OT/ICS Engineer, Maintenance Reliability.", path: "03_DOMAINS/MANUFACTURING_INDUSTRIAL/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-12", count: "5 ROLES", title: "Robotics & Automation", sum_vi: "Kiến trúc hệ thống robot, Điều khiển học & Động học, Định vị tự hành SLAM, Firmware nhúng thời gian thực, An toàn robot.", sum_en: "Robotics Systems Architect, Controls & Kinematics, Autonomous SLAM Navigation, Embedded Firmware, Safety Validation.", path: "03_DOMAINS/ROBOTICS_AUTOMATION/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-13", count: "5 ROLES", title: "Supply Chain & Logistics", sum_vi: "Chiến lược chuỗi cung ứng, Dự báo nhu cầu, Tối ưu mạng lưới vận tải, Thu mua nguồn cung, Tồn kho & Kho vận.", sum_en: "Supply Chain Strategist, Demand Forecasting, Logistics Network Optimizer, Procurement Sourcing, Inventory Analyst.", path: "03_DOMAINS/SUPPLY_CHAIN_LOGISTICS/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-14", count: "5 ROLES", title: "Energy & Sustainability", sum_vi: "Phân tích hệ thống năng lượng, Kỹ thuật lưới điện, Năng lượng tái tạo, Kiểm kê phát thải ESG Scope 1/2/3, Môi trường.", sum_en: "Energy Systems Analyst, Grid & Power Systems, Renewable Energy, ESG Carbon Accounting, Environmental Compliance.", path: "03_DOMAINS/ENERGY_SUSTAINABILITY/DOMAIN_INDEX.md" },
-        { cat: "domain", id: "DOM-15", count: "5 ROLES", title: "Education & Training", sum_vi: "Thiết kế học liệu, Kiến trúc chương trình đào tạo, Đo lường tâm trắc học, Đào tạo kỹ thuật, Đánh giá trải nghiệm học.", sum_en: "Instructional Designer, Curriculum Architect, Psychometric Assessment, Technical Trainer, Learning Evaluator.", path: "03_DOMAINS/EDUCATION_TRAINING/DOMAIN_INDEX.md" },
+        {
+          cat: "domain", id: "DOM-01", count: "11 ROLES", title: "IT & Software Engineering", path: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md",
+          sum: {
+            en: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.",
+            vi: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.",
+            zh: "涵盖 Software Architect、Backend、Frontend、Fullstack、DevOps、Platform、Database、QA、Performance 与 SRE。",
+            fr: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.",
+            es: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-02", count: "13 ROLES", title: "Cybersecurity", path: "03_DOMAINS/CYBERSECURITY/DOMAIN_INDEX.md",
+          sum: {
+            en: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (+ WORKFLOW.md).",
+            vi: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (kèm WORKFLOW.md).",
+            zh: "Security Architect、AppSec、Pentester、Red/Blue Team、CTI、DFIR、云/网络安全、IAM、GRC 与隐私合规（均附 WORKFLOW.md）。",
+            fr: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (+ WORKFLOW.md).",
+            es: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (+ WORKFLOW.md)."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-03", count: "10 ROLES", title: "AI & Machine Learning", path: "03_DOMAINS/AI_MACHINE_LEARNING/DOMAIN_INDEX.md",
+          sum: {
+            en: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM Engineer, MLOps, AI Evaluation, Data Scientist, GPU/HPC.",
+            vi: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM Engineer, MLOps, AI Evaluation, Data Scientist, GPU/HPC.",
+            zh: "AI Architect、ML Engineer、深度学习、Computer Vision、NLP、LLM、MLOps、模型评测、Data Scientist 与 GPU/HPC。",
+            fr: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM Engineer, MLOps, AI Evaluation, Data Scientist, GPU/HPC.",
+            es: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM Engineer, MLOps, AI Evaluation, Data Scientist, GPU/HPC."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-04", count: "10 ROLES", title: "Economics & Finance", path: "03_DOMAINS/ECONOMICS_FINANCE/DOMAIN_INDEX.md",
+          sum: {
+            en: "Economist, Financial/Investment/Quant Analyst, 3-Statement Financial Modeling, Risk, Corporate Finance, Valuation, Accounting.",
+            vi: "Economist, Financial/Investment/Quant Analyst, lập Financial Model 3 báo cáo, Risk Management, Corporate Finance, Valuation, Accounting.",
+            zh: "宏观/微观经济学、财务/投资/量化分析 (Quant)、三表财务建模、风险分析、公司金融、估值与会计核算。",
+            fr: "Economist, Financial/Investment/Quant Analyst, modélisation financière 3 états, Risk, Corporate Finance, Valuation, Accounting.",
+            es: "Economist, Financial/Investment/Quant Analyst, modelado financiero de 3 estados, Risk, Corporate Finance, Valuation, Accounting."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-05", count: "7 ROLES", title: "Business & Product", path: "03_DOMAINS/BUSINESS_PRODUCT/DOMAIN_INDEX.md",
+          sum: {
+            en: "Product Manager, Business Analyst, Business Strategist, Project Manager, Operations Manager, Growth Specialist, Market Researcher.",
+            vi: "Product Manager, Business Analyst, Business Strategist, Project/Operations Manager, Growth Specialist và Market Researcher.",
+            zh: "Product Manager、Business Analyst、商业战略、项目与运营管理、增长专家 (Growth) 与市场研究。",
+            fr: "Product Manager, Business Analyst, Business Strategist, Project/Operations Manager, Growth Specialist et Market Researcher.",
+            es: "Product Manager, Business Analyst, Business Strategist, Project/Operations Manager, Growth Specialist y Market Researcher."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-06", count: "6 ROLES", title: "Research & Science", path: "03_DOMAINS/RESEARCH_SCIENCE/DOMAIN_INDEX.md",
+          sum: {
+            en: "Research Scientist, Methodologist, Statistician, Experimental Designer, Literature Reviewer, Reproducibility Auditor.",
+            vi: "Research Scientist, Research Methodologist, Statistician, Experimental Designer, Literature Reviewer và Reproducibility Auditor.",
+            zh: "科研专家、研究方法论、统计学家、实验设计、文献综述与可复现性审计员 (Reproducibility Auditor)。",
+            fr: "Research Scientist, Methodologist, Statistician, Experimental Designer, Literature Reviewer et Reproducibility Auditor.",
+            es: "Research Scientist, Methodologist, Statistician, Experimental Designer, Literature Reviewer y Reproducibility Auditor."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-07", count: "6 ROLES", title: "Legal & Compliance", path: "03_DOMAINS/LEGAL_COMPLIANCE/DOMAIN_INDEX.md",
+          sum: {
+            en: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst, IP Specialist.",
+            vi: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst và IP (Sở hữu trí tuệ).",
+            zh: "法律检索、合同审查 (Contract Analyst)、合规专家、数据隐私、监管政策分析与知识产权 (IP) 专家。",
+            fr: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst et propriété intellectuelle (IP).",
+            es: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst y propiedad intelectual (IP)."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-08", count: "7 ROLES", title: "Design & Creative", path: "03_DOMAINS/DESIGN_CREATIVE/DOMAIN_INDEX.md",
+          sum: {
+            en: "Product Designer, UX Researcher, UI Designer, Visual/Brand/Motion Designers, Content Strategist (utilitarian, zero AI-Sign).",
+            vi: "Product Designer, UX Researcher, UI/Visual/Brand/Motion Designer và Content Strategist (tối giản thực dụng, zero AI-Sign).",
+            zh: "Product Designer、UX 研究、UI/视觉/品牌/动效设计与内容策略（强调实用工程美学，零 AI 廉价装饰）。",
+            fr: "Product Designer, UX Researcher, UI/Visual/Brand/Motion Designers et Content Strategist (esthétique utilitaire, zéro AI-Sign).",
+            es: "Product Designer, UX Researcher, UI/Visual/Brand/Motion Designers y Content Strategist (diseño utilitario, cero AI-Sign)."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-09", count: "6 ROLES", title: "Healthcare & Life Sciences", path: "03_DOMAINS/HEALTHCARE_LIFE_SCIENCES/DOMAIN_INDEX.md",
+          sum: {
+            en: "Clinical Researcher, Medical Literature Reviewer, Public Health Analyst, Biomedical Researcher, Healthcare Data, Patient Safety.",
+            vi: "Clinical Researcher, Medical Literature Reviewer, Public Health, Biomedical Researcher, Healthcare Data và Patient Safety.",
+            zh: "临床研究、医学文献循证审查、公共卫生分析、生物医学研究、医疗数据分析与患者安全审查。",
+            fr: "Clinical Researcher, revue de littérature médicale, santé publique, recherche biomédicale, données de santé et Patient Safety.",
+            es: "Clinical Researcher, revisión de literatura médica, salud pública, investigación biomédica, datos clínicos y Patient Safety."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-10", count: "7 ROLES", title: "Data & Analytics", path: "03_DOMAINS/DATA_ANALYTICS/DOMAIN_INDEX.md",
+          sum: {
+            en: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality Engineer, Data Governance, Data Visualization.",
+            vi: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality Engineer, Data Governance và Data Visualization.",
+            zh: "Data Architect、Data Engineer、Analytics Engineer、BI 分析、数据质量工程、数据治理与数据可视化。",
+            fr: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality, Data Governance et Data Visualization.",
+            es: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality, Data Governance y Data Visualization."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-11", count: "5 ROLES", title: "Manufacturing & Industrial", path: "03_DOMAINS/MANUFACTURING_INDUSTRIAL/DOMAIN_INDEX.md",
+          sum: {
+            en: "Industrial Systems Engineer, Manufacturing Process, Six Sigma SPC Quality Control, OT/ICS Engineer, Maintenance Reliability.",
+            vi: "Industrial Systems, Manufacturing Process, kiểm soát chất lượng Six Sigma SPC, OT/ICS Engineer và Maintenance Reliability.",
+            zh: "工业系统工程、制造工艺工程、六西格玛 SPC 质量控制、OT/ICS 工控工程与设备可靠性维护。",
+            fr: "Systèmes industriels, procédés de fabrication, contrôle qualité Six Sigma SPC, ingénierie OT/ICS et fiabilité maintenance.",
+            es: "Sistemas industriales, procesos de manufactura, control de calidad Six Sigma SPC, ingeniería OT/ICS y confiabilidad."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-12", count: "5 ROLES", title: "Robotics & Automation", path: "03_DOMAINS/ROBOTICS_AUTOMATION/DOMAIN_INDEX.md",
+          sum: {
+            en: "Robotics Systems Architect, Controls & Kinematics, Autonomous SLAM Navigation, Embedded Firmware, Robotics Safety Validation.",
+            vi: "Robotics Systems Architect, Controls & Kinematics, định vị tự hành SLAM, Embedded Firmware và Robotics Safety Validation.",
+            zh: "机器人系统架构、控制与运动学、SLAM 自主导航、实时嵌入式固件 (Embedded Firmware) 与机器人安全验证。",
+            fr: "Architecture robotique, commande & cinématique, navigation autonome SLAM, Embedded Firmware temps réel et validation sécurité.",
+            es: "Arquitectura robótica, control y cinemática, navegación autónoma SLAM, Embedded Firmware en tiempo real y seguridad robótica."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-13", count: "5 ROLES", title: "Supply Chain & Logistics", path: "03_DOMAINS/SUPPLY_CHAIN_LOGISTICS/DOMAIN_INDEX.md",
+          sum: {
+            en: "Supply Chain Strategist, Demand Forecasting Planner, Logistics Network Optimizer, Procurement Sourcing, Inventory & Warehouse.",
+            vi: "Supply Chain Strategist, Demand Forecasting, tối ưu mạng lưới Logistics, Procurement Sourcing và quản lý Inventory/Warehouse.",
+            zh: "供应链战略、需求预测规划、物流网络优化、采购寻源 (Procurement) 与库存仓储分析。",
+            fr: "Stratégie Supply Chain, prévision de la demande, optimisation réseau logistique, Procurement et gestion des stocks/entrepôts.",
+            es: "Estrategia de Supply Chain, pronóstico de demanda, optimización logística, Procurement y análisis de inventario/almacenes."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-14", count: "5 ROLES", title: "Energy & Sustainability", path: "03_DOMAINS/ENERGY_SUSTAINABILITY/DOMAIN_INDEX.md",
+          sum: {
+            en: "Energy Systems Analyst, Grid & Power Systems Engineer, Renewable Energy, ESG Carbon Accounting (Scope 1/2/3), Environmental Compliance.",
+            vi: "Energy Systems Analyst, Grid & Power Systems, Renewable Energy, kiểm kê khí thải ESG Scope 1/2/3 và Environmental Compliance.",
+            zh: "能源系统分析、电网与电力系统工程、可再生能源、ESG 碳核算 (Scope 1/2/3) 与环境合规。",
+            fr: "Systèmes énergétiques, réseaux électriques, énergies renouvelables, bilan carbone ESG (Scope 1/2/3) et conformité environnementale.",
+            es: "Sistemas energéticos, redes eléctricas, energías renovables, contabilidad de carbono ESG (Scope 1/2/3) y cumplimiento ambiental."
+          }
+        },
+        {
+          cat: "domain", id: "DOM-15", count: "5 ROLES", title: "Education & Training", path: "03_DOMAINS/EDUCATION_TRAINING/DOMAIN_INDEX.md",
+          sum: {
+            en: "Instructional Designer, Curriculum Architect, Psychometric Assessment Specialist, Technical Trainer, Learning Experience Evaluator.",
+            vi: "Instructional Designer, Curriculum Architect, đánh giá Psychometrics, Technical Trainer và Learning Experience Evaluator.",
+            zh: "教学系统设计、课程架构师、心理测量与评估 (Psychometrics)、技术培训师与学习体验评估。",
+            fr: "Ingénierie pédagogique, architecture de cursus, évaluation psychométrique, formation technique et évaluation d’apprentissage.",
+            es: "Diseño instruccional, arquitectura curricular, evaluación psicométrica, formación técnica y evaluación del aprendizaje."
+          }
+        },
 
-        { cat: "core-role", id: "ROLE-CORE-001", count: "CORE ROLE", title: "Project Manager (PM)", sum_vi: "Sở hữu phạm vi mục tiêu, phân loại L0–L4, định tuyến 15 miền, điều phối luồng việc và ký duyệt nghiệp vụ PM_GATE.", sum_en: "Owns scope clarity, L0–L4 classification, 15-domain routing, workstream coordination, and PM_GATE UX/business sign-off.", path: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md" },
-        { cat: "core-role", id: "ROLE-CORE-002", count: "CORE ROLE", title: "System Architect (SA)", sum_vi: "Sở hữu kiến trúc hệ thống, khóa hợp đồng giao diện, phân quyền ghi tệp độc quyền, an toàn tài nguyên và SA_GATE.", sum_en: "Owns technical architecture, interface contracts, disjoint file write-locks, security/resource safety, and SA_GATE.", path: "02_CORE_ROLES/SYSTEM_ARCHITECT/SYSTEM_PROMPT.md" },
-        { cat: "core-role", id: "ROLE-CORE-003", count: "CORE ROLE", title: "Domain Lead", sum_vi: "Chủ trì phương pháp luận chuyên ngành sâu và hòa giải tiêu chuẩn giữa nhiều lĩnh vực trong dự án Level 3–4.", sum_en: "Leads deep specialist methodology and reconciles cross-domain quality gates on complex Level 3–4 initiatives.", path: "02_CORE_ROLES/DOMAIN_LEAD/SYSTEM_PROMPT.md" },
-        { cat: "core-role", id: "ROLE-CORE-004", count: "CORE ROLE", title: "Quality Reviewer", sum_vi: "Kiểm định độc lập không trùng người thực thi, đối chiếu bằng chứng thực tế trước khi mở cổng bàn giao.", sum_en: "Performs independent verification separated from authorship, auditing empirical evidence prior to release.", path: "02_CORE_ROLES/QUALITY_REVIEWER/SYSTEM_PROMPT.md" },
+        {
+          cat: "core-role", id: "ROLE-CORE-001", count: "CORE ROLE", title: "Project Manager (PM)", path: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md",
+          sum: {
+            en: "Owns user objective clarity, L0–L4 triage, 15-Domain routing, workstream coordination, clean UX, and PM_GATE sign-off.",
+            vi: "Quản lý mục tiêu của user, phân loại L0–L4, chọn Domain, điều phối các workstream, giữ UX sạch gọn và duyệt cổng PM_GATE.",
+            zh: "负责明确用户目标、L0–L4 复杂度分级、15 Domains 路由、工作流协调、纯净 UX 把关及最终 PM_GATE 签收。",
+            fr: "Garant de la clarté des objectifs, du triage L0–L4, du routage 15 Domains, de la coordination, de l’UX sobre et du PM_GATE.",
+            es: "Responsable de objetivos del usuario, clasificación L0–L4, ruteo en 15 Domains, coordinación de flujos, UX limpia y PM_GATE."
+          }
+        },
+        {
+          cat: "core-role", id: "ROLE-CORE-002", count: "CORE ROLE", title: "System Architect (SA)", path: "02_CORE_ROLES/SYSTEM_ARCHITECT/SYSTEM_PROMPT.md",
+          sum: {
+            en: "Owns system architecture, upfront API/Schema Contracts, disjoint Exclusive Write-Locks, security/resource safety, and SA_GATE.",
+            vi: "Chịu trách nhiệm kiến trúc, khóa API/Schema Contract trước khi code, cấp Exclusive Write-Lock, kiểm soát Security và duyệt SA_GATE.",
+            zh: "负责系统架构、前置 API/Schema Contract 锁定、文件互斥写锁分配、安全与宿主资源保护以及 SA_GATE 技术签收。",
+            fr: "Responsable de l’architecture, des Contracts API/Schema, des Exclusive Write-Locks disjoints, de la sécurité et du SA_GATE.",
+            es: "Responsable de arquitectura, Contracts API/Schema previos, Exclusive Write-Locks disjuntos, seguridad técnica y SA_GATE."
+          }
+        },
+        {
+          cat: "core-role", id: "ROLE-CORE-003", count: "CORE ROLE", title: "Domain Lead", path: "02_CORE_ROLES/DOMAIN_LEAD/SYSTEM_PROMPT.md",
+          sum: {
+            en: "Leads specialist methodology and reconciles cross-domain quality standards on complex Level 3–4 programs.",
+            vi: "Định hướng phương pháp chuyên môn sâu và đồng bộ tiêu chuẩn giữa nhiều Domains trên các dự án phức tạp Level 3–4.",
+            zh: "在复杂的 Level 3–4 跨领域项目中主导专业方法论，协调并统一多领域的质量门禁标准。",
+            fr: "Pilote la méthodologie métier approfondie et harmonise les exigences inter-Domains sur les programmes Level 3–4.",
+            es: "Lidera la metodología especializada y armoniza estándares entre múltiples Domains en programas complejos Level 3–4."
+          }
+        },
+        {
+          cat: "core-role", id: "ROLE-CORE-004", count: "CORE ROLE", title: "Quality Reviewer", path: "02_CORE_ROLES/QUALITY_REVIEWER/SYSTEM_PROMPT.md",
+          sum: {
+            en: "Executes independent verification separated from authorship, auditing empirical test and runtime evidence prior to release.",
+            vi: "Thực hiện kiểm định độc lập (tách rời người implement), đối chiếu log, test và bằng chứng runtime trước khi release.",
+            zh: "与实现者严格分离的独立质量审核员，在交付前逐项核验测试结果、运行态证据与需求覆盖率。",
+            fr: "Assure une vérification indépendante séparée des auteurs, en auditant les preuves empiriques avant livraison.",
+            es: "Ejecuta verificación independiente separada de la implementación, auditando pruebas y evidencia empírica antes de entregar."
+          }
+        },
 
-        { cat: "core-skill", id: "SKL-CORE-001", count: "CORE SKILL", title: "cognitive-execution", sum_vi: "Phân rã bài toán, lập sổ cái giả định, kiểm định giả thuyết và phân tích chế độ lỗi trước khi ghi trạng thái.", sum_en: "Structured problem decomposition, assumption ledgering, hypothesis testing, and pre-mutation failure analysis.", path: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-002", count: "CORE SKILL", title: "critical-thinking", sum_vi: "Phản biện giả định ngầm, tìm bằng chứng ngược và phân loại rõ sự thật, ước lượng và điều chưa xác minh.", sum_en: "Challenges hidden assumptions, tests counter-evidence, and separates verified facts from unverified claims.", path: "04_CROSS_DOMAIN_SKILLS/CRITICAL_THINKING/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-003", count: "CORE SKILL", title: "systems-thinking", sum_vi: "Mô hình hóa biên hệ thống, vòng lặp phản hồi, điểm nghẽn cổ chai và hệ quả bậc hai khi thay đổi kiến trúc.", sum_en: "Maps system boundaries, feedback loops, throughput bottlenecks, and second-order coupling effects.", path: "04_CROSS_DOMAIN_SKILLS/SYSTEMS_THINKING/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-004", count: "CORE SKILL", title: "research-and-source-validation", sum_vi: "Xác thực nguồn sơ cấp, truy vết xuất xứ dữ liệu và nghiêm cấm bịa đặt trích dẫn tài liệu.", sum_en: "Enforces primary-source verification, provenance tracking, and zero fabricated citations.", path: "04_CROSS_DOMAIN_SKILLS/RESEARCH_AND_SOURCE_VALIDATION/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-005", count: "CORE SKILL", title: "data-interpretation", sum_vi: "Kiểm tra phân phối, mẫu số, nhiễu thống kê và sai lệch chọn mẫu trước khi rút ra kết luận định lượng.", sum_en: "Audits distributions, denominators, confounders, and selection bias before drawing quantitative conclusions.", path: "04_CROSS_DOMAIN_SKILLS/DATA_INTERPRETATION/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-006", count: "CORE SKILL", title: "decision-analysis", sum_vi: "Ma trận đánh đổi đa tiêu chí có trọng số, phân tích độ nhạy và hồ sơ quyết định kiến trúc (ADR).", sum_en: "Weighted multi-criteria trade-off matrices, sensitivity checks, and auditable Architecture Decision Records.", path: "04_CROSS_DOMAIN_SKILLS/DECISION_ANALYSIS/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-007", count: "CORE SKILL", title: "technical-writing", sum_vi: "Văn phong kỹ thuật cô đọng, chính xác, loại bỏ hoàn toàn từ ngữ sáo rỗng hay dấu hiệu AI trang trí.", sum_en: "High-signal operational engineering prose free of filler, hype adjectives, or decorative AI-Sign noise.", path: "04_CROSS_DOMAIN_SKILLS/TECHNICAL_WRITING/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-008", count: "CORE SKILL", title: "documentation", sum_vi: "Tổ chức tài liệu theo 4 khung Tutorial, Runbook, Reference, ADR và kiểm chứng lệnh chạy khớp mã nguồn.", sum_en: "Structures Tutorials, Runbooks, References, and ADRs with empirical doc-to-code command verification.", path: "04_CROSS_DOMAIN_SKILLS/DOCUMENTATION/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-009", count: "CORE SKILL", title: "quality-assurance", sum_vi: "Ma trận truy vết yêu cầu, kiểm thử biên/âm tính và phân loại mức độ nghiêm trọng của lỗi.", sum_en: "Requirement traceability matrices, boundary/negative testing, and deterministic defect grading.", path: "04_CROSS_DOMAIN_SKILLS/QUALITY_ASSURANCE/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-010", count: "CORE SKILL", title: "risk-management", sum_vi: "Định lượng xác suất × tác động, thiết kế chốt chặn giảm thiểu và ngưỡng kích hoạt leo thang.", sum_en: "Likelihood-by-impact scoring, preventive/detective controls, and explicit escalation thresholds.", path: "04_CROSS_DOMAIN_SKILLS/RISK_MANAGEMENT/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-011", count: "CORE SKILL", title: "communication", sum_vi: "Chuẩn hóa giao thức hợp đồng liên tác tử, báo cáo bàn giao 8 mục và cập nhật tiến độ thực tế cho người dùng.", sum_en: "Standardizes inter-agent contracts, structured handoff reports, and concise user status reporting.", path: "04_CROSS_DOMAIN_SKILLS/COMMUNICATION/SKILL.md" },
-        { cat: "core-skill", id: "SKL-CORE-012", count: "CORE SKILL", title: "requirements-analysis", sum_vi: "Chuyển hóa mục tiêu mơ hồ thành tiêu chí nghiệm thu kiểm chứng được cùng ràng buộc phi chức năng rõ ràng.", sum_en: "Translates high-level goals into testable acceptance criteria, scope boundaries, and non-functional constraints.", path: "04_CROSS_DOMAIN_SKILLS/REQUIREMENTS_ANALYSIS/SKILL.md" },
+        {
+          cat: "core-skill", id: "SKL-CORE-001", count: "CORE SKILL", title: "cognitive-execution", path: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md",
+          sum: {
+            en: "Structured problem decomposition, assumption tracking, hypothesis testing, and pre-action failure-mode analysis.",
+            vi: "Chia nhỏ bài toán, tách bạch fact vs assumption, kiểm chứng giả thuyết và lường trước failure modes trước khi sửa code.",
+            zh: "结构化问题拆解、假设台账管理、假设检验以及修改状态前的故障模式分析。",
+            fr: "Décomposition structurée, suivi des hypothèses, test empirique et analyse des modes de défaillance avant action.",
+            es: "Descomposición estructurada, registro de supuestos, validación de hipótesis y análisis previo de modos de fallo."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-002", count: "CORE SKILL", title: "critical-thinking", path: "04_CROSS_DOMAIN_SKILLS/CRITICAL_THINKING/SKILL.md",
+          sum: {
+            en: "Challenges hidden premises, evaluates counter-evidence, and strictly separates verified facts from unverified claims.",
+            vi: "Phản biện các giả định ngầm, đối chiếu phản chứng và phân tách rõ đâu là verified fact, đâu là mục NOT VERIFIED.",
+            zh: "审视隐含前提、评估反例证据，严格区分已验证事实、推断估算与未验证项 (NOT VERIFIED)。",
+            fr: "Remet en question les présupposés implicites, évalue les contre-preuves et sépare faits vérifiés et éléments non vérifiés.",
+            es: "Cuestiona supuestos ocultos, evalúa contraevidencia y separa hechos verificados de afirmaciones no verificadas."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-003", count: "CORE SKILL", title: "systems-thinking", path: "04_CROSS_DOMAIN_SKILLS/SYSTEMS_THINKING/SKILL.md",
+          sum: {
+            en: "Maps system boundaries, feedback loops, throughput bottlenecks, and second-order architectural side effects.",
+            vi: "Phân tích ranh giới hệ thống, feedback loops, điểm nghẽn bottleneck và tác động dây chuyền khi thay đổi kiến trúc.",
+            zh: "梳理系统边界、反馈回路、吞吐瓶颈以及架构变更带来的二阶耦合影响。",
+            fr: "Cartographie les frontières système, boucles de rétroaction, goulots d’étranglement et effets de bord d’architecture.",
+            es: "Mapea límites del sistema, bucles de retroalimentación, cuellos de botella y efectos arquitectónicos de segundo orden."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-004", count: "CORE SKILL", title: "research-and-source-validation", path: "04_CROSS_DOMAIN_SKILLS/RESEARCH_AND_SOURCE_VALIDATION/SKILL.md",
+          sum: {
+            en: "Enforces primary-source verification, provenance tracking, recency checks, and zero fabricated citations.",
+            vi: "Xác thực nguồn gốc tài liệu sơ cấp, kiểm tra độ cập nhật và chặn tuyệt đối lỗi bịa trích dẫn (hallucinated citations).",
+            zh: "强制要求一手信源核验、数据溯源与时效性检查，零容忍虚构引用或伪造出处。",
+            fr: "Impose la vérification des sources primaires, la traçabilité documentaire et zéro citation fabriquée.",
+            es: "Exige verificación de fuentes primarias, trazabilidad documental y cero citas inventadas."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-005", count: "CORE SKILL", title: "data-interpretation", path: "04_CROSS_DOMAIN_SKILLS/DATA_INTERPRETATION/SKILL.md",
+          sum: {
+            en: "Audits distributions, denominators, sample sizes, confounders, and selection bias before drawing conclusions.",
+            vi: "Kiểm tra phân phối dữ liệu, mẫu số, cỡ mẫu và nhiễu thống kê trước khi đưa ra kết luận định lượng.",
+            zh: "在得出定量结论前严格核查数据分布、分母口径、样本量、混杂因素与选择偏差。",
+            fr: "Audite les distributions, dénominateurs, tailles d’échantillon et biais statistiques avant toute conclusion chiffrée.",
+            es: "Audita distribuciones, denominadores, tamaños muestrales y sesgos antes de extraer conclusiones cuantitativas."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-006", count: "CORE SKILL", title: "decision-analysis", path: "04_CROSS_DOMAIN_SKILLS/DECISION_ANALYSIS/SKILL.md",
+          sum: {
+            en: "Weighted multi-criteria trade-off matrices, sensitivity analysis, and Architecture Decision Records (ADRs).",
+            vi: "Đánh giá trade-off đa tiêu chí, phân tích độ nhạy và ghi lại quyết định kỹ thuật theo chuẩn ADR.",
+            zh: "多维加权权衡矩阵、敏感性分析以及可追溯的架构决策记录 (ADR)。",
+            fr: "Matrices de compromis multicritères, analyses de sensibilité et Architecture Decision Records (ADR).",
+            es: "Matrices de compensación multicriterio, análisis de sensibilidad y Architecture Decision Records (ADR)."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-007", count: "CORE SKILL", title: "technical-writing", path: "04_CROSS_DOMAIN_SKILLS/TECHNICAL_WRITING/SKILL.md",
+          sum: {
+            en: "Concise, high-signal operational engineering prose free of marketing filler or decorative AI-Sign noise.",
+            vi: "Viết tài liệu kỹ thuật rõ ý, ngắn gọn, đi thẳng vào vấn đề — không sáo rỗng, không dùng emoji hay từ ngữ AI-Sign.",
+            zh: "高信息密度的工程技术写作规范，摒弃空洞营销辞藻与一切装饰性 AI 痕迹 (Zero AI-Sign)。",
+            fr: "Rédaction technique concise et opérationnelle, sans jargon marketing ni bruit décoratif AI-Sign.",
+            es: "Redacción técnica concisa y directa, libre de relleno promocional o ruido decorativo AI-Sign."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-008", count: "CORE SKILL", title: "documentation", path: "04_CROSS_DOMAIN_SKILLS/DOCUMENTATION/SKILL.md",
+          sum: {
+            en: "Structures Tutorials, Runbooks, References, and ADRs with empirical doc-to-code command verification.",
+            vi: "Tổ chức tài liệu theo chuẩn Tutorial, Runbook, Reference, ADR và kiểm tra lệnh ví dụ chạy khớp với code thật.",
+            zh: "按 Tutorial、Runbook、Reference 与 ADR 组织文档，并实证校验文档命令与真实代码一致。",
+            fr: "Structure Tutorials, Runbooks, References et ADR avec vérification empirique de cohérence doc-code.",
+            es: "Estructura Tutorials, Runbooks, References y ADR verificando empíricamente comandos frente al código real."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-009", count: "CORE SKILL", title: "quality-assurance", path: "04_CROSS_DOMAIN_SKILLS/QUALITY_ASSURANCE/SKILL.md",
+          sum: {
+            en: "Requirement traceability matrices, negative/boundary test coverage, and deterministic defect classification.",
+            vi: "Đối chiếu độ phủ yêu cầu (traceability), kiểm thử biên/case lỗi và phân loại mức độ nghiêm trọng của bug.",
+            zh: "需求追踪矩阵、边界与异常路径测试覆盖以及确定性的缺陷等级分类。",
+            fr: "Matrices de traçabilité, couverture des cas limites/négatifs et classification déterministe des anomalies.",
+            es: "Matrices de trazabilidad, cobertura de casos borde/negativos y clasificación determinista de defectos."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-010", count: "CORE SKILL", title: "risk-management", path: "04_CROSS_DOMAIN_SKILLS/RISK_MANAGEMENT/SKILL.md",
+          sum: {
+            en: "Likelihood-by-impact scoring, preventive/detective mitigations, and explicit escalation triggers.",
+            vi: "Đánh giá xác suất × mức ảnh hưởng, thiết lập cơ chế phòng ngừa/phát hiện sớm và ngưỡng báo động leo thang.",
+            zh: "概率与影响度量化评估、预防/检测控制措施以及明确的升级触发阈值。",
+            fr: "Cotation probabilité × impact, contrôles préventifs/détectifs et seuils explicites d’escalade.",
+            es: "Evaluación de probabilidad × impacto, controles preventivos/detectivos y umbrales claros de escalamiento."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-011", count: "CORE SKILL", title: "communication", path: "04_CROSS_DOMAIN_SKILLS/COMMUNICATION/SKILL.md",
+          sum: {
+            en: "Standardizes inter-agent Contracts, 8-item Handoff Reports, and concise factual user status updates.",
+            vi: "Chuẩn hóa Contract giao việc giữa các Agent, báo cáo Handoff 8 mục và cách báo cáo kết quả ngắn gọn cho user.",
+            zh: "规范智能体间的工作流 Contract、8 项标准 Handoff 报告以及面向用户的简明事实同步。",
+            fr: "Standardise les Contracts inter-agents, les Handoff Reports en 8 points et les points d’avancement concis.",
+            es: "Estandariza Contracts entre agentes, Handoff Reports de 8 puntos y actualizaciones concisas al usuario."
+          }
+        },
+        {
+          cat: "core-skill", id: "SKL-CORE-012", count: "CORE SKILL", title: "requirements-analysis", path: "04_CROSS_DOMAIN_SKILLS/REQUIREMENTS_ANALYSIS/SKILL.md",
+          sum: {
+            en: "Translates ambiguous goals into testable Acceptance Criteria, clear scope bounds, and non-functional constraints.",
+            vi: "Chuyển mục tiêu tổng quát thành bộ Acceptance Criteria test được, ranh giới in-scope/out-of-scope và ràng buộc phi chức năng.",
+            zh: "将模糊诉求转化为可测试的验收标准 (Acceptance Criteria)、清晰范围边界与非功能性约束。",
+            fr: "Traduit les besoins généraux en Acceptance Criteria testables, limites de périmètre et contraintes non fonctionnelles.",
+            es: "Traduce objetivos generales en Acceptance Criteria verificables, límites de alcance y restricciones no funcionales."
+          }
+        },
 
-        { cat: "spec-skill", id: "SKL-SPEC-001", count: "SPEC SKILL", title: "human-centric-application-qa", sum_vi: "Kiểm định ứng dụng 3 cấp độ như người dùng thật: điều hướng, biểu mẫu, trạng thái lỗi/rỗng và đa khung hình.", sum_en: "3-level real-user QA across interactive controls, error/empty states, responsive viewports, and backend state.", path: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-002", count: "SPEC SKILL", title: "browser-and-gui-interaction", sum_vi: "Tự động hóa trình duyệt xác định, chụp kiểm tra trực quan giao diện và rà soát lỗi console/network.", sum_en: "Deterministic browser driving, visual screenshot inspection, and console/network error verification.", path: "05_SPECIALIZED_SKILLS/BROWSER_AND_GUI_INTERACTION/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-003", count: "SPEC SKILL", title: "api-testing", sum_vi: "Kiểm thử hợp đồng schema HTTP/gRPC/GraphQL, phân quyền BOLA/IDOR, tính lũy đẳng và mã lỗi.", sum_en: "Verifies HTTP/gRPC/GraphQL schemas, authn/authz boundaries, idempotency, and error payload contracts.", path: "05_SPECIALIZED_SKILLS/API_TESTING/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-004", count: "SPEC SKILL", title: "database-validation", sum_vi: "Kiểm định an toàn migration xuôi/ngược, toàn vẹn giao dịch ACID, chỉ mục EXPLAIN và đối chiếu dữ liệu.", sum_en: "Audits forward/rollback migrations, ACID constraints, query execution plans, and persistence integrity.", path: "05_SPECIALIZED_SKILLS/DATABASE_VALIDATION/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-005", count: "SPEC SKILL", title: "performance-benchmarking", sum_vi: "Đo lường p50/p95/p99 có pha làm nóng, thông lượng, cấp phát bộ nhớ và kiểm soát nhiễu nền.", sum_en: "Warmup-controlled p50/p95/p99 latency, throughput, memory allocation profiling, and baseline comparison.", path: "05_SPECIALIZED_SKILLS/PERFORMANCE_BENCHMARKING/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-006", count: "SPEC SKILL", title: "security-assessment", sum_vi: "Kiểm tra phạm vi ủy quyền RoE, phân tích luồng dữ liệu source-to-sink và phân loại lỗ hổng có bằng chứng tái lập.", sum_en: "Enforces RoE authorization gates, source-to-sink vulnerability verification, and redacted CVSS reporting.", path: "05_SPECIALIZED_SKILLS/SECURITY_ASSESSMENT/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-007", count: "SPEC SKILL", title: "financial-model-validation", sum_vi: "Đối chiếu cân bằng 3 báo cáo tài chính, nhất quán đơn vị tiền tệ/thời gian và kiểm tra độ nhạy kịch bản.", sum_en: "Audits three-statement accounting identities, unit/period consistency, and downside sensitivity scenarios.", path: "05_SPECIALIZED_SKILLS/FINANCIAL_MODEL_VALIDATION/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-008", count: "SPEC SKILL", title: "scientific-reproducibility", sum_vi: "Khóa hạt giống ngẫu nhiên, môi trường thực thi, kiểm định giả thuyết thống kê và khả năng tái lập độc lập.", sum_en: "Verifies deterministic random seeds, environment lockfiles, statistical power, and independent replication.", path: "05_SPECIALIZED_SKILLS/SCIENTIFIC_REPRODUCIBILITY/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-009", count: "SPEC SKILL", title: "model-evaluation", sum_vi: "Rà soát rò rỉ dữ liệu train/test, đánh giá theo lát cắt (slice), hiệu chuẩn xác suất và độ bền ngoài phân phối.", sum_en: "Audits train/test leakage, disaggregated slice metrics, calibration, and out-of-distribution robustness.", path: "05_SPECIALIZED_SKILLS/MODEL_EVALUATION/SKILL.md" },
-        { cat: "spec-skill", id: "SKL-SPEC-010", count: "SPEC SKILL", title: "skill-discovery-and-loading", sum_vi: "Quy trình 10 bước nạp kỹ năng tiết kiệm token và cách ly kiểm tra mã độc đối với kỹ năng bên thứ ba.", sum_en: "10-step progressive skill loading within token caps plus static quarantine audit for external skills.", path: "05_SPECIALIZED_SKILLS/SKILL_DISCOVERY_AND_LOADING/SKILL.md" }
+        {
+          cat: "spec-skill", id: "SKL-SPEC-001", count: "SPEC SKILL", title: "human-centric-application-qa", path: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md",
+          sum: {
+            en: "3-level real-user QA across interactive UI controls, Loading/Empty/Error states, responsive viewports, and backend state.",
+            vi: "Test ứng dụng 3 cấp độ như user thật: click control, form, trạng thái Loading/Empty/Error, responsive đa màn hình và đối chiếu DB/API.",
+            zh: "像真实用户一样执行三级应用 QA：交互控件、加载/空/错误状态、多视口响应式布局及后端状态交叉核验。",
+            fr: "QA applicative à 3 niveaux centrée utilisateur : contrôles interactifs, états Loading/Empty/Error, viewports et état backend.",
+            es: "QA de aplicaciones en 3 niveles como usuario real: controles interactivos, estados Loading/Empty/Error, viewports y backend."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-002", count: "SPEC SKILL", title: "browser-and-gui-interaction", path: "05_SPECIALIZED_SKILLS/BROWSER_AND_GUI_INTERACTION/SKILL.md",
+          sum: {
+            en: "Deterministic browser automation, visual screenshot inspection, and console/network error verification.",
+            vi: "Tự động hóa trình duyệt với Playwright/DevTools, chụp và kiểm tra trực quan screenshot, rà lỗi console & network.",
+            zh: "确定性浏览器自动化交互、真实渲染截图视觉检查以及 Console/Network 异常核验。",
+            fr: "Automatisation navigateur déterministe, inspection visuelle de captures d’écran et contrôle console/réseau.",
+            es: "Automatización determinista de navegador, inspección visual de capturas y verificación de errores en consola/red."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-003", count: "SPEC SKILL", title: "api-testing", path: "05_SPECIALIZED_SKILLS/API_TESTING/SKILL.md",
+          sum: {
+            en: "Verifies HTTP/gRPC/GraphQL schemas, BOLA/IDOR authorization boundaries, idempotency, and error semantics.",
+            vi: "Kiểm thử schema HTTP/gRPC/GraphQL, phân quyền BOLA/IDOR, tính idempotent khi gọi lặp và chuẩn mã lỗi trả về.",
+            zh: "核验 HTTP/gRPC/GraphQL 契约、BOLA/IDOR 越权边界、接口幂等性与错误响应语义。",
+            fr: "Vérifie les schémas HTTP/gRPC/GraphQL, le contrôle d’accès BOLA/IDOR, l’idempotence et la sémantique d’erreurs.",
+            es: "Verifica esquemas HTTP/gRPC/GraphQL, límites de autorización BOLA/IDOR, idempotencia y semántica de errores."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-004", count: "SPEC SKILL", title: "database-validation", path: "05_SPECIALIZED_SKILLS/DATABASE_VALIDATION/SKILL.md",
+          sum: {
+            en: "Audits forward/rollback migrations, ACID constraints, EXPLAIN query plans, and persistence integrity.",
+            vi: "Kiểm tra an toàn migration up/down, ràng buộc toàn vẹn ACID, tối ưu EXPLAIN plan và đối chiếu dữ liệu lưu trữ.",
+            zh: "审计数据库正反向迁移安全性、ACID 约束完整性、EXPLAIN 执行计划与持久化一致性。",
+            fr: "Audite les migrations up/down, l’intégrité ACID, les plans d’exécution EXPLAIN et la cohérence des données.",
+            es: "Audita migraciones up/down, restricciones ACID, planes de ejecución EXPLAIN e integridad de persistencia."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-005", count: "SPEC SKILL", title: "performance-benchmarking", path: "05_SPECIALIZED_SKILLS/PERFORMANCE_BENCHMARKING/SKILL.md",
+          sum: {
+            en: "Warmup-controlled p50/p95/p99 latency, throughput, memory profiling, and baseline regression checks.",
+            vi: "Đo benchmark có pha warmup cho latency p50/p95/p99, throughput, mức cấp phát RAM và phát hiện suy giảm hiệu năng.",
+            zh: "包含预热阶段的 p50/p95/p99 延迟测量、吞吐量压测、内存剖析与基线性能回归对比。",
+            fr: "Mesure de latence p50/p95/p99 avec warmup, débit, profilage mémoire et détection de régressions.",
+            es: "Medición de latencia p50/p95/p99 con warmup, throughput, perfilado de memoria y control de regresiones."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-006", count: "SPEC SKILL", title: "security-assessment", path: "05_SPECIALIZED_SKILLS/SECURITY_ASSESSMENT/SKILL.md",
+          sum: {
+            en: "Enforces RoE authorization gates, source-to-sink vulnerability tracing, and redacted CVSS finding reports.",
+            vi: "Kiểm tra phạm vi ủy quyền RoE, truy vết lỗ hổng source-to-sink và lập báo cáo bảo mật chuẩn CVSS đã che thông tin nhạy cảm.",
+            zh: "执行 RoE 授权范围门禁、Source-to-Sink 漏洞追踪核验以及脱敏后的标准 CVSS 安全报告。",
+            fr: "Applique les gates d’autorisation RoE, l’analyse de vulnérabilités source-to-sink et les rapports CVSS expurgés.",
+            es: "Aplica controles de autorización RoE, trazabilidad source-to-sink de vulnerabilidades e informes CVSS redactados."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-007", count: "SPEC SKILL", title: "financial-model-VALIDATION".toLowerCase(), path: "05_SPECIALIZED_SKILLS/FINANCIAL_MODEL_VALIDATION/SKILL.md",
+          sum: {
+            en: "Audits three-statement accounting identities, currency/period unit consistency, and downside sensitivity scenarios.",
+            vi: "Đối chiếu cân bằng 3 báo cáo tài chính, kiểm tra nhất quán đơn vị tiền tệ/kỳ kế toán và chạy kịch bản độ nhạy rủi ro.",
+            zh: "核查三大财务报表勾稽平衡、币种与期间单位一致性以及下行风险敏感性情景测试。",
+            fr: "Vérifie l’équilibre des 3 états financiers, la cohérence d’unités/périodes et les scénarios de sensibilité.",
+            es: "Audita el cuadre de los 3 estados financieros, consistencia de unidades/períodos y escenarios de sensibilidad."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-008", count: "SPEC SKILL", title: "scientific-reproducibility", path: "05_SPECIALIZED_SKILLS/SCIENTIFIC_REPRODUCIBILITY/SKILL.md",
+          sum: {
+            en: "Verifies deterministic random seeds, environment lockfiles, statistical power, and independent replication.",
+            vi: "Khóa random seed, cố định môi trường dependency, kiểm tra độ mạnh thống kê và đảm bảo thí nghiệm chạy lại ra đúng kết quả.",
+            zh: "核验确定性随机种子、环境依赖锁文件、统计检验效力以及独立复现实验的一致性。",
+            fr: "Vérifie les seeds déterministes, le verrouillage d’environnement, la puissance statistique et la reproductibilité.",
+            es: "Verifica semillas deterministas, bloqueo de entorno, potencia estadística y reproducibilidad independiente."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-009", count: "SPEC SKILL", title: "model-evaluation", path: "05_SPECIALIZED_SKILLS/MODEL_EVALUATION/SKILL.md",
+          sum: {
+            en: "Audits train/test leakage, disaggregated slice metrics, calibration, and out-of-distribution (OOD) robustness.",
+            vi: "Rà soát lỗi data leakage giữa tập train/test, đánh giá theo từng slice dữ liệu, độ calibration và độ bền trên dữ liệu OOD.",
+            zh: "排查训练/测试集数据泄漏、分片指标评估 (Slice Metrics)、概率校准度与分布外 (OOD) 鲁棒性。",
+            fr: "Audite les fuites train/test, les métriques par sous-segments, la calibration et la robustesse hors distribution (OOD).",
+            es: "Audita fugas train/test, métricas desagregadas por segmentos, calibración y robustez fuera de distribución (OOD)."
+          }
+        },
+        {
+          cat: "spec-skill", id: "SKL-SPEC-010", count: "SPEC SKILL", title: "skill-discovery-and-loading", path: "05_SPECIALIZED_SKILLS/SKILL_DISCOVERY_AND_LOADING/SKILL.md",
+          sum: {
+            en: "10-step progressive skill loading within token caps plus static quarantine audit before running external skills.",
+            vi: "Quy trình 10 bước load SKILL.md đúng nhu cầu để tiết kiệm token, kèm bước kiểm tra an toàn tĩnh trước khi nạp skill bên ngoài.",
+            zh: "遵循 Token 预算上限的 10 步渐进式技能加载流程，并对外部第三方技能执行静态安全隔离审查。",
+            fr: "Protocole en 10 étapes de chargement progressif des skills sous budget token, avec audit statique des skills externes.",
+            es: "Protocolo de 10 pasos para carga progresiva de skills cuidando tokens, con auditoría estática de skills externos."
+          }
+        }
       ];
 
       var SNIPPETS = {
@@ -1820,7 +2836,7 @@
 
           var name = document.createElement("span");
           name.className = "stage-name";
-          name.textContent = currentLang === "vi" ? st.name_vi : st.name_en;
+          name.textContent = st.name[currentLang] || st.name.en;
 
           var prog = document.createElement("span");
           prog.className = "stage-progress";
@@ -1838,8 +2854,8 @@
         });
 
         var cur = PIPELINE_STAGES[activeStageIdx];
-        document.getElementById("stageTitle").textContent = currentLang === "vi" ? cur.title_vi : cur.title_en;
-        document.getElementById("stageBody").textContent = currentLang === "vi" ? cur.body_vi : cur.body_en;
+        document.getElementById("stageTitle").textContent = cur.title[currentLang] || cur.title.en;
+        document.getElementById("stageBody").textContent = cur.body[currentLang] || cur.body.en;
 
         var linkEl = document.getElementById("stageLink");
         linkEl.href = REPO_BLOB + cur.path;
@@ -1901,7 +2917,7 @@
 
           var n = document.createElement("span");
           n.className = "router-tab-name";
-          n.textContent = currentLang === "vi" ? lvl.name_vi : lvl.name_en;
+          n.textContent = lvl.name[currentLang] || lvl.name.en;
 
           btn.appendChild(c);
           btn.appendChild(n);
@@ -1913,13 +2929,13 @@
         });
 
         var cur = ROUTER_LEVELS[activeRouterIdx];
-        document.getElementById("rTitle").textContent = currentLang === "vi" ? cur.title_vi : cur.title_en;
+        document.getElementById("rTitle").textContent = cur.title[currentLang] || cur.title.en;
         document.getElementById("rBadge").textContent = cur.badge;
-        document.getElementById("rDesc").textContent = currentLang === "vi" ? cur.desc_vi : cur.desc_en;
-        document.getElementById("rAgents").textContent = currentLang === "vi" ? cur.agents_vi : cur.agents_en;
-        document.getElementById("rState").textContent = currentLang === "vi" ? cur.state_vi : cur.state_en;
-        document.getElementById("rGate").textContent = currentLang === "vi" ? cur.gate_vi : cur.gate_en;
-        document.getElementById("rWeightText").textContent = currentLang === "vi" ? cur.weight_vi : cur.weight_en;
+        document.getElementById("rDesc").textContent = cur.desc[currentLang] || cur.desc.en;
+        document.getElementById("rAgents").textContent = cur.agents[currentLang] || cur.agents.en;
+        document.getElementById("rState").textContent = cur.state[currentLang] || cur.state.en;
+        document.getElementById("rGate").textContent = cur.gate[currentLang] || cur.gate.en;
+        document.getElementById("rWeightText").textContent = cur.weight[currentLang] || cur.weight.en;
         document.getElementById("rWeightBar").style.width = cur.weight_pct + "%";
         document.getElementById("rModules").textContent = cur.modules;
 
@@ -1946,7 +2962,7 @@
 
           var d = document.createElement("span");
           d.className = "layer-desc";
-          d.textContent = currentLang === "vi" ? row.desc_vi : row.desc_en;
+          d.textContent = row.desc[currentLang] || row.desc.en;
 
           var c = document.createElement("span");
           c.className = "layer-count";
@@ -1972,11 +2988,11 @@
           var wrap = document.createElement("div");
           var t = document.createElement("div");
           t.className = "prec-title";
-          t.textContent = currentLang === "vi" ? p.title_vi : p.title_en;
+          t.textContent = p.title[currentLang] || p.title.en;
 
           var r = document.createElement("div");
           r.className = "prec-rule";
-          r.textContent = currentLang === "vi" ? p.rule_vi : p.rule_en;
+          r.textContent = p.rule[currentLang] || p.rule.en;
 
           wrap.appendChild(t);
           wrap.appendChild(r);
@@ -1996,7 +3012,8 @@
         var filtered = CATALOG.filter(function (item) {
           if (activeCategory !== "all" && item.cat !== activeCategory) return false;
           if (!query) return true;
-          var haystack = (item.id + " " + item.title + " " + item.sum_vi + " " + item.sum_en + " " + item.path).toLowerCase();
+          var localizedSum = item.sum[currentLang] || item.sum.en;
+          var haystack = (item.id + " " + item.title + " " + item.sum.en + " " + localizedSum + " " + item.path).toLowerCase();
           return haystack.indexOf(query) !== -1;
         });
 
@@ -2036,7 +3053,7 @@
 
           var p = document.createElement("p");
           p.className = "card-summary";
-          p.textContent = currentLang === "vi" ? item.sum_vi : item.sum_en;
+          p.textContent = item.sum[currentLang] || item.sum.en;
 
           bodyWrap.appendChild(top);
           bodyWrap.appendChild(h3);
@@ -2070,10 +3087,11 @@
         document.getElementById("snippetCode").textContent = SNIPPETS[activeSnippet];
       }
 
-      /* Apply Language Strings */
+      /* Apply Language Strings across all 5 languages (EN default, VI, ZH, FR, ES) */
       function applyLanguage(lang) {
+        if (!I18N[lang]) lang = "en";
         currentLang = lang;
-        document.documentElement.lang = lang;
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
         var dict = I18N[lang];
 
         document.querySelectorAll("[data-i18n]").forEach(function (el) {
@@ -2082,6 +3100,7 @@
         });
 
         document.getElementById("catalogSearch").placeholder = dict.search_ph;
+        document.getElementById("copyBtn").textContent = dict.copy_label;
 
         document.querySelectorAll(".lang-btn").forEach(function (btn) {
           btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
@@ -2180,16 +3199,17 @@
       document.getElementById("copyBtn").addEventListener("click", function () {
         var btn = document.getElementById("copyBtn");
         var text = SNIPPETS[activeSnippet];
+        var dict = I18N[currentLang];
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function () {
-            btn.textContent = "Copied";
-            setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+            btn.textContent = dict.copied_label;
+            setTimeout(function () { btn.textContent = I18N[currentLang].copy_label; }, 1600);
           });
         }
       });
 
-      /* Initial Hydration */
-      applyLanguage("vi");
+      /* Initial Hydration — Default Language: English (en) */
+      applyLanguage("en");
       renderSnippet();
       initAnimations();
       if (isCycling) startCycle();
