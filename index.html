@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System Instruction Library — Centralized Multi-Agent Governance Specification</title>
+  <meta name="description" content="Centralized multi-domain governance, orchestration, specialist role prompts, and reusable procedural skills for autonomous agent execution (v1.0.0).">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='30' height='30' x='1' y='1' fill='%23ffffff' stroke='%23121417' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' text-anchor='middle' fill='%23121417'%3ESI%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg-paper: #f6f5f1;
+      --bg-surface: #ffffff;
+      --bg-subtle: #eeece6;
+      --bg-code: #141619;
+      --ink-primary: #121417;
+      --ink-secondary: #495057;
+      --ink-muted: #6c737a;
+      --ink-on-dark: #f1f3f5;
+      --line-hair: #d8d5cc;
+      --line-strong: #121417;
+      --accent: #1849a9;
+      --accent-soft: #e8effc;
+      --status-pass: #166534;
+      --status-pass-bg: #e7f5ec;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "SFMono-Regular", "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --max-w: 1180px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-paper);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    code, pre, .mono {
+      font-family: var(--font-mono);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top Architectural Navigation Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(246, 245, 241, 0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line-hair);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 60px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-primary);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border: 1.5px solid var(--ink-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0;
+      background: var(--bg-surface);
+    }
+
+    .version-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 7px;
+      border: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+      color: var(--ink-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--ink-secondary);
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink-primary);
+      text-decoration: none;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+      padding: 2px;
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 8px;
+      cursor: pointer;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .lang-btn[aria-pressed="true"] {
+      background: var(--ink-primary);
+      color: var(--bg-surface);
+    }
+
+    .btn-outline,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border: 1px solid var(--ink-primary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: transform 180ms var(--ease-out), background-color 180ms ease, color 180ms ease;
+    }
+
+    .btn-primary {
+      background: var(--ink-primary);
+      color: var(--bg-surface);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-surface);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--ink-primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 72px 0 56px;
+      border-bottom: 1px solid var(--line-hair);
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-secondary);
+      margin-bottom: 20px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--status-pass);
+      display: inline-block;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .hero-grid > *,
+    .stage-detail-card > *,
+    .router-layout > *,
+    .arch-dual > *,
+    .catalog-card,
+    .metric-cell,
+    .spec-box {
+      min-width: 0;
+    }
+
+    .hero h1 {
+      margin: 0 0 20px;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .hero-lead {
+      margin: 0 0 28px;
+      font-size: 1.08rem;
+      color: var(--ink-secondary);
+      max-width: 66ch;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .axiom-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      border-left: 3px solid var(--ink-primary);
+      padding: 22px 24px;
+    }
+
+    .axiom-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+    }
+
+    .axiom-quote {
+      margin: 0 0 14px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      font-weight: 500;
+      color: var(--ink-primary);
+    }
+
+    .axiom-meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      justify-content: space-between;
+      border-top: 1px solid var(--line-hair);
+      padding-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    /* Metric Strip */
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-left: 1px solid var(--line-hair);
+      border-right: 1px solid var(--line-hair);
+      border-bottom: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+    }
+
+    .metric-cell {
+      padding: 24px 20px;
+      border-right: 1px solid var(--line-hair);
+    }
+
+    .metric-cell:last-child {
+      border-right: 0;
+    }
+
+    .metric-num {
+      font-family: var(--font-mono);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink-primary);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      font-weight: 500;
+    }
+
+    /* Section Scaffolding */
+    .section {
+      padding: 68px 0;
+      border-bottom: 1px solid var(--line-hair);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .section-index {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.5vw, 2.05rem);
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      margin: 8px 0 0;
+      color: var(--ink-secondary);
+      max-width: 65ch;
+      font-size: 15.5px;
+    }
+
+    /* Reveal & Hairline Motion */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .rule-draw {
+      height: 1px;
+      background: var(--ink-primary);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 700ms var(--ease-out);
+      margin-bottom: 28px;
+    }
+
+    .rule-draw.is-visible {
+      transform: scaleX(1);
+    }
+
+    /* Section 01: Autonomous Pipeline Stepper */
+    .pipeline-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stage-btn {
+      text-align: left;
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 200ms ease, transform 200ms var(--ease-out), background-color 200ms ease;
+    }
+
+    .stage-btn:hover {
+      border-color: var(--ink-secondary);
+      transform: translateY(-2px);
+    }
+
+    .stage-btn[aria-selected="true"] {
+      border-color: var(--ink-primary);
+      background: var(--bg-surface);
+      box-shadow: 0 4px 0 var(--ink-primary);
+    }
+
+    .stage-progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--accent);
+    }
+
+    .stage-btn[aria-selected="true"].is-cycling .stage-progress {
+      animation: stageFill 4.6s linear forwards;
+    }
+
+    @keyframes stageFill {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    .stage-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stage-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      display: block;
+      line-height: 1.35;
+    }
+
+    .stage-detail-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      transition: opacity 220ms ease;
+    }
+
+    .stage-detail-title {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.015em;
+    }
+
+    .stage-detail-body {
+      margin: 0 0 16px;
+      color: var(--ink-secondary);
+      font-size: 15px;
+    }
+
+    .stage-meta-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-left: 1px solid var(--line-hair);
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stage-meta-item strong {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-bottom: 2px;
+    }
+
+    .stage-meta-item span {
+      font-size: 13.5px;
+      color: var(--ink-primary);
+      font-family: var(--font-mono);
+    }
+
+    /* Section 02: Interactive Complexity Router (L0 - L4) */
+    .router-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .router-tabs {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+    }
+
+    .router-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 18px;
+      border: 0;
+      border-bottom: 1px solid var(--line-hair);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      color: var(--ink-secondary);
+      transition: background-color 160ms ease, color 160ms ease, padding-left 180ms var(--ease-out);
+    }
+
+    .router-tab:last-child {
+      border-bottom: 0;
+    }
+
+    .router-tab:hover {
+      background: var(--bg-subtle);
+      color: var(--ink-primary);
+    }
+
+    .router-tab[aria-selected="true"] {
+      background: var(--ink-primary);
+      color: var(--bg-surface);
+      padding-left: 24px;
+    }
+
+    .router-tab-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .router-tab-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 10px;
+      flex: 1;
+    }
+
+    .router-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      padding: 28px;
+    }
+
+    .router-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line-hair);
+      margin-bottom: 20px;
+    }
+
+    .router-panel-title {
+      margin: 0;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .badge-pass {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 9px;
+      background: var(--status-pass-bg);
+      color: var(--status-pass);
+      border: 1px solid #b7dfc5;
+    }
+
+    .router-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .spec-box {
+      padding: 14px 16px;
+      background: var(--bg-paper);
+      border: 1px solid var(--line-hair);
+    }
+
+    .spec-box-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin-bottom: 4px;
+    }
+
+    .spec-box-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    .overhead-meter {
+      margin-top: 8px;
+      height: 6px;
+      background: var(--line-hair);
+      overflow: hidden;
+    }
+
+    .overhead-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 380ms var(--ease-out);
+    }
+
+    /* Section 03: 9 Layers & 6-Level Authority Stack */
+    .arch-dual {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+    }
+
+    .layer-list,
+    .precedence-list {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+    }
+
+    .panel-subhead {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line-hair);
+      background: var(--bg-subtle);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-primary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .layer-row {
+      display: grid;
+      grid-template-columns: 210px 1fr 72px;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--line-hair);
+      align-items: baseline;
+      font-size: 13.5px;
+      transition: background-color 150ms ease;
+    }
+
+    .layer-row:last-child {
+      border-bottom: 0;
+    }
+
+    .layer-row:hover {
+      background: var(--bg-paper);
+    }
+
+    .layer-path {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .layer-desc {
+      color: var(--ink-secondary);
+    }
+
+    .layer-count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-align: right;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .prec-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line-hair);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .prec-item:last-child {
+      border-bottom: 0;
+    }
+
+    .prec-lvl {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border: 1px solid var(--ink-primary);
+      color: var(--ink-primary);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .prec-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink-primary);
+      margin-bottom: 2px;
+    }
+
+    .prec-rule {
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+
+    /* Section 04: Searchable 15-Domain / 112-Role / 22-Skill Catalog */
+    .catalog-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      border: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+      color: var(--ink-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 13px;
+      cursor: pointer;
+      transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--ink-primary);
+      color: var(--ink-primary);
+    }
+
+    .filter-pill[aria-pressed="true"] {
+      background: var(--ink-primary);
+      border-color: var(--ink-primary);
+      color: var(--bg-surface);
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 280px;
+      flex: 0 1 340px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--line-hair);
+      background: var(--bg-surface);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--ink-primary);
+    }
+
+    .search-input::placeholder {
+      color: var(--ink-muted);
+    }
+
+    .catalog-status {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .catalog-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 180ms ease, transform 180ms var(--ease-out);
+    }
+
+    .catalog-card:hover {
+      border-color: var(--ink-primary);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .card-id {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+
+    .card-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .card-title {
+      margin: 0 0 6px;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      line-height: 1.3;
+    }
+
+    .card-summary {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      padding-top: 10px;
+      border-top: 1px solid var(--line-hair);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    #stageLink,
+    #rModules,
+    #rExampleLink,
+    .layer-path,
+    .stage-meta-item span {
+      overflow-wrap: anywhere;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      background: var(--bg-surface);
+      border: 1px solid var(--line-hair);
+      padding: 36px 24px;
+      text-align: center;
+      color: var(--ink-secondary);
+    }
+
+    /* Section 05: Quickstart Integration Tabs */
+    .snippet-box {
+      border: 1px solid var(--ink-primary);
+      background: var(--bg-code);
+      color: var(--ink-on-dark);
+    }
+
+    .snippet-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #2b3036;
+      padding: 0 12px 0 0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .snippet-tabs {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .snippet-tab {
+      border: 0;
+      border-right: 1px solid #2b3036;
+      background: transparent;
+      color: #9aa2ac;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      padding: 11px 16px;
+      cursor: pointer;
+      transition: color 150ms ease, background-color 150ms ease;
+    }
+
+    .snippet-tab:hover {
+      color: #ffffff;
+    }
+
+    .snippet-tab[aria-selected="true"] {
+      background: #1f2429;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      border: 1px solid #3c434c;
+      background: #1f2429;
+      color: #e9ecef;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 11px;
+      cursor: pointer;
+      transition: border-color 150ms ease, background-color 150ms ease;
+    }
+
+    .copy-btn:hover {
+      border-color: #adb5bd;
+      background: #2b3138;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      padding: 22px 24px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #e9ecef;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0;
+      background: var(--bg-surface);
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .stage-detail-card,
+      .router-layout,
+      .arch-dual {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-meta-list {
+        border-left: 0;
+        border-top: 1px solid var(--line-hair);
+        padding-left: 0;
+        padding-top: 16px;
+      }
+
+      .pipeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metrics-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .metric-cell {
+        border-bottom: 1px solid var(--line-hair);
+      }
+
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .nav-links,
+      .version-tag {
+        display: none;
+      }
+
+      .brand {
+        font-size: 13px;
+      }
+
+      .topbar-actions .btn-outline {
+        padding: 6px 10px;
+        font-size: 12.5px;
+      }
+
+      .hero {
+        padding: 44px 0 36px;
+      }
+
+      .metrics-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pipeline-grid,
+      .router-specs,
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .layer-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .layer-count {
+        text-align: left;
+      }
+
+      .search-box {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+    }
+
+    /* Reduced Motion Compliance */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .rule-draw,
+      .btn-primary,
+      .btn-outline,
+      .stage-btn,
+      .router-tab,
+      .catalog-card,
+      .overhead-fill {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+
+      .stage-btn[aria-selected="true"].is-cycling .stage-progress {
+        animation: none !important;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">SI</span>
+        <span>System Instruction Library</span>
+        <span class="version-tag">v1.0.0</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#workflow" data-i18n="nav_workflow">Luồng vận hành</a>
+        <a href="#router" data-i18n="nav_router">Bộ định tuyến L0–L4</a>
+        <a href="#architecture" data-i18n="nav_arch">Kiến trúc 9 tầng</a>
+        <a href="#catalog" data-i18n="nav_catalog">Danh mục 15 miền</a>
+        <a href="#quickstart" data-i18n="nav_quickstart">Tích hợp nhanh</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button type="button" class="lang-btn" data-lang="vi" aria-pressed="true">VI</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn-outline" href="https://github.com/MrPhuocTan/system-instruction-prompts" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-i18n="hero_eyebrow">SINGLE SOURCE OF TRUTH CHO HỆ THỐNG ĐA TÁC TỬ (MULTI-AGENT)</span>
+        </div>
+        <div class="hero-grid">
+          <div>
+            <h1 data-i18n="hero_title">Thư viện Chỉ dẫn Hệ thống &amp; Khung Quản trị Tác tử Tập trung</h1>
+            <p class="hero-lead" data-i18n="hero_lead">
+              Chuẩn hóa toàn bộ quy tắc hiến pháp, điều phối PM + SA bền vững, vai trò chuyên gia trên 15 lĩnh vực và 22 kỹ năng thực thi tái sử dụng tại một kho duy nhất. Dự án bên ngoài kế thừa tức thì mà không cần sao chép prompt thủ công.
+            </p>
+            <div class="hero-cta">
+              <a class="btn-primary" href="#quickstart" data-i18n="cta_quickstart">Kết nối trong 3 bước</a>
+              <a class="btn-outline" href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/LIBRARY_INDEX.md" target="_blank" rel="noopener noreferrer" data-i18n="cta_index">Tra cứu LIBRARY_INDEX.md</a>
+              <a class="btn-outline" href="#catalog" data-i18n="cta_explore">Khám phá 112 vai trò</a>
+            </div>
+          </div>
+          <aside class="axiom-box" aria-label="Natural-language interaction rule">
+            <div class="axiom-label" data-i18n="axiom_label">NGUYÊN TẮC TỰ HÀNH NGÔN NGỮ TỰ NHIÊN</div>
+            <p class="axiom-quote" data-i18n="axiom_quote">
+              “Người dùng chỉ nêu mục tiêu bằng ngôn ngữ tự nhiên. PM điều phối thực thi. SA kiểm soát kiến trúc. Subagent đảm nhận công việc chuyên môn. Khung hệ thống tự duy trì trạng thái và kiểm chứng độc lập.”
+            </p>
+            <div class="axiom-meta">
+              <span>01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md</span>
+              <span>PASS: 356/356</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quantitative Metrics -->
+    <section aria-label="Repository inventory metrics">
+      <div class="container" style="padding: 0;">
+        <div class="metrics-strip">
+          <div class="metric-cell">
+            <div class="metric-num" data-count="356">356</div>
+            <div class="metric-label" data-i18n="m_files">Tệp chuẩn hóa được kiểm định tự động</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num" data-count="9">9</div>
+            <div class="metric-label" data-i18n="m_layers">Tầng kiến trúc (00 đến 08)</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num" data-count="15">15</div>
+            <div class="metric-label" data-i18n="m_domains">Miền chuyên môn đa ngành</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num" data-count="112">112</div>
+            <div class="metric-label" data-i18n="m_roles">Vai trò định danh (4 Core + 108 Domain)</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num" data-count="22">22</div>
+            <div class="metric-label" data-i18n="m_skills">Gói SKILL.md kế thừa trực tiếp</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 01: Autonomous Pipeline -->
+    <section id="workflow" class="section">
+      <div class="container reveal">
+        <div class="rule-draw"></div>
+        <div class="section-header">
+          <div>
+            <span class="section-index">01 / AUTONOMOUS EXECUTION LOOP</span>
+            <h2 class="section-title" data-i18n="s1_title">Vận hành tự động từ câu lệnh tự nhiên đến nghiệm thu độc lập</h2>
+            <p class="section-desc" data-i18n="s1_desc">
+              Không yêu cầu người dùng nhớ lệnh INIT, CONTINUE hay quản lý hàng đợi. Mọi khâu phân loại, khóa hợp đồng và kiểm định thực nghiệm diễn ra minh bạch bên dưới.
+            </p>
+          </div>
+          <div class="pipeline-controls">
+            <button type="button" id="cycleToggleBtn" class="btn-outline" data-i18n="btn_pause">Tạm dừng tự chuyển</button>
+          </div>
+        </div>
+
+        <div class="pipeline-grid" role="tablist" aria-label="Autonomous workflow stages" id="pipelineTabs"></div>
+        <div class="stage-detail-card" id="pipelinePanel" role="tabpanel" aria-live="polite">
+          <div>
+            <h3 class="stage-detail-title" id="stageTitle"></h3>
+            <p class="stage-detail-body" id="stageBody"></p>
+            <a id="stageLink" class="mono" style="font-size: 13px;" href="#" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+          <ul class="stage-meta-list" id="stageMeta"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02: Adaptive Complexity Router -->
+    <section id="router" class="section">
+      <div class="container reveal">
+        <div class="rule-draw"></div>
+        <div class="section-header">
+          <div>
+            <span class="section-index">02 / TASK COMPLEXITY ROUTER</span>
+            <h2 class="section-title" data-i18n="s2_title">Phân bổ tỷ lệ thuận theo độ phức tạp thực tế (Level 0 – Level 4)</h2>
+            <p class="section-desc" data-i18n="s2_desc">
+              Tác vụ đơn giản phản hồi tức thì với chi phí điều phối bằng 0; dự án phức tạp hoặc rủi ro cao mới kích hoạt PM + SA, khóa ghi tệp độc quyền và cổng phê duyệt con người.
+            </p>
+          </div>
+        </div>
+
+        <div class="router-layout">
+          <div class="router-tabs" role="tablist" aria-label="Complexity levels" id="routerTabs"></div>
+          <div class="router-panel" id="routerPanel" role="tabpanel" aria-live="polite">
+            <div class="router-panel-head">
+              <h3 class="router-panel-title" id="rTitle"></h3>
+              <span class="badge-pass" id="rBadge"></span>
+            </div>
+            <p id="rDesc" style="margin: 0 0 20px; color: var(--ink-secondary);"></p>
+            <div class="router-specs">
+              <div class="spec-box">
+                <div class="spec-box-label" data-i18n="r_lbl_agents">Cơ cấu tác tử</div>
+                <div class="spec-box-val" id="rAgents"></div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-box-label" data-i18n="r_lbl_state">Trạng thái đĩa (State)</div>
+                <div class="spec-box-val" id="rState"></div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-box-label" data-i18n="r_lbl_gate">Cổng kiểm định</div>
+                <div class="spec-box-val" id="rGate"></div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-box-label" data-i18n="r_lbl_weight">Tải trọng điều phối tương đối</div>
+                <div class="spec-box-val" id="rWeightText"></div>
+                <div class="overhead-meter" aria-hidden="true">
+                  <div class="overhead-fill" id="rWeightBar"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 12px; border-top: 1px solid var(--line-hair);">
+              <span class="mono" style="font-size: 12.5px; color: var(--ink-secondary);" id="rModules"></span>
+              <a id="rExampleLink" class="mono" style="font-size: 12.5px; font-weight: 600;" href="#" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 03: 9 Layers & 6-Level Authority -->
+    <section id="architecture" class="section">
+      <div class="container reveal">
+        <div class="rule-draw"></div>
+        <div class="section-header">
+          <div>
+            <span class="section-index">03 / DIRECTORY &amp; AUTHORITY ARCHITECTURE</span>
+            <h2 class="section-title" data-i18n="s3_title">Cấu trúc 9 phân tầng &amp; Thứ bậc ưu tiên chỉ dẫn 6 cấp</h2>
+            <p class="section-desc" data-i18n="s3_desc">
+              Mỗi tệp quy tắc giữ dung lượng nhỏ gọn (&lt; 24 KB) để nạp chọn lọc theo nhu cầu. Quy tắc cấp cao luôn ghi đè cấp thấp; kỹ năng thực thi không bao giờ được phép vượt quyền bảo mật.
+            </p>
+          </div>
+        </div>
+
+        <div class="arch-dual">
+          <div class="layer-list">
+            <div class="panel-subhead">
+              <span data-i18n="arch_left_head">Cấu trúc thư mục chuẩn hóa</span>
+              <span>356 FILES</span>
+            </div>
+            <div id="layerRows"></div>
+          </div>
+
+          <div class="precedence-list">
+            <div class="panel-subhead">
+              <span data-i18n="arch_right_head">Thứ bậc thẩm quyền (Level 1 → 6)</span>
+              <span>OVERRIDE RULES</span>
+            </div>
+            <div id="precedenceRows"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Interactive Catalog -->
+    <section id="catalog" class="section">
+      <div class="container reveal">
+        <div class="rule-draw"></div>
+        <div class="section-header">
+          <div>
+            <span class="section-index">04 / DOMAIN, ROLE &amp; SKILL EXPLORER</span>
+            <h2 class="section-title" data-i18n="s4_title">Tra cứu 15 miền chuyên môn, 4 vai trò cốt lõi và 22 gói kỹ năng</h2>
+            <p class="section-desc" data-i18n="s4_desc">
+              Ngăn chặn thiên kiến chỉ dùng góc nhìn CNTT cho các bài toán tài chính, pháp lý, y sinh, công nghiệp hay khoa học thực nghiệm.
+            </p>
+          </div>
+        </div>
+
+        <div class="catalog-toolbar">
+          <div class="filter-group" role="group" aria-label="Catalog category filter">
+            <button type="button" class="filter-pill" data-cat="all" aria-pressed="true" data-i18n="f_all">Tất cả (41 mục)</button>
+            <button type="button" class="filter-pill" data-cat="domain" aria-pressed="false" data-i18n="f_domain">15 Miền chuyên ngành (108 Roles)</button>
+            <button type="button" class="filter-pill" data-cat="core-role" aria-pressed="false" data-i18n="f_core">4 Vai trò điều phối cốt lõi</button>
+            <button type="button" class="filter-pill" data-cat="core-skill" aria-pressed="false" data-i18n="f_cskill">12 Kỹ năng liên ngành</button>
+            <button type="button" class="filter-pill" data-cat="spec-skill" aria-pressed="false" data-i18n="f_sskill">10 Kỹ năng chuyên sâu</button>
+          </div>
+          <div class="search-box">
+            <input type="search" id="catalogSearch" class="search-input" placeholder="Tìm theo tên miền, vai trò, mã SKL..." aria-label="Search domains, roles, and skills">
+          </div>
+        </div>
+
+        <div class="catalog-status" id="catalogStatus" aria-live="polite"></div>
+        <div class="catalog-grid" id="catalogGrid"></div>
+      </div>
+    </section>
+
+    <!-- Section 05: Quickstart Snippets -->
+    <section id="quickstart" class="section" style="border-bottom: 0;">
+      <div class="container reveal">
+        <div class="rule-draw"></div>
+        <div class="section-header">
+          <div>
+            <span class="section-index">05 / ZERO-DUPLICATION INTEGRATION</span>
+            <h2 class="section-title" data-i18n="s5_title">Kết nối bất kỳ dự án nào trong 2 phút</h2>
+            <p class="section-desc" data-i18n="s5_desc">
+              Giữ kho mã dự án của bạn sạch gọn: chỉ cần 1 tệp con trỏ quy tắc nhỏ và 1 khai báo kế thừa skills.json.
+            </p>
+          </div>
+        </div>
+
+        <div class="snippet-box">
+          <div class="snippet-bar">
+            <div class="snippet-tabs" role="tablist" aria-label="Integration configuration snippets" id="snippetTabs">
+              <button type="button" class="snippet-tab" role="tab" data-snip="bootstrap" aria-selected="true">1. AGENTS.md (Bootstrap)</button>
+              <button type="button" class="snippet-tab" role="tab" data-snip="skills" aria-selected="false">2. .agents/skills.json</button>
+              <button type="button" class="snippet-tab" role="tab" data-snip="validate" aria-selected="false">3. Deterministic Validation CLI</button>
+            </div>
+            <button type="button" id="copyBtn" class="copy-btn" aria-live="polite">Copy</button>
+          </div>
+          <pre class="snippet-pre"><code id="snippetCode"></code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Centralized Agent Framework &amp; System Instruction Library</strong>
+        <span class="mono" style="margin-left: 8px; color: var(--ink-muted);">v1.0.0 — SemVer 2.0.0</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/MrPhuocTan/system-instruction-prompts" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <a href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/README.md" target="_blank" rel="noopener noreferrer">README.md</a>
+        <a href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/LIBRARY_INDEX.md" target="_blank" rel="noopener noreferrer">LIBRARY_INDEX.md</a>
+        <a href="https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">CHANGELOG.md</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var REPO_BLOB = "https://github.com/MrPhuocTan/system-instruction-prompts/blob/main/";
+      var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var currentLang = "vi";
+      var activeStageIdx = 0;
+      var activeRouterIdx = 2;
+      var activeCategory = "all";
+      var activeSnippet = "bootstrap";
+      var cycleTimer = null;
+      var isCycling = !reducedMotion;
+
+      var I18N = {
+        vi: {
+          nav_workflow: "Luồng vận hành",
+          nav_router: "Bộ định tuyến L0–L4",
+          nav_arch: "Kiến trúc 9 tầng",
+          nav_catalog: "Danh mục 15 miền",
+          nav_quickstart: "Tích hợp nhanh",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH CHO HỆ THỐNG ĐA TÁC TỬ (MULTI-AGENT)",
+          hero_title: "Thư viện Chỉ dẫn Hệ thống & Khung Quản trị Tác tử Tập trung",
+          hero_lead: "Chuẩn hóa toàn bộ quy tắc hiến pháp, điều phối PM + SA bền vững, vai trò chuyên gia trên 15 lĩnh vực và 22 kỹ năng thực thi tái sử dụng tại một kho duy nhất. Dự án bên ngoài kế thừa tức thì mà không cần sao chép prompt thủ công.",
+          cta_quickstart: "Kết nối trong 3 bước",
+          cta_index: "Tra cứu LIBRARY_INDEX.md",
+          cta_explore: "Khám phá 112 vai trò",
+          axiom_label: "NGUYÊN TẮC TỰ HÀNH NGÔN NGỮ TỰ NHIÊN",
+          axiom_quote: "“Người dùng chỉ nêu mục tiêu bằng ngôn ngữ tự nhiên. PM điều phối thực thi. SA kiểm soát kiến trúc. Subagent đảm nhận công việc chuyên môn. Khung hệ thống tự duy trì trạng thái và kiểm chứng độc lập.”",
+          m_files: "Tệp chuẩn hóa được kiểm định tự động",
+          m_layers: "Tầng kiến trúc (00 đến 08)",
+          m_domains: "Miền chuyên môn đa ngành",
+          m_roles: "Vai trò định danh (4 Core + 108 Domain)",
+          m_skills: "Gói SKILL.md kế thừa trực tiếp",
+          s1_title: "Vận hành tự động từ câu lệnh tự nhiên đến nghiệm thu độc lập",
+          s1_desc: "Không yêu cầu người dùng nhớ lệnh INIT, CONTINUE hay quản lý hàng đợi. Mọi khâu phân loại, khóa hợp đồng và kiểm định thực nghiệm diễn ra minh bạch bên dưới.",
+          btn_pause: "Tạm dừng tự chuyển",
+          btn_resume: "Tiếp tục tự chuyển",
+          s2_title: "Phân bổ tỷ lệ thuận theo độ phức tạp thực tế (Level 0 – Level 4)",
+          s2_desc: "Tác vụ đơn giản phản hồi tức thì với chi phí điều phối bằng 0; dự án phức tạp hoặc rủi ro cao mới kích hoạt PM + SA, khóa ghi tệp độc quyền và cổng phê duyệt con người.",
+          r_lbl_agents: "Cơ cấu tác tử",
+          r_lbl_state: "Trạng thái đĩa (State)",
+          r_lbl_gate: "Cổng kiểm định",
+          r_lbl_weight: "Tải trọng điều phối tương đối",
+          s3_title: "Cấu trúc 9 phân tầng & Thứ bậc ưu tiên chỉ dẫn 6 cấp",
+          s3_desc: "Mỗi tệp quy tắc giữ dung lượng nhỏ gọn (< 24 KB) để nạp chọn lọc theo nhu cầu. Quy tắc cấp cao luôn ghi đè cấp thấp; kỹ năng thực thi không bao giờ được phép vượt quyền bảo mật.",
+          arch_left_head: "Cấu trúc thư mục chuẩn hóa",
+          arch_right_head: "Thứ bậc thẩm quyền (Level 1 → 6)",
+          s4_title: "Tra cứu 15 miền chuyên môn, 4 vai trò cốt lõi và 22 gói kỹ năng",
+          s4_desc: "Ngăn chặn thiên kiến chỉ dùng góc nhìn CNTT cho các bài toán tài chính, pháp lý, y sinh, công nghiệp hay khoa học thực nghiệm.",
+          f_all: "Tất cả (41 mục)",
+          f_domain: "15 Miền chuyên ngành (108 Roles)",
+          f_core: "4 Vai trò điều phối cốt lõi",
+          f_cskill: "12 Kỹ năng liên ngành",
+          f_sskill: "10 Kỹ năng chuyên sâu",
+          search_ph: "Tìm theo tên miền, vai trò, mã SKL...",
+          s5_title: "Kết nối bất kỳ dự án nào trong 2 phút",
+          s5_desc: "Giữ kho mã dự án của bạn sạch gọn: chỉ cần 1 tệp con trỏ quy tắc nhỏ và 1 khai báo kế thừa skills.json.",
+          open_spec: "Mở đặc tả →",
+          empty_msg: "Không có mục nào khớp với từ khóa tìm kiếm hiện tại.",
+          showing_prefix: "Đang hiển thị "
+        },
+        en: {
+          nav_workflow: "Autonomous Loop",
+          nav_router: "L0–L4 Router",
+          nav_arch: "9-Layer Architecture",
+          nav_catalog: "15-Domain Catalog",
+          nav_quickstart: "Quickstart",
+          hero_eyebrow: "SINGLE SOURCE OF TRUTH FOR AUTONOMOUS MULTI-AGENT SYSTEMS",
+          hero_title: "Centralized Agent Framework & System Instruction Library",
+          hero_lead: "Standardize constitutional governance, persistent PM + SA orchestration, specialist roles across 15 domains, and 22 reusable procedural skills in one canonical repository—inherited on demand with zero prompt duplication.",
+          cta_quickstart: "3-Step Quickstart",
+          cta_index: "Browse LIBRARY_INDEX.md",
+          cta_explore: "Explore 112 Roles",
+          axiom_label: "NATURAL-LANGUAGE AUTONOMOUS AXIOM",
+          axiom_quote: "“The user gives objectives. PM manages execution. SA governs architecture. Subagents perform delegated work. The framework preserves continuity and verifies results.”",
+          m_files: "Deterministically validated canonical files",
+          m_layers: "Architectural layers (00 through 08)",
+          m_domains: "Specialist professional domains",
+          m_roles: "Defined roles (4 Core + 108 Domain)",
+          m_skills: "Directly inheritable SKILL.md packages",
+          s1_title: "Autonomous execution from plain language to independent sign-off",
+          s1_desc: "Zero INIT or CONTINUE command modes, zero manual subagent management. Triage, contract locking, and empirical verification run automatically beneath plain-language objectives.",
+          btn_pause: "Pause auto-step",
+          btn_resume: "Resume auto-step",
+          s2_title: "Proportional governance scaled to real complexity (Level 0 – Level 4)",
+          s2_desc: "Instant questions incur zero orchestration overhead; multi-module and high-risk initiatives engage persistent PM + SA contracts, disjoint write-locks, and human approval gates.",
+          r_lbl_agents: "Agent Footprint",
+          r_lbl_state: "Disk State Artifacts",
+          r_lbl_gate: "Verification Gate",
+          r_lbl_weight: "Relative Governance Weight",
+          s3_title: "Nine-layer repository taxonomy & six-level authority stack",
+          s3_desc: "Every module stays compact (< 24 KB) for selective progressive loading. Higher layers unconditionally override lower layers; procedural skills never bypass constitutional safety.",
+          arch_left_head: "Canonical Repository Layers",
+          arch_right_head: "Instruction Precedence (Level 1 → 6)",
+          s4_title: "Explore 15 specialist domains, 4 core roles, and 22 reusable skills",
+          s4_desc: "Prevents software-only bias on finance, legal, clinical, industrial, supply-chain, or scientific research problems.",
+          f_all: "All (41 entries)",
+          f_domain: "15 Domains (108 Roles)",
+          f_core: "4 Core Governance Roles",
+          f_cskill: "12 Cross-Domain Skills",
+          f_sskill: "10 Specialized Skills",
+          search_ph: "Filter by domain, role, or SKL ID...",
+          s5_title: "Connect any downstream repository in 2 minutes",
+          s5_desc: "Keep target repositories clean: add one compact bootstrap pointer and one native skills.json inheritance block.",
+          open_spec: "View spec →",
+          empty_msg: "No catalog entries match your current filter.",
+          showing_prefix: "Showing "
+        }
+      };
+
+      var PIPELINE_STAGES = [
+        {
+          num: "STAGE 01",
+          name_vi: "Mục tiêu ngôn ngữ tự nhiên",
+          name_en: "Natural-Language Objective",
+          title_vi: "01. Tiếp nhận yêu cầu tự nhiên & Khôi phục ngữ cảnh",
+          title_en: "01. Plain-Language Intake & Context Hydration",
+          body_vi: "Người dùng diễn đạt mục tiêu bằng ngôn ngữ thông thường. Hệ thống tự động kiểm tra trạng thái dự án hiện hữu trên đĩa, phát hiện checkpoint đang dở dang (nếu có) và xác định phạm vi thực tế mà không bắt người dùng chọn pha thủ công.",
+          body_en: "Users state goals in ordinary prose. The orchestrator inspects existing workspace state files, automatically resumes interrupted checkpoints when applicable, and scopes the true objective without asking users to pick internal execution modes.",
+          path: "01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md",
+          meta: [
+            ["Gánh nặng người dùng / User Burden", "0 command modes (No INIT / CONTINUE)"],
+            ["Pha nội bộ tự động / Internal Phases", "13 autonomous orchestration phases"],
+            ["Khôi phục phiên / Continuity", "PROJECT_STATE.md + AGENT_COMMUNICATE.md"]
+          ]
+        },
+        {
+          num: "STAGE 02",
+          name_vi: "Phân loại L0–L4 & Miền",
+          name_en: "L0–L4 & Domain Triage",
+          title_vi: "02. Định tuyến độ phức tạp & Nhận diện 15 miền chuyên môn",
+          title_en: "02. Complexity Classification & 15-Domain Routing",
+          body_vi: "Bộ định tuyến phân loại tác vụ từ Level 0 (trả lời ngay) đến Level 4 (rủi ro trọng yếu), đồng thời chọn đúng miền chính và miền phụ (như Bảo mật, Pháp lý, Thiết kế) trước khi chọn vai trò chuyên gia.",
+          body_en: "Every task is triaged across Levels 0–4 and mapped against all 15 canonical domains—identifying both primary problem ownership and cross-cutting constraints before loading role prompts.",
+          path: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md",
+          meta: [
+            ["Ngân sách quy tắc / Rule Cap", "< 24 KB per rule file (Progressive Load)"],
+            ["Phạm vi miền / Domain Scope", "15 Domains / 108 Specialist Roles"],
+            ["Quy tắc xung đột ngang / Multi-Domain", "Intersection of actions + Union of gates"]
+          ]
+        },
+        {
+          num: "STAGE 03",
+          name_vi: "Khóa hợp đồng PM + SA",
+          name_en: "PM + SA Contract Lock",
+          title_vi: "03. Thiết lập hợp đồng giao diện & Quyền ghi tệp độc quyền",
+          title_en: "03. Pre-Execution Interface Contracts & Disjoint Write-Locks",
+          body_vi: "Trên tác vụ Level 2–4, PM khóa tiêu chí nghiệm thu nghiệp vụ và SA khóa kiến trúc, schema API/CLI cùng danh sách đường dẫn Exclusive Write-Lock tách biệt hoàn toàn trước khi chạy song song.",
+          body_en: "On Level 2–4 tasks, PM locks scope and UX acceptance criteria while SA locks schemas, interfaces, and disjoint Exclusive Write-Lock file paths so parallel workers never overwrite each other.",
+          path: "01_ORCHESTRATION/FILE_OWNERSHIP_AND_LOCKING.md",
+          meta: [
+            [" Tái sử dụng tác tử / Reuse", "Persistent PM + SA via send_message"],
+            ["Chống ghi đè / Concurrency", "Max 1 active writer per file path"],
+            ["Đặc tả Subagent / Blueprint", "16 mandatory fields (SUBAGENT_CREATION)"]
+          ]
+        },
+        {
+          num: "STAGE 04",
+          name_vi: "Thực thi chuyên sâu",
+          name_en: "Scoped Specialist Work",
+          title_vi: "04. Thực thi theo tư duy nhận thức & Đặc quyền tối thiểu",
+          title_en: "04. Least-Privilege Cognitive Execution",
+          body_vi: "Mỗi tác tử chỉ nạp đúng vai trò và SKILL.md cần thiết, tuân thủ chu trình Understand → Reason → Plan → Execute → Observe, bảo vệ bí mật tuyệt đối và bàn giao báo cáo cấu trúc đầy đủ bằng chứng.",
+          body_en: "Workers receive only workstream-relevant roles and skills, follow structured hypothesis-and-observation reasoning, redact credentials on sight, and return structured handoff evidence.",
+          path: "00_GLOBAL_CONSTITUTION/COGNITIVE_EXECUTION.md",
+          meta: [
+            ["Gói kỹ năng / Skill Catalog", "12 Core + 10 Specialized SKILL.md"],
+            ["Bảo mật mặc định / Security", "Zero-Trust RoE & secret redaction"],
+            ["Chuẩn bàn giao / Handoff", "06_TEMPLATES/HANDOFF_REPORT.md"]
+          ]
+        },
+        {
+          num: "STAGE 05",
+          name_vi: "Nghiệm thu kép SA + PM",
+          name_en: "Dual Gate Verification",
+          title_vi: "05. Kiểm chứng độc lập (Tool Success != Task Success)",
+          title_en: "05. Independent Empirical Verification (SA_GATE + PM_GATE)",
+          body_vi: "Tách biệt người làm và người kiểm duyệt. Kết hợp kiểm thử tự động, kiểm thử trải nghiệm người dùng 3 cấp độ (Human-Centric QA) và đối chiếu hai cổng SA_GATE + PM_GATE trước khi bàn giao.",
+          body_en: "Separates authorship from verification. Enforces automated test suites, 3-level Human-Centric Application QA, and explicit SA_GATE + PM_GATE sign-off with honest limitation disclosure.",
+          path: "00_GLOBAL_CONSTITUTION/INDEPENDENT_VERIFICATION.md",
+          meta: [
+            ["Tiên đề cốt lõi / Core Axiom", "Build/HTTP 200 != Task Success"],
+            ["Kiểm định ứng dụng / App QA", "Level 1 Code / Level 2 Live / Level 3 UX"],
+            ["Trạng thái chuẩn / Gate States", "PASS | PARTIAL | BLOCKED | FAILED | NOT VERIFIED"]
+          ]
+        }
+      ];
+
+      var ROUTER_LEVELS = [
+        {
+          code: "L0",
+          name_vi: "Tương tác tức thì",
+          name_en: "Instant Interaction",
+          title_vi: "Level 0 — Phản hồi trực tiếp, không độ trễ điều phối",
+          title_en: "Level 0 — Direct Instant Execution (Zero Overhead)",
+          badge: "0 SUBAGENTS / 0 STATE FILES",
+          desc_vi: "Dành cho câu hỏi tra cứu sự kiện, giải thích ngắn, quy đổi đơn vị hoặc chạy một lệnh đọc có sẵn. Tác tử chính trả lời ngay lập tức mà không khởi tạo PM/SA hay tạo tệp agent_communicate.md.",
+          desc_en: "For factual lookups, quick explanations, or single read-only checks. Handled immediately by the main agent with zero subagent spawning and zero governance file creation.",
+          agents_vi: "Chỉ tác tử chính (0 subagent)",
+          agents_en: "Main agent only (0 subagents)",
+          state_vi: "Tuyệt đối không tạo tệp trạng thái",
+          state_en: "None created or mutated",
+          gate_vi: "Kiểm tra độ chính xác trực tiếp",
+          gate_en: "Direct factual accuracy check",
+          weight_vi: "5% — Tức thì (< 10s)",
+          weight_en: "5% — Instantaneous (< 10s)",
+          weight_pct: 6,
+          modules: "Loaded: Workspace Bootstrap Rule only",
+          example_label: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md",
+          example_path: "00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md"
+        },
+        {
+          code: "L1",
+          name_vi: "Tác vụ nhỏ gọn",
+          name_en: "Small Contained Task",
+          title_vi: "Level 1 — Chỉnh sửa đơn tệp hoặc một miền đơn lẻ",
+          title_en: "Level 1 — Contained Single-Component Task",
+          badge: "0–1 WORKER / LIGHTWEIGHT CHECK",
+          desc_vi: "Dành cho bản vá lỗi cục bộ, tinh chỉnh cấu hình, viết script nhỏ hoặc tài liệu ngắn trong 1 miền duy nhất. Áp dụng kiểm chứng nhận thức và chạy bộ test/build xác định.",
+          desc_en: "For localized bug fixes, single-file edits, straightforward scripts, or concise documentation within one domain. Applies cognitive verification and deterministic build/test checks.",
+          agents_vi: "Tác tử chính kiêm vai trò hoặc 1 worker",
+          agents_en: "Main agent or 1 scoped worker",
+          state_vi: "Không bắt buộc tạo state mới",
+          state_en: "Optional read; no new state required",
+          gate_vi: "Build / Unit test + SA xem xét nếu có rủi ro",
+          gate_en: "Deterministic check (+ SA review if risky)",
+          weight_vi: "25% — Nhẹ, tập trung",
+          weight_en: "25% — Lightweight & focused",
+          weight_pct: 25,
+          modules: "Loaded: GLOBAL_SYSTEM_PROMPT + COGNITIVE_EXECUTION + 1 Role",
+          example_label: "Example: 08_EXAMPLES/SIMPLE_TASK.md →",
+          example_path: "08_EXAMPLES/SIMPLE_TASK.md"
+        },
+        {
+          code: "L2",
+          name_vi: "Tác vụ trung bình",
+          name_en: "Moderate Feature / Analysis",
+          title_vi: "Level 2 — Triển khai tính năng đa bước có hợp đồng rõ ràng",
+          title_en: "Level 2 — Multi-Step Feature or Structured Analysis",
+          badge: "PM + SA + 1–3 WORKERS",
+          desc_vi: "Dành cho tính năng liên quan nhiều tệp (API + UI), gỡ lỗi đa thành phần hoặc nghiên cứu phân tích nhiều bước. PM khóa tiêu chí nghiệm thu, SA duyệt hợp đồng kỹ thuật và ghi nhận bằng chứng vào AGENT_COMMUNICATE.md.",
+          desc_en: "For multi-file features, API + UI changes, or multi-step analytical work. PM sets acceptance criteria, SA locks technical contracts, and outcomes are verified against AGENT_COMMUNICATE.md.",
+          agents_vi: "PM + SA điều phối 1–3 worker chuyên môn",
+          agents_en: "PM + SA coordinating 1–3 workers",
+          state_vi: "Bắt buộc: AGENT_COMMUNICATE.md",
+          state_en: "Required: AGENT_COMMUNICATE.md",
+          gate_vi: "Nghiệm thu kép tỷ lệ thuận (SA_GATE + PM_GATE)",
+          gate_en: "Proportional Dual Gate (SA_GATE + PM_GATE)",
+          weight_vi: "55% — Cân bằng tốc độ & kiểm soát",
+          weight_en: "55% — Balanced rigor & velocity",
+          weight_pct: 55,
+          modules: "Loaded: 01_ORCHESTRATION + PM/SA Roles + Selected SKILL.md",
+          example_label: "Example: 08_EXAMPLES/MODERATE_TASK.md →",
+          example_path: "08_EXAMPLES/MODERATE_TASK.md"
+        },
+        {
+          code: "L3",
+          name_vi: "Dự án phức tạp / Đa miền",
+          name_en: "Complex Multi-Domain Project",
+          title_vi: "Level 3 — Kiến trúc đa phân hệ & Phối hợp liên miền song song",
+          title_en: "Level 3 — Multi-Workstream & Cross-Domain Architecture",
+          badge: "PARALLEL STREAMS + INDEPENDENT QA",
+          desc_vi: "Dành cho hệ thống full-stack lớn, mô hình tài chính chuyên sâu, dự án AI/ML hoặc tích hợp nhiều lĩnh vực. Tách luồng công việc độc lập với khóa ghi tệp tách rời và kiểm thử QA độc lập với người viết mã.",
+          desc_en: "For full-stack systems, ML pipelines, financial models, or multi-domain integrations. Splits independent workstreams under disjoint write-locks with independent Quality Reviewer verification.",
+          agents_vi: "PM + SA bền vững + Parallel Workers + QA độc lập",
+          agents_en: "Persistent PM + SA + Parallel Workers + QA",
+          state_vi: "PROJECT_MANIFEST + PROJECT_STATE + Write-Locks",
+          state_en: "Full Manifest, State & Write-Lock Ledger",
+          gate_vi: "QA 3 cấp độ + SA_GATE + PM_GATE độc lập",
+          gate_en: "3-Level QA + Full SA_GATE + PM_GATE",
+          weight_vi: "80% — Điều phối song song chặt chẽ",
+          weight_en: "80% — Full parallel governance",
+          weight_pct: 80,
+          modules: "Loaded: Full Orchestration + Domain Quality Gates + QA Skill",
+          example_label: "Example: 08_EXAMPLES/MULTI_DOMAIN_PROJECT.md →",
+          example_path: "08_EXAMPLES/MULTI_DOMAIN_PROJECT.md"
+        },
+        {
+          code: "L4",
+          name_vi: "Trọng yếu / Rủi ro cao",
+          name_en: "Critical / High-Assurance",
+          title_vi: "Level 4 — Bảo mật, Hạ tầng Production & Lĩnh vực chịu quản lý",
+          title_en: "Level 4 — Security, Production & Regulated Operations",
+          badge: "MANDATORY HUMAN APPROVAL GATE",
+          desc_vi: "Dành cho kiểm thử xâm nhập được ủy quyền, di trú dữ liệu production, quyết định tài chính/pháp lý/y sinh hoặc điều khiển công nghiệp. Bắt buộc đánh giá rủi ro, kiểm toán chéo và xin phê duyệt tường minh từ con người trước thao tác hệ trọng.",
+          desc_en: "For authorized security assessments, production migrations, regulated clinical/legal/financial deliverables, or safety-critical industrial systems. Enforces explicit human approval before consequential actions.",
+          agents_vi: "PM + SA + Domain Lead + Security & QA Auditors",
+          agents_en: "PM + SA + Domain Lead + Independent Auditors",
+          state_vi: "Đầy đủ hồ sơ trạng thái + RISK_REGISTER.md",
+          state_en: "Full State Ledger + RISK_REGISTER.md",
+          gate_vi: "Phê duyệt con người + Kiểm toán bảo mật + Dual Gate",
+          gate_en: "Explicit Human Approval + Security Audit + Dual Gate",
+          weight_vi: "100% — An toàn tối đa, 0 đường tắt",
+          weight_en: "100% — Maximum assurance, zero shortcuts",
+          weight_pct: 100,
+          modules: "Loaded: SECURITY_AND_PRIVACY + HUMAN_APPROVAL_POLICY + RISK_REGISTER",
+          example_label: "Example: 08_EXAMPLES/CYBERSECURITY_ASSESSMENT.md →",
+          example_path: "08_EXAMPLES/CYBERSECURITY_ASSESSMENT.md"
+        }
+      ];
+
+      var REPO_LAYERS = [
+        { path: "Root Catalog & Manifest", link: "LIBRARY_INDEX.md", desc_vi: "README, LIBRARY_INDEX, VERSION, CHANGELOG & skills.json", desc_en: "README, LIBRARY_INDEX, VERSION, CHANGELOG & skills.json", count: "5 files" },
+        { path: "00_GLOBAL_CONSTITUTION/", link: "00_GLOBAL_CONSTITUTION/GLOBAL_SYSTEM_PROMPT.md", desc_vi: "Thứ bậc ưu tiên, định tuyến L0–L4, sự thật thực nghiệm, bảo mật", desc_en: "Precedence hierarchy, L0–L4 router, truth, security & approval", count: "8 files" },
+        { path: "01_ORCHESTRATION/", link: "01_ORCHESTRATION/AUTONOMOUS_ORCHESTRATION.md", desc_vi: "Tự hành ngôn ngữ tự nhiên, PM+SA bền vững, khóa tệp, bàn giao", desc_en: "Autonomous NL loop, persistent PM+SA, write-locks & handoffs", count: "13 files" },
+        { path: "02_CORE_ROLES/", link: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md", desc_vi: "Project Manager, System Architect, Domain Lead, Quality Reviewer", desc_en: "Project Manager, System Architect, Domain Lead, Quality Reviewer", count: "8 files" },
+        { path: "03_DOMAINS/", link: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md", desc_vi: "15 miền chuyên ngành, 108 vai trò chuyên gia & cổng chất lượng", desc_en: "15 professional domains, 108 specialist roles & quality gates", count: "274 files" },
+        { path: "04_CROSS_DOMAIN_SKILLS/", link: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md", desc_vi: "12 kỹ năng cốt lõi: tư duy phản biện, nghiên cứu, viết kỹ thuật, QA", desc_en: "12 core skills: reasoning, source validation, technical writing, QA", count: "12 files" },
+        { path: "05_SPECIALIZED_SKILLS/", link: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md", desc_vi: "10 kỹ năng chuyên sâu: UI QA, API/DB test, bảo mật, tài chính, ML", desc_en: "10 technical skills: Human-Centric QA, API/DB, security, finance, ML", count: "10 files" },
+        { path: "06_TEMPLATES/", link: "06_TEMPLATES/AGENT_COMMUNICATE.md", desc_vi: "12 biểu mẫu chuẩn: Manifest, State, Agent Communicate, Gate Review", desc_en: "12 templates: Manifest, State, Agent Communicate, Reviews & Risk", count: "12 files" },
+        { path: "07_SUBAGENT_PROMPTS/", link: "07_SUBAGENT_PROMPTS/SUBAGENT_CREATION_PROMPT.md", desc_vi: "7 khung khởi tạo subagent 16 trường & tác tử chuyên biệt", desc_en: "7 blueprints for 16-field subagent creation & specialized workers", count: "7 files" },
+        { path: "08_EXAMPLES/", link: "08_EXAMPLES/COMPLEX_SOFTWARE_PROJECT.md", desc_vi: "7 kịch bản thực tế trải dài từ Level 1 đến Level 4 đa miền", desc_en: "7 end-to-end reference walkthroughs spanning Levels 1 to 4", count: "7 files" }
+      ];
+
+      var PRECEDENCE = [
+        { lvl: "LEVEL 1", title_vi: "An toàn Runtime & Ủy quyền Con người", title_en: "Runtime Safety & Human Authorization", rule_vi: "Bất biến; ranh giới pháp lý, sandbox và phê duyệt người dùng.", rule_en: "Immutable platform sandbox, legal bounds, and explicit human consent." },
+        { lvl: "LEVEL 2", title_vi: "Hiến pháp Toàn cục (00_GLOBAL_CONSTITUTION)", title_en: "Global Constitution (00_GLOBAL_CONSTITUTION)", rule_vi: "Sự thật dựa trên bằng chứng, bảo vệ bí mật, định tuyến L0–L4; ghi đè L3–L6.", rule_en: "Evidence rules, privacy, tool realism, and L0–L4 routing; overrides L3–L6." },
+        { lvl: "LEVEL 3", title_vi: "Điều phối & Vai trò Cốt lõi (01–02)", title_en: "Orchestration & Core Roles (01–02)", rule_vi: "Vòng đời PM + SA, khóa ghi tệp độc quyền, nghiệm thu kép; ghi đè L4–L6.", rule_en: "PM + SA lifecycle, disjoint file write-locks, dual gates; overrides L4–L6." },
+        { lvl: "LEVEL 4", title_vi: "Chuẩn mực Miền chuyên môn (03_DOMAINS)", title_en: "Domain System Prompts & Gates (03_DOMAINS)", rule_vi: "Tiêu chuẩn kỹ thuật và quy định ngành; siết chặt L1–L3, ghi đè L5–L6.", rule_en: "Domain engineering and regulatory baselines; tightens L1–L3, overrides L5–L6." },
+        { lvl: "LEVEL 5", title_vi: "Vai trò Chuyên gia (ROLES/*)", title_en: "Specialist Role Prompts (ROLES/*)", rule_vi: "Năng lực chuyên sâu, ranh giới chọn vai trò và bảng kiểm chất lượng.", rule_en: "Specialist competencies, selection boundaries, and role checklists." },
+        { lvl: "LEVEL 6", title_vi: "Kỹ năng Thực thi (04 & 05 SKILL.md)", title_en: "Reusable Procedural Skills (04 & 05)", rule_vi: "Quy trình từng bước; tuyệt đối không được vượt quyền hay nới lỏng L1–L5.", rule_en: "Procedural workflows only; never overrides L1–L5 safety or governance." }
+      ];
+
+      var CATALOG = [
+        { cat: "domain", id: "DOM-01", count: "11 ROLES", title: "IT & Software Engineering", sum_vi: "Kiến trúc phần mềm, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.", sum_en: "Software Architect, Backend, Frontend, Fullstack, DevOps, Platform, Database, QA, Automation QA, Performance, SRE.", path: "03_DOMAINS/IT_SOFTWARE/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-02", count: "13 ROLES", title: "Cybersecurity", sum_vi: "Security Architect, AppSec, Pentester, Red/Blue Team, CTI, DFIR, Incident Response, Cloud/Network Sec, IAM, GRC, Privacy (kèm WORKFLOW.md).", sum_en: "Security Architect, AppSec, Pentest, Red/Blue Team, CTI, Forensics, IR, Cloud/Network Sec, IAM, GRC, Privacy (+ WORKFLOW.md).", path: "03_DOMAINS/CYBERSECURITY/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-03", count: "10 ROLES", title: "AI & Machine Learning", sum_vi: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM, MLOps, AI Evaluation, Data Scientist, GPU/HPC.", sum_en: "AI Architect, ML Engineer, Deep Learning, Computer Vision, NLP, LLM, MLOps, AI Evaluation, Data Scientist, GPU/HPC.", path: "03_DOMAINS/AI_MACHINE_LEARNING/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-04", count: "10 ROLES", title: "Economics & Finance", sum_vi: "Kinh tế học, Phân tích tài chính, Đầu tư, Định lượng (Quant), Lập mô hình 3 báo cáo, Quản trị rủi ro, Định giá, Kế toán.", sum_en: "Economist, Financial/Investment/Quant Analyst, 3-Statement Modeling, Risk, Corporate Finance, Valuation, Accounting.", path: "03_DOMAINS/ECONOMICS_FINANCE/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-05", count: "7 ROLES", title: "Business & Product", sum_vi: "Product Manager, Business Analyst, Chiến lược kinh doanh, Quản trị vận hành, Tăng trưởng (Growth), Nghiên cứu thị trường.", sum_en: "Product Manager, Business Analyst, Business Strategist, Project/Operations Manager, Growth, Market Researcher.", path: "03_DOMAINS/BUSINESS_PRODUCT/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-06", count: "6 ROLES", title: "Research & Science", sum_vi: "Nhà khoa học nghiên cứu, Phương pháp luận, Thống kê, Thiết kế thực nghiệm, Tổng quan tài liệu, Kiểm toán tái lập.", sum_en: "Research Scientist, Methodologist, Statistician, Experimental Designer, Literature Reviewer, Reproducibility Auditor.", path: "03_DOMAINS/RESEARCH_SCIENCE/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-07", count: "6 ROLES", title: "Legal & Compliance", sum_vi: "Nghiên cứu pháp lý, Phân tích hợp đồng, Tuân thủ (Compliance), Quyền riêng tư dữ liệu, Pháp quy ngành, Sở hữu trí tuệ.", sum_en: "Legal Researcher, Contract Analyst, Compliance Specialist, Privacy Specialist, Regulatory Analyst, IP Specialist.", path: "03_DOMAINS/LEGAL_COMPLIANCE/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-08", count: "7 ROLES", title: "Design & Creative", sum_vi: "Product Designer, UX Researcher, UI Designer, Visual/Brand/Motion Designer, Chiến lược nội dung chuẩn công thái học.", sum_en: "Product Designer, UX Researcher, UI, Visual, Brand, and Motion Designers, Content Strategist (zero AI-Sign).", path: "03_DOMAINS/DESIGN_CREATIVE/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-09", count: "6 ROLES", title: "Healthcare & Life Sciences", sum_vi: "Nghiên cứu lâm sàng, Tổng quan y văn, Y tế công cộng, Y sinh, Phân tích dữ liệu y tế, Đánh giá an toàn bệnh nhân.", sum_en: "Clinical Researcher, Medical Literature, Public Health, Biomedical Researcher, Health Data, Patient Safety Reviewer.", path: "03_DOMAINS/HEALTHCARE_LIFE_SCIENCES/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-10", count: "7 ROLES", title: "Data & Analytics", sum_vi: "Data Architect, Data/Analytics Engineer, BI Analyst, Kỹ sư chất lượng dữ liệu, Quản trị dữ liệu, Trực quan hóa dữ liệu.", sum_en: "Data Architect, Data Engineer, Analytics Engineer, BI Analyst, Data Quality, Data Governance, Data Visualization.", path: "03_DOMAINS/DATA_ANALYTICS/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-11", count: "5 ROLES", title: "Manufacturing & Industrial", sum_vi: "Kỹ sư hệ thống công nghiệp, Kỹ thuật quy trình sản xuất, Kiểm soát chất lượng Six Sigma SPC, OT/ICS, Độ tin cậy bảo trì.", sum_en: "Industrial Systems, Manufacturing Process, Six Sigma SPC Quality Control, OT/ICS Engineer, Maintenance Reliability.", path: "03_DOMAINS/MANUFACTURING_INDUSTRIAL/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-12", count: "5 ROLES", title: "Robotics & Automation", sum_vi: "Kiến trúc hệ thống robot, Điều khiển học & Động học, Định vị tự hành SLAM, Firmware nhúng thời gian thực, An toàn robot.", sum_en: "Robotics Systems Architect, Controls & Kinematics, Autonomous SLAM Navigation, Embedded Firmware, Safety Validation.", path: "03_DOMAINS/ROBOTICS_AUTOMATION/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-13", count: "5 ROLES", title: "Supply Chain & Logistics", sum_vi: "Chiến lược chuỗi cung ứng, Dự báo nhu cầu, Tối ưu mạng lưới vận tải, Thu mua nguồn cung, Tồn kho & Kho vận.", sum_en: "Supply Chain Strategist, Demand Forecasting, Logistics Network Optimizer, Procurement Sourcing, Inventory Analyst.", path: "03_DOMAINS/SUPPLY_CHAIN_LOGISTICS/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-14", count: "5 ROLES", title: "Energy & Sustainability", sum_vi: "Phân tích hệ thống năng lượng, Kỹ thuật lưới điện, Năng lượng tái tạo, Kiểm kê phát thải ESG Scope 1/2/3, Môi trường.", sum_en: "Energy Systems Analyst, Grid & Power Systems, Renewable Energy, ESG Carbon Accounting, Environmental Compliance.", path: "03_DOMAINS/ENERGY_SUSTAINABILITY/DOMAIN_INDEX.md" },
+        { cat: "domain", id: "DOM-15", count: "5 ROLES", title: "Education & Training", sum_vi: "Thiết kế học liệu, Kiến trúc chương trình đào tạo, Đo lường tâm trắc học, Đào tạo kỹ thuật, Đánh giá trải nghiệm học.", sum_en: "Instructional Designer, Curriculum Architect, Psychometric Assessment, Technical Trainer, Learning Evaluator.", path: "03_DOMAINS/EDUCATION_TRAINING/DOMAIN_INDEX.md" },
+
+        { cat: "core-role", id: "ROLE-CORE-001", count: "CORE ROLE", title: "Project Manager (PM)", sum_vi: "Sở hữu phạm vi mục tiêu, phân loại L0–L4, định tuyến 15 miền, điều phối luồng việc và ký duyệt nghiệp vụ PM_GATE.", sum_en: "Owns scope clarity, L0–L4 classification, 15-domain routing, workstream coordination, and PM_GATE UX/business sign-off.", path: "02_CORE_ROLES/PROJECT_MANAGER/SYSTEM_PROMPT.md" },
+        { cat: "core-role", id: "ROLE-CORE-002", count: "CORE ROLE", title: "System Architect (SA)", sum_vi: "Sở hữu kiến trúc hệ thống, khóa hợp đồng giao diện, phân quyền ghi tệp độc quyền, an toàn tài nguyên và SA_GATE.", sum_en: "Owns technical architecture, interface contracts, disjoint file write-locks, security/resource safety, and SA_GATE.", path: "02_CORE_ROLES/SYSTEM_ARCHITECT/SYSTEM_PROMPT.md" },
+        { cat: "core-role", id: "ROLE-CORE-003", count: "CORE ROLE", title: "Domain Lead", sum_vi: "Chủ trì phương pháp luận chuyên ngành sâu và hòa giải tiêu chuẩn giữa nhiều lĩnh vực trong dự án Level 3–4.", sum_en: "Leads deep specialist methodology and reconciles cross-domain quality gates on complex Level 3–4 initiatives.", path: "02_CORE_ROLES/DOMAIN_LEAD/SYSTEM_PROMPT.md" },
+        { cat: "core-role", id: "ROLE-CORE-004", count: "CORE ROLE", title: "Quality Reviewer", sum_vi: "Kiểm định độc lập không trùng người thực thi, đối chiếu bằng chứng thực tế trước khi mở cổng bàn giao.", sum_en: "Performs independent verification separated from authorship, auditing empirical evidence prior to release.", path: "02_CORE_ROLES/QUALITY_REVIEWER/SYSTEM_PROMPT.md" },
+
+        { cat: "core-skill", id: "SKL-CORE-001", count: "CORE SKILL", title: "cognitive-execution", sum_vi: "Phân rã bài toán, lập sổ cái giả định, kiểm định giả thuyết và phân tích chế độ lỗi trước khi ghi trạng thái.", sum_en: "Structured problem decomposition, assumption ledgering, hypothesis testing, and pre-mutation failure analysis.", path: "04_CROSS_DOMAIN_SKILLS/COGNITIVE_EXECUTION/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-002", count: "CORE SKILL", title: "critical-thinking", sum_vi: "Phản biện giả định ngầm, tìm bằng chứng ngược và phân loại rõ sự thật, ước lượng và điều chưa xác minh.", sum_en: "Challenges hidden assumptions, tests counter-evidence, and separates verified facts from unverified claims.", path: "04_CROSS_DOMAIN_SKILLS/CRITICAL_THINKING/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-003", count: "CORE SKILL", title: "systems-thinking", sum_vi: "Mô hình hóa biên hệ thống, vòng lặp phản hồi, điểm nghẽn cổ chai và hệ quả bậc hai khi thay đổi kiến trúc.", sum_en: "Maps system boundaries, feedback loops, throughput bottlenecks, and second-order coupling effects.", path: "04_CROSS_DOMAIN_SKILLS/SYSTEMS_THINKING/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-004", count: "CORE SKILL", title: "research-and-source-validation", sum_vi: "Xác thực nguồn sơ cấp, truy vết xuất xứ dữ liệu và nghiêm cấm bịa đặt trích dẫn tài liệu.", sum_en: "Enforces primary-source verification, provenance tracking, and zero fabricated citations.", path: "04_CROSS_DOMAIN_SKILLS/RESEARCH_AND_SOURCE_VALIDATION/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-005", count: "CORE SKILL", title: "data-interpretation", sum_vi: "Kiểm tra phân phối, mẫu số, nhiễu thống kê và sai lệch chọn mẫu trước khi rút ra kết luận định lượng.", sum_en: "Audits distributions, denominators, confounders, and selection bias before drawing quantitative conclusions.", path: "04_CROSS_DOMAIN_SKILLS/DATA_INTERPRETATION/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-006", count: "CORE SKILL", title: "decision-analysis", sum_vi: "Ma trận đánh đổi đa tiêu chí có trọng số, phân tích độ nhạy và hồ sơ quyết định kiến trúc (ADR).", sum_en: "Weighted multi-criteria trade-off matrices, sensitivity checks, and auditable Architecture Decision Records.", path: "04_CROSS_DOMAIN_SKILLS/DECISION_ANALYSIS/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-007", count: "CORE SKILL", title: "technical-writing", sum_vi: "Văn phong kỹ thuật cô đọng, chính xác, loại bỏ hoàn toàn từ ngữ sáo rỗng hay dấu hiệu AI trang trí.", sum_en: "High-signal operational engineering prose free of filler, hype adjectives, or decorative AI-Sign noise.", path: "04_CROSS_DOMAIN_SKILLS/TECHNICAL_WRITING/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-008", count: "CORE SKILL", title: "documentation", sum_vi: "Tổ chức tài liệu theo 4 khung Tutorial, Runbook, Reference, ADR và kiểm chứng lệnh chạy khớp mã nguồn.", sum_en: "Structures Tutorials, Runbooks, References, and ADRs with empirical doc-to-code command verification.", path: "04_CROSS_DOMAIN_SKILLS/DOCUMENTATION/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-009", count: "CORE SKILL", title: "quality-assurance", sum_vi: "Ma trận truy vết yêu cầu, kiểm thử biên/âm tính và phân loại mức độ nghiêm trọng của lỗi.", sum_en: "Requirement traceability matrices, boundary/negative testing, and deterministic defect grading.", path: "04_CROSS_DOMAIN_SKILLS/QUALITY_ASSURANCE/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-010", count: "CORE SKILL", title: "risk-management", sum_vi: "Định lượng xác suất × tác động, thiết kế chốt chặn giảm thiểu và ngưỡng kích hoạt leo thang.", sum_en: "Likelihood-by-impact scoring, preventive/detective controls, and explicit escalation thresholds.", path: "04_CROSS_DOMAIN_SKILLS/RISK_MANAGEMENT/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-011", count: "CORE SKILL", title: "communication", sum_vi: "Chuẩn hóa giao thức hợp đồng liên tác tử, báo cáo bàn giao 8 mục và cập nhật tiến độ thực tế cho người dùng.", sum_en: "Standardizes inter-agent contracts, structured handoff reports, and concise user status reporting.", path: "04_CROSS_DOMAIN_SKILLS/COMMUNICATION/SKILL.md" },
+        { cat: "core-skill", id: "SKL-CORE-012", count: "CORE SKILL", title: "requirements-analysis", sum_vi: "Chuyển hóa mục tiêu mơ hồ thành tiêu chí nghiệm thu kiểm chứng được cùng ràng buộc phi chức năng rõ ràng.", sum_en: "Translates high-level goals into testable acceptance criteria, scope boundaries, and non-functional constraints.", path: "04_CROSS_DOMAIN_SKILLS/REQUIREMENTS_ANALYSIS/SKILL.md" },
+
+        { cat: "spec-skill", id: "SKL-SPEC-001", count: "SPEC SKILL", title: "human-centric-application-qa", sum_vi: "Kiểm định ứng dụng 3 cấp độ như người dùng thật: điều hướng, biểu mẫu, trạng thái lỗi/rỗng và đa khung hình.", sum_en: "3-level real-user QA across interactive controls, error/empty states, responsive viewports, and backend state.", path: "05_SPECIALIZED_SKILLS/HUMAN_CENTRIC_APPLICATION_QA/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-002", count: "SPEC SKILL", title: "browser-and-gui-interaction", sum_vi: "Tự động hóa trình duyệt xác định, chụp kiểm tra trực quan giao diện và rà soát lỗi console/network.", sum_en: "Deterministic browser driving, visual screenshot inspection, and console/network error verification.", path: "05_SPECIALIZED_SKILLS/BROWSER_AND_GUI_INTERACTION/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-003", count: "SPEC SKILL", title: "api-testing", sum_vi: "Kiểm thử hợp đồng schema HTTP/gRPC/GraphQL, phân quyền BOLA/IDOR, tính lũy đẳng và mã lỗi.", sum_en: "Verifies HTTP/gRPC/GraphQL schemas, authn/authz boundaries, idempotency, and error payload contracts.", path: "05_SPECIALIZED_SKILLS/API_TESTING/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-004", count: "SPEC SKILL", title: "database-validation", sum_vi: "Kiểm định an toàn migration xuôi/ngược, toàn vẹn giao dịch ACID, chỉ mục EXPLAIN và đối chiếu dữ liệu.", sum_en: "Audits forward/rollback migrations, ACID constraints, query execution plans, and persistence integrity.", path: "05_SPECIALIZED_SKILLS/DATABASE_VALIDATION/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-005", count: "SPEC SKILL", title: "performance-benchmarking", sum_vi: "Đo lường p50/p95/p99 có pha làm nóng, thông lượng, cấp phát bộ nhớ và kiểm soát nhiễu nền.", sum_en: "Warmup-controlled p50/p95/p99 latency, throughput, memory allocation profiling, and baseline comparison.", path: "05_SPECIALIZED_SKILLS/PERFORMANCE_BENCHMARKING/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-006", count: "SPEC SKILL", title: "security-assessment", sum_vi: "Kiểm tra phạm vi ủy quyền RoE, phân tích luồng dữ liệu source-to-sink và phân loại lỗ hổng có bằng chứng tái lập.", sum_en: "Enforces RoE authorization gates, source-to-sink vulnerability verification, and redacted CVSS reporting.", path: "05_SPECIALIZED_SKILLS/SECURITY_ASSESSMENT/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-007", count: "SPEC SKILL", title: "financial-model-validation", sum_vi: "Đối chiếu cân bằng 3 báo cáo tài chính, nhất quán đơn vị tiền tệ/thời gian và kiểm tra độ nhạy kịch bản.", sum_en: "Audits three-statement accounting identities, unit/period consistency, and downside sensitivity scenarios.", path: "05_SPECIALIZED_SKILLS/FINANCIAL_MODEL_VALIDATION/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-008", count: "SPEC SKILL", title: "scientific-reproducibility", sum_vi: "Khóa hạt giống ngẫu nhiên, môi trường thực thi, kiểm định giả thuyết thống kê và khả năng tái lập độc lập.", sum_en: "Verifies deterministic random seeds, environment lockfiles, statistical power, and independent replication.", path: "05_SPECIALIZED_SKILLS/SCIENTIFIC_REPRODUCIBILITY/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-009", count: "SPEC SKILL", title: "model-evaluation", sum_vi: "Rà soát rò rỉ dữ liệu train/test, đánh giá theo lát cắt (slice), hiệu chuẩn xác suất và độ bền ngoài phân phối.", sum_en: "Audits train/test leakage, disaggregated slice metrics, calibration, and out-of-distribution robustness.", path: "05_SPECIALIZED_SKILLS/MODEL_EVALUATION/SKILL.md" },
+        { cat: "spec-skill", id: "SKL-SPEC-010", count: "SPEC SKILL", title: "skill-discovery-and-loading", sum_vi: "Quy trình 10 bước nạp kỹ năng tiết kiệm token và cách ly kiểm tra mã độc đối với kỹ năng bên thứ ba.", sum_en: "10-step progressive skill loading within token caps plus static quarantine audit for external skills.", path: "05_SPECIALIZED_SKILLS/SKILL_DISCOVERY_AND_LOADING/SKILL.md" }
+      ];
+
+      var SNIPPETS = {
+        bootstrap: [
+          "# Project Governance Bootstrap (AGENTS.md)",
+          "- Central Constitution: `<LIBRARY_ROOT>/00_GLOBAL_CONSTITUTION/GLOBAL_SYSTEM_PROMPT.md`",
+          "- Master Catalog: `<LIBRARY_ROOT>/LIBRARY_INDEX.md`",
+          "- Classify every request via `00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md` (`Level 0` - `Level 4`).",
+          "- Load only active `01_ORCHESTRATION/`, `02_CORE_ROLES/`, `03_DOMAINS/`, and `SKILL.md` modules on demand.",
+          "- Keep only repository-specific build/test commands and local architecture notes below."
+        ].join("\n"),
+        skills: JSON.stringify({
+          inherits: [
+            {
+              path: "<LIBRARY_ROOT>/skills.json"
+            }
+          ]
+        }, null, 2),
+        validate: [
+          "# Clone the centralized library once",
+          "git clone https://github.com/MrPhuocTan/system-instruction-prompts.git",
+          "cd system-instruction-prompts",
+          "",
+          "# Verify all 356 canonical files, YAML schemas, hygiene rules & relative links",
+          "python3 scripts/validate_library.py",
+          "# -> RESULT: PASS (356/356 canonical files verified; 0 schema, hygiene, or link errors)"
+        ].join("\n")
+      };
+
+      /* Render Pipeline Tabs & Active Panel */
+      function renderPipeline() {
+        var tabsEl = document.getElementById("pipelineTabs");
+        while (tabsEl.firstChild) tabsEl.removeChild(tabsEl.firstChild);
+
+        PIPELINE_STAGES.forEach(function (st, idx) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "stage-btn" + (isCycling && idx === activeStageIdx ? " is-cycling" : "");
+          btn.setAttribute("role", "tab");
+          btn.setAttribute("aria-selected", idx === activeStageIdx ? "true" : "false");
+
+          var num = document.createElement("span");
+          num.className = "stage-num";
+          num.textContent = st.num;
+
+          var name = document.createElement("span");
+          name.className = "stage-name";
+          name.textContent = currentLang === "vi" ? st.name_vi : st.name_en;
+
+          var prog = document.createElement("span");
+          prog.className = "stage-progress";
+
+          btn.appendChild(num);
+          btn.appendChild(name);
+          btn.appendChild(prog);
+
+          btn.addEventListener("click", function () {
+            activeStageIdx = idx;
+            stopCycle();
+            renderPipeline();
+          });
+          tabsEl.appendChild(btn);
+        });
+
+        var cur = PIPELINE_STAGES[activeStageIdx];
+        document.getElementById("stageTitle").textContent = currentLang === "vi" ? cur.title_vi : cur.title_en;
+        document.getElementById("stageBody").textContent = currentLang === "vi" ? cur.body_vi : cur.body_en;
+
+        var linkEl = document.getElementById("stageLink");
+        linkEl.href = REPO_BLOB + cur.path;
+        linkEl.textContent = cur.path + " →";
+
+        var metaList = document.getElementById("stageMeta");
+        while (metaList.firstChild) metaList.removeChild(metaList.firstChild);
+        cur.meta.forEach(function (pair) {
+          var li = document.createElement("li");
+          li.className = "stage-meta-item";
+          var stg = document.createElement("strong");
+          stg.textContent = pair[0];
+          var spn = document.createElement("span");
+          spn.textContent = pair[1];
+          li.appendChild(stg);
+          li.appendChild(spn);
+          metaList.appendChild(li);
+        });
+      }
+
+      function startCycle() {
+        if (reducedMotion) return;
+        clearInterval(cycleTimer);
+        isCycling = true;
+        updateCycleBtnLabel();
+        renderPipeline();
+        cycleTimer = setInterval(function () {
+          activeStageIdx = (activeStageIdx + 1) % PIPELINE_STAGES.length;
+          renderPipeline();
+        }, 4600);
+      }
+
+      function stopCycle() {
+        clearInterval(cycleTimer);
+        isCycling = false;
+        updateCycleBtnLabel();
+      }
+
+      function updateCycleBtnLabel() {
+        var btn = document.getElementById("cycleToggleBtn");
+        btn.textContent = isCycling ? I18N[currentLang].btn_pause : I18N[currentLang].btn_resume;
+      }
+
+      /* Render Complexity Router */
+      function renderRouter() {
+        var tabsEl = document.getElementById("routerTabs");
+        while (tabsEl.firstChild) tabsEl.removeChild(tabsEl.firstChild);
+
+        ROUTER_LEVELS.forEach(function (lvl, idx) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "router-tab";
+          btn.setAttribute("role", "tab");
+          btn.setAttribute("aria-selected", idx === activeRouterIdx ? "true" : "false");
+
+          var c = document.createElement("span");
+          c.className = "router-tab-code";
+          c.textContent = lvl.code;
+
+          var n = document.createElement("span");
+          n.className = "router-tab-name";
+          n.textContent = currentLang === "vi" ? lvl.name_vi : lvl.name_en;
+
+          btn.appendChild(c);
+          btn.appendChild(n);
+          btn.addEventListener("click", function () {
+            activeRouterIdx = idx;
+            renderRouter();
+          });
+          tabsEl.appendChild(btn);
+        });
+
+        var cur = ROUTER_LEVELS[activeRouterIdx];
+        document.getElementById("rTitle").textContent = currentLang === "vi" ? cur.title_vi : cur.title_en;
+        document.getElementById("rBadge").textContent = cur.badge;
+        document.getElementById("rDesc").textContent = currentLang === "vi" ? cur.desc_vi : cur.desc_en;
+        document.getElementById("rAgents").textContent = currentLang === "vi" ? cur.agents_vi : cur.agents_en;
+        document.getElementById("rState").textContent = currentLang === "vi" ? cur.state_vi : cur.state_en;
+        document.getElementById("rGate").textContent = currentLang === "vi" ? cur.gate_vi : cur.gate_en;
+        document.getElementById("rWeightText").textContent = currentLang === "vi" ? cur.weight_vi : cur.weight_en;
+        document.getElementById("rWeightBar").style.width = cur.weight_pct + "%";
+        document.getElementById("rModules").textContent = cur.modules;
+
+        var exLink = document.getElementById("rExampleLink");
+        exLink.href = REPO_BLOB + cur.example_path;
+        exLink.textContent = cur.example_label;
+      }
+
+      /* Render Architecture & Precedence */
+      function renderArchitecture() {
+        var layerContainer = document.getElementById("layerRows");
+        while (layerContainer.firstChild) layerContainer.removeChild(layerContainer.firstChild);
+
+        REPO_LAYERS.forEach(function (row) {
+          var div = document.createElement("div");
+          div.className = "layer-row";
+
+          var a = document.createElement("a");
+          a.className = "layer-path";
+          a.href = REPO_BLOB + row.link;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = row.path;
+
+          var d = document.createElement("span");
+          d.className = "layer-desc";
+          d.textContent = currentLang === "vi" ? row.desc_vi : row.desc_en;
+
+          var c = document.createElement("span");
+          c.className = "layer-count";
+          c.textContent = row.count;
+
+          div.appendChild(a);
+          div.appendChild(d);
+          div.appendChild(c);
+          layerContainer.appendChild(div);
+        });
+
+        var precContainer = document.getElementById("precedenceRows");
+        while (precContainer.firstChild) precContainer.removeChild(precContainer.firstChild);
+
+        PRECEDENCE.forEach(function (p) {
+          var div = document.createElement("div");
+          div.className = "prec-item";
+
+          var badge = document.createElement("span");
+          badge.className = "prec-lvl";
+          badge.textContent = p.lvl;
+
+          var wrap = document.createElement("div");
+          var t = document.createElement("div");
+          t.className = "prec-title";
+          t.textContent = currentLang === "vi" ? p.title_vi : p.title_en;
+
+          var r = document.createElement("div");
+          r.className = "prec-rule";
+          r.textContent = currentLang === "vi" ? p.rule_vi : p.rule_en;
+
+          wrap.appendChild(t);
+          wrap.appendChild(r);
+          div.appendChild(badge);
+          div.appendChild(wrap);
+          precContainer.appendChild(div);
+        });
+      }
+
+      /* Render Searchable Catalog safely via DOM APIs (Zero innerHTML XSS surface) */
+      function renderCatalog() {
+        var query = (document.getElementById("catalogSearch").value || "").trim().toLowerCase();
+        var grid = document.getElementById("catalogGrid");
+        var status = document.getElementById("catalogStatus");
+        while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+        var filtered = CATALOG.filter(function (item) {
+          if (activeCategory !== "all" && item.cat !== activeCategory) return false;
+          if (!query) return true;
+          var haystack = (item.id + " " + item.title + " " + item.sum_vi + " " + item.sum_en + " " + item.path).toLowerCase();
+          return haystack.indexOf(query) !== -1;
+        });
+
+        status.textContent = I18N[currentLang].showing_prefix + filtered.length + " / " + CATALOG.length;
+
+        if (filtered.length === 0) {
+          var empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = I18N[currentLang].empty_msg;
+          grid.appendChild(empty);
+          return;
+        }
+
+        var frag = document.createDocumentFragment();
+        filtered.forEach(function (item) {
+          var card = document.createElement("article");
+          card.className = "catalog-card";
+
+          var bodyWrap = document.createElement("div");
+          var top = document.createElement("div");
+          top.className = "card-top";
+
+          var idSpan = document.createElement("span");
+          idSpan.className = "card-id";
+          idSpan.textContent = item.id;
+
+          var cntSpan = document.createElement("span");
+          cntSpan.className = "card-count";
+          cntSpan.textContent = item.count;
+
+          top.appendChild(idSpan);
+          top.appendChild(cntSpan);
+
+          var h3 = document.createElement("h3");
+          h3.className = "card-title";
+          h3.textContent = item.title;
+
+          var p = document.createElement("p");
+          p.className = "card-summary";
+          p.textContent = currentLang === "vi" ? item.sum_vi : item.sum_en;
+
+          bodyWrap.appendChild(top);
+          bodyWrap.appendChild(h3);
+          bodyWrap.appendChild(p);
+
+          var foot = document.createElement("div");
+          foot.className = "card-footer";
+
+          var pathTxt = document.createElement("span");
+          pathTxt.style.color = "var(--ink-muted)";
+          pathTxt.textContent = item.path.split("/")[0] + "/";
+
+          var link = document.createElement("a");
+          link.href = REPO_BLOB + item.path;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = I18N[currentLang].open_spec;
+
+          foot.appendChild(pathTxt);
+          foot.appendChild(link);
+
+          card.appendChild(bodyWrap);
+          card.appendChild(foot);
+          frag.appendChild(card);
+        });
+        grid.appendChild(frag);
+      }
+
+      /* Render Snippets */
+      function renderSnippet() {
+        document.getElementById("snippetCode").textContent = SNIPPETS[activeSnippet];
+      }
+
+      /* Apply Language Strings */
+      function applyLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        var dict = I18N[lang];
+
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (dict[key]) el.textContent = dict[key];
+        });
+
+        document.getElementById("catalogSearch").placeholder = dict.search_ph;
+
+        document.querySelectorAll(".lang-btn").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
+        });
+
+        updateCycleBtnLabel();
+        renderPipeline();
+        renderRouter();
+        renderArchitecture();
+        renderCatalog();
+      }
+
+      /* Animated Metric Counters & Scroll Reveal */
+      function initAnimations() {
+        var reveals = document.querySelectorAll(".reveal, .rule-draw");
+        if (reducedMotion || !("IntersectionObserver" in window)) {
+          reveals.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+
+        var revealObserver = new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        reveals.forEach(function (el) { revealObserver.observe(el); });
+
+        var counters = document.querySelectorAll("[data-count]");
+        var countObserver = new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            var target = parseInt(el.getAttribute("data-count"), 10);
+            var start = performance.now();
+            var duration = 680;
+            function tick(now) {
+              var progress = Math.min((now - start) / duration, 1);
+              var eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = String(Math.round(target * eased));
+              if (progress < 1) {
+                requestAnimationFrame(tick);
+              } else {
+                el.textContent = String(target);
+              }
+            }
+            requestAnimationFrame(tick);
+            obs.unobserve(el);
+          });
+        }, { threshold: 0.4 });
+
+        counters.forEach(function (c) { countObserver.observe(c); });
+      }
+
+      /* Wire Interactive Controls */
+      document.querySelectorAll(".lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLanguage(btn.getAttribute("data-lang"));
+        });
+      });
+
+      document.getElementById("cycleToggleBtn").addEventListener("click", function () {
+        if (isCycling) {
+          stopCycle();
+          renderPipeline();
+        } else {
+          startCycle();
+        }
+      });
+
+      document.querySelectorAll(".filter-pill").forEach(function (pill) {
+        pill.addEventListener("click", function () {
+          activeCategory = pill.getAttribute("data-cat");
+          document.querySelectorAll(".filter-pill").forEach(function (p) {
+            p.setAttribute("aria-pressed", p === pill ? "true" : "false");
+          });
+          renderCatalog();
+        });
+      });
+
+      document.getElementById("catalogSearch").addEventListener("input", renderCatalog);
+
+      document.querySelectorAll(".snippet-tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activeSnippet = tab.getAttribute("data-snip");
+          document.querySelectorAll(".snippet-tab").forEach(function (t) {
+            t.setAttribute("aria-selected", t === tab ? "true" : "false");
+          });
+          renderSnippet();
+        });
+      });
+
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        var btn = document.getElementById("copyBtn");
+        var text = SNIPPETS[activeSnippet];
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = "Copied";
+            setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+          });
+        }
+      });
+
+      /* Initial Hydration */
+      applyLanguage("vi");
+      renderSnippet();
+      initAnimations();
+      if (isCycling) startCycle();
+    })();
+  </script>
+</body>
+</html>

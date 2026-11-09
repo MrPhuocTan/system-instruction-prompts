@@ -1,0 +1,27 @@
+# Local Governance State, Session Logs & Host-Specific Mount Layer
+/agent_communicate.md
+/configs/
+/AGENTS.md
+/INDEX.md
+/global/
+/roles/
+/domains/
+/templates/
+/agents/
+/skills/
+/scripts/governance_state.py
+/tests/
+
+# Scratch, Bytecode, Test Caches & OS Metadata
+scratch/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.DS_Store
+
+# Secrets & Environment Files
+.env
+.env.*
+*.pem
+*.key
