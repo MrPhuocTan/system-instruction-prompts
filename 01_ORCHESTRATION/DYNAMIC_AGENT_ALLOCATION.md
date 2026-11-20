@@ -45,7 +45,9 @@ Before allocating workers, `PM` inspects [`LIBRARY_INDEX.md`](../LIBRARY_INDEX.m
   3. Are subagent tools unavailable in the active harness? -> Execute sequentially inline without fabricating parallel agents.
   4. Does the topology spawn `>= 4` concurrent subagents? -> Record explicit justification in `AGENT_COMMUNICATE.md` demonstrating net wall-clock gain or mandatory Separation of Duties ([`TASK_COMPLEXITY_ROUTER.md`](../00_GLOBAL_CONSTITUTION/TASK_COMPLEXITY_ROUTER.md)).
 
-## 5. Allocation Anti-Patterns to Reject
+## 5. Allocation Anti-Patterns to Reject & Model-Agnostic Capacity Guards
 - **One-Agent-Per-Role Reflex:** Spawning 5 separate subagents for a 100-line task merely because 5 logical roles apply -> merge compatible roles into `1` execution agent (`Pattern A`).
+- **Browser & Patch-Worker Churn:** Spawning 5–10 separate `browser` subagents or throwaway patch workers across iterations of the same application -> spawn at most **`1` `browser` subagent** (`Model: "flash"`) and `1–2` domain workers per session, reusing their `conversationId` via `send_message`.
+- **Unbounded Concurrent Streams (`503` Capacity Exhaustion):** Running `> 3` heavy subagents simultaneously on capacity-constrained model tiers -> cap concurrent active subagents at **`<= 3`**, and if a subagent fails with `503 UNAVAILABLE` after retries, record an explicit inline fallback entry in `AGENT_COMMUNICATE.md` and complete empirical CLI + `browser` verification directly.
 - **Pretending Role Prompts Are Daemons:** Treating `SYSTEM_PROMPT.md` files as continuously running background workers when no subagent process is active.
-- **Self-Certifying Critical Work:** Allowing a `Level 4` implementation worker to act as its own `QUALITY_REVIEWER` or safety auditor (`Pattern C` violation).
+- **Self-Certifying Critical Work:** Allowing a `Level 3`–`Level 4` implementation worker to act as its own `QUALITY_REVIEWER`, `browser` QA verifier, or safety auditor (`Pattern C` violation).

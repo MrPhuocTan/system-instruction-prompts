@@ -39,11 +39,15 @@ Every subagent invocation prompt must instantiate canonical blueprint [`SUBAGENT
 16. **Reporting & Handoff Format:** Requirement to write/return a structured [`HANDOFF_REPORT.md`](../06_TEMPLATES/HANDOFF_REPORT.md) payload via `send_message` to the caller `conversationId`.
 
 ## 4. Worker Reuse, Fault Isolation & Retirement
-- **Intra-Session Specialist Reuse**
+- **Intra-Session Specialist & Browser Reuse (`Zero Churn`)**
   - Record each worker's `conversationId` in [`WORKER_REGISTRY.md`](../06_TEMPLATES/WORKER_REGISTRY.md) and `AGENT_COMMUNICATE.md` (`Section 6: Worker Registry`).
-  - When a subsequent batch requires refinements within the same domain, message the existing specialist `conversationId` via `send_message` with updated scope and write-locks rather than spawning redundant subagents.
-- **Root-Cause Fault Handling**
+  - When a subsequent batch requires refinements or UI re-verification within the same application, message the existing specialist or `browser` `conversationId` via `send_message` with updated scope and write-locks rather than spawning redundant subagents (cap `browser` instances at `1` per application session).
+- **Mandatory Tool & Path Hygiene Inside Subagents**
+  - Custom subagent definitions (`agents/*.md`) must explicitly declare `tools: [read_file, edit_file, write_file, run_command, manage_task, search_web]` so the runtime does not downgrade them to a read-only default toolset.
+  - Subagents must always pass **absolute filesystem paths** (`/abs/path/to/file`) to `read_file`, `edit_file`, and `write_file`, and inspect target line ranges via `read_file` prior to calling `edit_file`.
+- **Root-Cause Fault & `503` Capacity Handling**
   - If a subagent returns `BLOCKED` or `FAILED`, `SA` inspects observed command logs and diffs before re-dispatching; never blindly re-run an identical failing prompt without diagnosing root causes ([`COGNITIVE_EXECUTION.md`](../00_GLOBAL_CONSTITUTION/COGNITIVE_EXECUTION.md)).
+  - If a subagent is terminated by upstream `503 UNAVAILABLE` capacity errors after platform retries, record the fallback in `AGENT_COMMUNICATE.md` and execute its verification checks directly rather than stalling or silently skipping gates.
 - **Clean Lock Release on Completion**
   - Once a worker's handoff passes verification, mark its write-lock `RELEASED` and reconcile `Checkpoint` state so Wave 3 integration or QA agents operate without contention.
 
