@@ -3,9 +3,32 @@
 **Single source of truth for autonomous multi-agent governance, specialist domain roles, and reusable procedural skills.**
 
 - **Version:** `1.0.0` ([VERSION.md](./VERSION.md) | [CHANGELOG.md](./CHANGELOG.md))
+- **Get the Full Pro Release (`100%` — `356` Files) on Agensi.io:** [**Subscribe on Agensi.io (`$10/month` or `$8/month` billed annually)**](https://www.agensi.io)
 - **Live Interactive Overview:** [https://mrphuoctan.github.io/system-instruction-prompts/](https://mrphuoctan.github.io/system-instruction-prompts/)
 - **Master File Catalog:** [LIBRARY_INDEX.md](./LIBRARY_INDEX.md) (`356` canonical files | `9` layers | `15` domains | `112` roles | `22` skills)
-- **End-to-End Walkthroughs:** [08_EXAMPLES/](./08_EXAMPLES/SIMPLE_TASK.md) (`Level 0` through `Level 4` real scenarios)
+- **Public GitHub Preview Scope:** **`10%` Community Starter Preview (`36 / 356` files)** — [08_EXAMPLES/SIMPLE_TASK.md](./08_EXAMPLES/SIMPLE_TASK.md)
+
+> [!IMPORTANT]
+> **Public Preview (`10%`) vs. Agensi.io Full Pro Package (`100%` — `356` Canonical Files)**
+> This public GitHub repository provides the **complete architectural documentation, `LIBRARY_INDEX.md` master catalog, interactive showcase, and a `10%` starter sample (`36 / 356` files)** so you can inspect the prompt engineering quality and governance architecture firsthand.
+>
+> To unlock the **complete `356`-file production library** (all `112` core & specialist role `SYSTEM_PROMPT.md` + `QUALITY_CHECKLIST.md` + Cybersecurity `WORKFLOW.md` packages across `15` domains, all `22` procedural `SKILL.md` modules, all `12` operational templates, `7` subagent blueprints, `7` full walkthroughs, and the deterministic validator suite), purchase or subscribe on **Agensi.io**:
+> - **Marketplace Listing:** [**Centralized Agent Framework & System Instruction Library on Agensi.io**](https://www.agensi.io)
+> - **Pricing:** **`$10 / month`** (Monthly Subscription) or **`$8 / month`** (`$96 / year`, 20% Annual Discount — includes instant ZIP download & MCP access)
+
+| Layer | Full Pro Package on [Agensi.io](https://www.agensi.io) (`100%`) | Public GitHub Preview (`10%` Sample) |
+| :--- | :--- | :--- |
+| **Root Catalog & Manifests** | `5 / 5` files (`README.md`, `LIBRARY_INDEX.md`, `VERSION.md`, `CHANGELOG.md`, `skills.json`) | `5 / 5` files included |
+| **`00_GLOBAL_CONSTITUTION/`** | `8 / 8` constitutional governance modules | `3 / 8` preview modules (`GLOBAL_SYSTEM_PROMPT.md`, `AGENT_GOVERNANCE.md`, `TASK_COMPLEXITY_ROUTER.md`) |
+| **`01_ORCHESTRATION/`** | `13 / 13` autonomous `PM + SA` orchestration & locking modules | `3 / 13` preview modules (`ORCHESTRATION_SYSTEM_PROMPT.md`, `AUTONOMOUS_ORCHESTRATION.md`, `PERSISTENT_PM_SA.md`) |
+| **`02_CORE_ROLES/`** | `8 / 8` files (`PROJECT_MANAGER`, `SYSTEM_ARCHITECT`, `DOMAIN_LEAD`, `QUALITY_REVIEWER`) | `4 / 8` preview files (`PROJECT_MANAGER` & `SYSTEM_ARCHITECT`) |
+| **`03_DOMAINS/` (`15` Domains)** | `274 / 274` files (`15` domain prompts/gates + `108` specialist roles + `13` Cybersecurity workflows) | `15 / 274` files (all `15` `DOMAIN_INDEX.md` catalogs included; specialist role packs on [Agensi.io](https://www.agensi.io)) |
+| **`04_CROSS_DOMAIN_SKILLS/`** | `12 / 12` core reasoning, research, QA & decision `SKILL.md` packages | `2 / 12` preview skills (`COGNITIVE_EXECUTION`, `SYSTEMS_THINKING`) |
+| **`05_SPECIALIZED_SKILLS/`** | `10 / 10` specialized QA, browser, API, DB, security, finance & ML `SKILL.md` packages | `1 / 10` preview skill (`HUMAN_CENTRIC_APPLICATION_QA`) |
+| **`06_TEMPLATES/`** | `12 / 12` project manifest, state, contract, handoff & gate templates | `1 / 12` preview template (`AGENT_COMMUNICATE.md`) |
+| **`07_SUBAGENT_PROMPTS/`** | `7 / 7` subagent creation, worker, QA, security & reviewer blueprints | `1 / 7` preview blueprint (`SUBAGENT_CREATION_PROMPT.md`) |
+| **`08_EXAMPLES/`** | `7 / 7` end-to-end `Level 0`–`Level 4` multi-domain walkthroughs | `1 / 7` preview walkthrough (`SIMPLE_TASK.md`) |
+| **Total Canonical Library** | **`356 / 356` Files (`100%` Full Production Access)** | **`36 / 356` Files (`10.1%` Public Starter Preview)** |
 
 ---
 
